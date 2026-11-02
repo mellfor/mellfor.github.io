@@ -137,18 +137,12 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 .projects-more a{color:var(--accent)}@media(max-width:768px){.projects-more{flex-direction:column;gap:12px;align-items:flex-start}}
 
 /* ============ NEW LEGACY SECTION (STICKY) ============ */
-.legacy-wrapper { position: relative; height: 400vh; background: #000; }
+.legacy-wrapper { position: relative; height: 500vh; background: #000; }
 .legacy-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
 #legacyCanvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
-#legacyTextOverlay { 
-  position: absolute; z-index: 5; font-size: clamp(40px, 8vw, 100px); font-weight: 700; 
-  font-family: var(--font-mono); color: #fff; text-shadow: 0 0 30px rgba(255,255,255,0.8); 
-  opacity: 0; pointer-events: none; transition: opacity 0.5s ease, transform 0.5s ease; transform: scale(0.8);
-  text-align: center;
-}
-#legacyTextOverlay.show { opacity: 1; transform: scale(1); }
-.legacy-quote { position: absolute; bottom: 10%; width: 100%; text-align: center; z-index: 5; font-size: 18px; color: var(--muted); pointer-events: none; opacity: 0; transition: opacity 0.5s; }
-.legacy-quote.show { opacity: 1; }
+.legacy-quote-box { position: absolute; bottom: 8%; left: 50%; transform: translateX(-50%); z-index: 5; text-align: center; pointer-events: none; opacity: 1; }
+.legacy-quote-text { font-size: 16px; color: #ccc; font-family: var(--font-sans); line-height: 1.6; max-width: 600px; }
+.legacy-quote-author { font-size: 14px; color: var(--muted); font-family: var(--font-mono); margin-top: 10px; }
 
 /* ============ CONTACT & FOOTER ============ */
 .contact{padding:140px 48px;border-top:1px solid var(--line);position:relative;background:var(--bg);z-index:5}
@@ -419,12 +413,14 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
   </div>
 </section>
 
-<!-- ОБНОВЛЕННЫЙ РАЗДЕЛ LEGACY (СТАТИЧНЫЙ СКРОЛЛ) -->
+<!-- ОБНОВЛЕННЫЙ РАЗДЕЛ LEGACY -->
 <section class="legacy-wrapper" id="legacy">
   <div class="legacy-sticky">
     <canvas id="legacyCanvas"></canvas>
-    <div id="legacyTextOverlay" data-ru="Думал это все?)" data-en="Thought that's it?">Думал это все?)</div>
-    <div class="legacy-quote" id="legacyQuote" data-ru="Ты можешь не знать меня в лицо. Но ты наверняка уже слышал обо мне. Просто под другим именем." data-en="You might not know my face. But you've definitely heard of me. Just under a different name.">Ты можешь не знать меня в лицо. Но ты наверняка уже слышал обо мне. Просто под другим именем.</div>
+    <div class="legacy-quote-box">
+      <div class="legacy-quote-text" data-ru="Ты можешь не знать меня в лицо. Но ты наверняка уже слышал обо мне. Просто под другим именем." data-en="You might not know my face. But you've definitely heard of me. Just under a different name.">Ты можешь не знать меня в лицо. Но ты наверняка уже слышал обо мне. Просто под другим именем.</div>
+      <div class="legacy-quote-author">— Dani "MellFor"</div>
+    </div>
   </div>
 </section>
 
@@ -1177,22 +1173,22 @@ function initLegacyScene() {
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 1000);
-  camera.position.z = 30;
+  camera.position.z = 25;
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
   renderer.setSize(innerWidth, innerHeight);
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 
   // --- СИСТЕМА ЧАСТИЦ ---
-  const particleCount = 10000;
+  const particleCount = 12000;
   const geometry = new THREE.BufferGeometry();
   const positions = new Float32Array(particleCount * 3);
   const targetPositions = new Float32Array(particleCount * 3);
   const colors = new Float32Array(particleCount * 3);
 
   for (let i = 0; i < particleCount; i++) {
-    positions[i * 3] = (Math.random() - 0.5) * 100;
-    positions[i * 3 + 1] = (Math.random() - 0.5) * 100;
-    positions[i * 3 + 2] = (Math.random() - 0.5) * 100;
+    positions[i * 3] = (Math.random() - 0.5) * 50;
+    positions[i * 3 + 1] = (Math.random() - 0.5) * 50;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 50;
     targetPositions[i * 3] = 0; targetPositions[i * 3 + 1] = 0; targetPositions[i * 3 + 2] = 0;
     const color = new THREE.Color().setHSL(0.7 + Math.random() * 0.2, 0.8, 0.5);
     colors[i * 3] = color.r; colors[i * 3 + 1] = color.g; colors[i * 3 + 2] = color.b;
@@ -1200,7 +1196,7 @@ function initLegacyScene() {
   geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
   geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-  const material = new THREE.PointsMaterial({ size: 0.2, vertexColors: true, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending });
+  const material = new THREE.PointsMaterial({ size: 0.15, vertexColors: true, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending });
   const particles = new THREE.Points(geometry, material);
   scene.add(particles);
 
@@ -1213,26 +1209,64 @@ function initLegacyScene() {
     ctx.fillText(text, c.width / 2, c.height / 2);
     const data = ctx.getImageData(0, 0, c.width, c.height).data;
     const points = [];
-    for (let y = 0; y < c.height; y += 4) {
-      for (let x = 0; x < c.width; x += 4) {
+    for (let y = 0; y < c.height; y += 3) {
+      for (let x = 0; x < c.width; x += 3) {
         if (data[(y * c.width + x) * 4 + 3] > 128) {
-          points.push({ x: (x - c.width/2) * 0.05, y: -(y - c.height/2) * 0.05, z: 0 });
+          points.push({ x: (x - c.width/2) * 0.04, y: -(y - c.height/2) * 0.04, z: 0 });
         }
       }
     }
     return points;
   }
 
-  const masksPoints = getTextPoints('🎭🎭🎭', 120);
-  const moneyPoints = getTextPoints('₽ € $', 160);
-  const meLLForPoints = getTextPoints('MELLFOR', 130);
+  const masksPoints = getTextPoints('🎭🎭🎭', 100);
+  const moneyPoints = getTextPoints('₽ € $', 140);
+  const meLLForPoints = getTextPoints('MELLFOR', 110);
   
   // Генерация кольца для финала
   const ringPoints = [];
-  for(let i=0; i<1000; i++) {
-      const angle = (i / 1000) * Math.PI * 2;
-      ringPoints.push({ x: Math.cos(angle) * 15, y: Math.sin(angle) * 15, z: (Math.random()-0.5)*2 });
+  for(let i=0; i<1500; i++) {
+      const angle = (i / 1500) * Math.PI * 2;
+      ringPoints.push({ x: Math.cos(angle) * 18, y: Math.sin(angle) * 18, z: (Math.random()-0.5)*2 });
   }
+
+  // --- ГЕНЕРАЦИЯ СОЛНЕЧНОЙ СИСТЕМЫ ---
+  const solarPoints = [];
+  // Солнце (в центре)
+  for(let i=0; i<1000; i++) {
+      const r = Math.random() * 2;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      solarPoints.push({
+          x: r * Math.sin(phi) * Math.cos(theta),
+          y: r * Math.sin(phi) * Math.sin(theta),
+          z: r * Math.cos(phi)
+      });
+  }
+  // Планеты и орбиты
+  const planetDists = [5, 7, 9.5, 12, 15, 18, 21];
+  planetDists.forEach((dist, idx) => {
+      // Орбита (кольцо частиц)
+      for(let i=0; i<300; i++) {
+          const angle = (i / 300) * Math.PI * 2;
+          solarPoints.push({ x: Math.cos(angle) * dist, y: Math.sin(angle) * dist, z: 0 });
+      }
+      // Сама планета
+      const pRadius = 0.5 + Math.random() * 0.6;
+      const pAngle = Math.random() * Math.PI * 2;
+      const pX = Math.cos(pAngle) * dist;
+      const pY = Math.sin(pAngle) * dist;
+      for(let i=0; i<200; i++) {
+          const r = Math.random() * pRadius;
+          const theta = Math.random() * Math.PI * 2;
+          const phi = Math.acos(2 * Math.random() - 1);
+          solarPoints.push({
+              x: pX + r * Math.sin(phi) * Math.cos(theta),
+              y: pY + r * Math.sin(phi) * Math.sin(theta),
+              z: r * Math.cos(phi)
+          });
+      }
+  });
 
   // --- ЛОГИКА МОРФИНГА ---
   let currentPhase = 0;
@@ -1244,45 +1278,6 @@ function initLegacyScene() {
       targetPositions[i * 3 + 2] = pt.z + (Math.random() - 0.5) * 0.5;
     }
   }
-
-  // --- СОЛНЕЧНАЯ СИСТЕМА (Появляется в конце) ---
-  const solarSystem = new THREE.Group();
-  solarSystem.visible = false; // Скрыто по умолчанию
-  
-  // Солнце
-  const sunGeo = new THREE.SphereGeometry(3, 32, 32);
-  const sunMat = new THREE.MeshBasicMaterial({ color: 0xffaa00 });
-  const sun = new THREE.Mesh(sunGeo, sunMat);
-  solarSystem.add(sun);
-  
-  // Свет от солнца
-  const sunLight = new THREE.PointLight(0xffaa00, 2, 100);
-  solarSystem.add(sunLight);
-
-  // Планеты
-  const planets = [];
-  const planetColors = [0x888888, 0xffcc00, 0x00aaff, 0xff4400, 0xffaa88, 0xffeecc, 0x88ddff, 0x0000ff];
-  for(let i=0; i<8; i++) {
-      const dist = 6 + i * 2.5;
-      const size = 0.5 + Math.random() * 0.8;
-      
-      // Орбита
-      const orbitGeo = new THREE.RingGeometry(dist - 0.05, dist + 0.05, 64);
-      const orbitMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.1, side: THREE.DoubleSide });
-      const orbit = new THREE.Mesh(orbitGeo, orbitMat);
-      orbit.rotation.x = Math.PI / 2;
-      solarSystem.add(orbit);
-      
-      // Сама планета
-      const pGeo = new THREE.SphereGeometry(size, 16, 16);
-      const pMat = new THREE.MeshStandardMaterial({ color: planetColors[i], roughness: 0.8 });
-      const planet = new THREE.Mesh(pGeo, pMat);
-      planet.position.x = dist;
-      planet.userData = { dist: dist, speed: 0.005 / (i*0.5 + 1), angle: Math.random() * Math.PI * 2 };
-      solarSystem.add(planet);
-      planets.push(planet);
-  }
-  scene.add(solarSystem);
 
   // --- ВЗАИМОДЕЙСТВИЕ С МЫШЬЮ ---
   const mouse = new THREE.Vector2(999, 999);
@@ -1308,7 +1303,7 @@ function initLegacyScene() {
       posArr[i * 3 + 1] += (targetPositions[i * 3 + 1] - posArr[i * 3 + 1]) * 0.05;
       posArr[i * 3 + 2] += (targetPositions[i * 3 + 2] - posArr[i * 3 + 2]) * 0.05;
       
-      // Отталкивание от мыши (только в 2D проекции для простоты)
+      // Отталкивание от мыши
       if (mouse.x !== 999) {
           const dx = posArr[i * 3] - mouse.x * 20;
           const dy = posArr[i * 3 + 1] - mouse.y * 20;
@@ -1321,14 +1316,13 @@ function initLegacyScene() {
     }
     geometry.attributes.position.needsUpdate = true;
 
-    // Вращение солнечной системы
-    if (solarSystem.visible) {
-        solarSystem.rotation.y += 0.002;
-        planets.forEach(p => {
-            p.userData.angle += p.userData.speed;
-            p.position.x = Math.cos(p.userData.angle) * p.userData.dist;
-            p.position.z = Math.sin(p.userData.angle) * p.userData.dist;
-        });
+    // Вращение для фаз 3 и 4 (Солнечная система и кольцо)
+    if (currentPhase === 3) {
+        particles.rotation.z += 0.005; // Система медленно вращается
+    } else if (currentPhase === 4) {
+        particles.rotation.z += 0.01; // Ускоряем вращение
+    } else {
+        particles.rotation.z += (0 - particles.rotation.z) * 0.05; // Возврат в исходное
     }
 
     renderer.render(scene, camera);
@@ -1342,50 +1336,42 @@ function initLegacyScene() {
   });
 
   // --- SCROLL TRIGGER ---
-  const textOverlay = document.getElementById('legacyTextOverlay');
-  const quoteOverlay = document.getElementById('legacyQuote');
+  const textOverlay = document.getElementById('legacyQuote');
   
   if (typeof ScrollTrigger !== 'undefined') {
-    const tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: ".legacy-wrapper",
-            start: "top top",
-            end: "bottom bottom",
-            scrub: 1,
-            onUpdate: (self) => {
-                const progress = self.progress;
-                
-                // Фаза 1: Маски (0% - 25%)
-                if (progress < 0.25 && currentPhase !== 1) {
-                    currentPhase = 1;
-                    morphTo(masksPoints);
-                    textOverlay.classList.remove('show');
-                    quoteOverlay.classList.remove('show');
-                    solarSystem.visible = false;
-                }
-                // Фаза 2: Валюты (25% - 50%)
-                else if (progress >= 0.25 && progress < 0.5 && currentPhase !== 2) {
-                    currentPhase = 2;
-                    morphTo(moneyPoints);
-                    textOverlay.classList.remove('show');
-                    quoteOverlay.classList.remove('show');
-                }
-                // Фаза 3: Текст (50% - 65%)
-                else if (progress >= 0.5 && progress < 0.65 && currentPhase !== 3) {
-                    currentPhase = 3;
-                    morphTo(moneyPoints); // Оставляем деньги на фоне
-                    textOverlay.innerText = currentLang === 'ru' ? "Думал это все?)" : "Thought that's it?";
-                    textOverlay.classList.add('show');
-                    quoteOverlay.classList.add('show');
-                }
-                // Фаза 4: Солнечная система + MELLFOR (65% - 100%)
-                else if (progress >= 0.65 && currentPhase !== 4) {
-                    currentPhase = 4;
-                    textOverlay.classList.remove('show');
-                    quoteOverlay.classList.remove('show');
-                    solarSystem.visible = true;
-                    morphTo(ringPoints); // Частицы собираются в кольцо вокруг системы
-                }
+    ScrollTrigger.create({
+        trigger: ".legacy-wrapper",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1,
+        onUpdate: (self) => {
+            const progress = self.progress;
+            
+            // Фаза 1: Маски (0% - 25%)
+            if (progress < 0.25 && currentPhase !== 1) {
+                currentPhase = 1;
+                morphTo(masksPoints);
+                textOverlay.classList.remove('show');
+            }
+            // Фаза 2: Валюты (25% - 50%)
+            else if (progress >= 0.25 && progress < 0.5 && currentPhase !== 2) {
+                currentPhase = 2;
+                morphTo(moneyPoints);
+                textOverlay.classList.remove('show');
+            }
+            // Фаза 3: Солнечная система (50% - 75%)
+            else if (progress >= 0.5 && progress < 0.75 && currentPhase !== 3) {
+                currentPhase = 3;
+                morphTo(solarPoints);
+                textOverlay.classList.add('show');
+            }
+            // Фаза 4: Кольцо MELLFOR (75% - 100%)
+            else if (progress >= 0.75 && currentPhase !== 4) {
+                currentPhase = 4;
+                // Смешиваем кольцо и солнечную систему, чтобы ник облетал планеты
+                const combinedPoints = [...ringPoints, ...solarPoints];
+                morphTo(combinedPoints);
+                textOverlay.classList.add('show');
             }
         }
     });
@@ -1437,12 +1423,6 @@ if(langToggleBtn){
       el.innerHTML=el.getAttribute(`data-${currentLang}`); 
     }); 
     playClick(); 
-    
-    // Обновляем текст в Legacy, если он на экране
-    const textOverlay = document.getElementById('legacyTextOverlay');
-    if(textOverlay.classList.contains('show')) {
-        textOverlay.innerText = currentLang === 'ru' ? "Думал это все?)" : "Thought that's it?";
-    }
   }); 
 }
 
