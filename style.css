@@ -741,3 +741,19 @@ img, canvas { display: block; max-width: 100%; }
   opacity: 1;
   transform: translateY(0);
 }
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+#langToggle {
+  font-family: var(--font-mono);
+  border: 1px solid var(--line);
+  color: var(--fg);
+  background: transparent;
+  transition: all 0.3s;
+}
+#langToggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
