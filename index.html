@@ -136,15 +136,13 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 .projects-more{display:flex;justify-content:space-between;align-items:center;margin-top:48px;font-family:var(--font-mono);font-size:13px;color:var(--muted)}
 .projects-more a{color:var(--accent)}@media(max-width:768px){.projects-more{flex-direction:column;gap:12px;align-items:flex-start}}
 
-/* ============ NEW LEGACY SECTION (STICKY) ============ */
-/* УМЕНЬШИЛ ВЫСОТУ ДО 250vh, ЧТОБЫ НЕ ЛИСТАТЬ ВЕЧНО */
-.legacy-wrapper { position: relative; height: 250vh; background: #000; }
-.legacy-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+/* ============ NEW LEGACY SECTION ============ */
+/* Теперь это просто 100vh, без всяких длинных скроллов */
+.legacy-wrapper { position: relative; height: 100vh; background: #000; border-top: 1px solid var(--line); overflow: hidden; }
 #legacyCanvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
-.legacy-quote-box { position: absolute; bottom: 6%; left: 50%; transform: translateX(-50%); z-index: 5; text-align: center; pointer-events: none; opacity: 1; transition: opacity 0.5s; }
-.legacy-quote-box.fade { opacity: 0; }
-.legacy-quote-text { font-size: 16px; color: #ccc; font-family: var(--font-sans); line-height: 1.6; max-width: 600px; }
-.legacy-quote-author { font-size: 14px; color: var(--muted); font-family: var(--font-mono); margin-top: 10px; }
+.legacy-quote-box { position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); z-index: 5; text-align: center; pointer-events: none; }
+.legacy-quote-text { font-size: 15px; color: #888; font-family: var(--font-sans); line-height: 1.6; max-width: 500px; }
+.legacy-quote-author { font-size: 13px; color: #555; font-family: var(--font-mono); margin-top: 8px; }
 
 /* ============ CONTACT & FOOTER ============ */
 .contact{padding:140px 48px;border-top:1px solid var(--line);position:relative;background:var(--bg);z-index:5}
@@ -417,12 +415,10 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 
 <!-- ОБНОВЛЕННЫЙ РАЗДЕЛ LEGACY -->
 <section class="legacy-wrapper" id="legacy">
-  <div class="legacy-sticky">
-    <canvas id="legacyCanvas"></canvas>
-    <div class="legacy-quote-box" id="legacyQuote">
-      <div class="legacy-quote-text" data-ru="Ты можешь не знать меня в лицо. Но ты наверняка уже слышал обо мне. Просто под другим именем." data-en="You might not know my face. But you've definitely heard of me. Just under a different name.">Ты можешь не знать меня в лицо. Но ты наверняка уже слышал обо мне. Просто под другим именем.</div>
-      <div class="legacy-quote-author">— Dani "MellFor"</div>
-    </div>
+  <canvas id="legacyCanvas"></canvas>
+  <div class="legacy-quote-box" id="legacyQuote">
+    <div class="legacy-quote-text" data-ru="Ты можешь не знать меня в лицо. Но ты наверняка уже слышал обо мне. Просто под другим именем." data-en="You might not know my face. But you've definitely heard of me. Just under a different name.">Ты можешь не знать меня в лицо. Но ты наверняка уже слышал обо мне. Просто под другим именем.</div>
+    <div class="legacy-quote-author">— Dani "MellFor"</div>
   </div>
 </section>
 
@@ -1192,20 +1188,21 @@ function createMwinDiceScene(){
   return { type: 'dice', roll: roll, dispose(){ cancelAnimationFrame(animId); window.removeEventListener('resize',resize); materials.forEach(m=>{ if(m.map) m.map.dispose(); m.dispose(); }); renderer.dispose(); } };
 }
 
-// ============ 3D LEGACY SCENE (ИДЕАЛ) ============
+// ============ 3D LEGACY SCENE (АВТО-АНИМАЦИЯ) ============
 function initLegacyScene() {
   const canvas = document.getElementById('legacyCanvas');
   if (!canvas || typeof THREE === 'undefined') return;
 
+  const isMobile = innerWidth < 768 || /iPhone|iPad|Android/i.test(navigator.userAgent);
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 1000);
-  camera.position.set(0, 0, 25); // Отъезжаем дальше, чтобы видеть всю систему
+  camera.position.set(0, 0, 35); // Отъезжаем дальше, чтобы видеть всю систему и кольцо
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
   renderer.setSize(innerWidth, innerHeight);
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 
-  // --- СИСТЕМА ЧАСТИЦ ---
-  const particleCount = 15000;
+  // Оптимизация под мобилки
+  const particleCount = isMobile ? 6000 : 15000;
   const geometry = new THREE.BufferGeometry();
   const positions = new Float32Array(particleCount * 3);
   const targetPositions = new Float32Array(particleCount * 3);
@@ -1249,36 +1246,40 @@ function initLegacyScene() {
   const moneyPoints = getTextPoints('₽ € $', 140);
   const meLLForPoints = getTextPoints('MELLFOR', 110);
   
-  // Генерация кольца для финала
-  const ringPoints = [];
-  for(let i=0; i<1500; i++) {
-      const angle = (i / 1500) * Math.PI * 2;
-      ringPoints.push({ x: Math.cos(angle) * 18, y: Math.sin(angle) * 18, z: (Math.random()-0.5)*2 });
-  }
+  // Генерация кольца для финала (Ник облетает систему)
+  const nameRingPoints = meLLForPoints.map(p => {
+      // Растягиваем текст по кругу (Радиус 28)
+      const angle = p.x / 10; 
+      return { 
+          x: Math.cos(angle) * 28, 
+          y: Math.sin(angle) * 28, 
+          z: p.y * 2 // Высота букв
+      };
+  });
 
   // --- ГЕНЕРАЦИЯ СОЛНЕЧНОЙ СИСТЕМЫ ---
   const solarPoints = [];
   // Солнце (в центре)
-  for(let i=0; i<1000; i++) {
-      const r = Math.random() * 2;
+  for(let i=0; i<800; i++) {
+      const r = Math.random() * 2.5;
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(2 * Math.random() - 1);
       solarPoints.push({ x: r * Math.sin(phi) * Math.cos(theta), y: r * Math.sin(phi) * Math.sin(theta), z: r * Math.cos(phi) });
   }
   // Планеты и орбиты
-  const planetDists = [5, 7, 9.5, 12, 15, 18, 21];
-  planetDists.forEach((dist, idx) => {
+  const planetDists = [6, 9, 12, 16, 20, 24];
+  planetDists.forEach((dist) => {
       // Орбита (кольцо частиц)
-      for(let i=0; i<300; i++) {
-          const angle = (i / 300) * Math.PI * 2;
+      for(let i=0; i<200; i++) {
+          const angle = (i / 200) * Math.PI * 2;
           solarPoints.push({ x: Math.cos(angle) * dist, y: Math.sin(angle) * dist, z: 0 });
       }
       // Сама планета
-      const pRadius = 0.5 + Math.random() * 0.6;
+      const pRadius = 0.6 + Math.random() * 0.7;
       const pAngle = Math.random() * Math.PI * 2;
       const pX = Math.cos(pAngle) * dist;
       const pY = Math.sin(pAngle) * dist;
-      for(let i=0; i<200; i++) {
+      for(let i=0; i<150; i++) {
           const r = Math.random() * pRadius;
           const theta = Math.random() * Math.PI * 2;
           const phi = Math.acos(2 * Math.random() - 1);
@@ -1286,8 +1287,10 @@ function initLegacyScene() {
       }
   });
 
+  // Объединяем систему и кольцо с ником для финальной сцены
+  const finalPoints = [...solarPoints, ...nameRingPoints];
+
   // --- ЛОГИКА МОРФИНГА ---
-  let currentPhase = 0;
   function morphTo(pointsArray) {
     for (let i = 0; i < particleCount; i++) {
       const pt = pointsArray[i % pointsArray.length];
@@ -1296,6 +1299,18 @@ function initLegacyScene() {
       targetPositions[i * 3 + 2] = pt.z + (Math.random() - 0.5) * 0.3;
     }
   }
+
+  // --- АВТО-ТАЙМЕР (КИНЕМАТОГРАФ) ---
+  // 1. Собираем Маски
+  setTimeout(() => morphTo(masksPoints), 500);
+  // 2. Через 3.5 секунды Маски перетекают в Валюты
+  setTimeout(() => morphTo(moneyPoints), 4000);
+  // 3. Через 7.5 секунд Валюты взрываются и собираются в Солнечную Систему с Ником
+  setTimeout(() => {
+      morphTo(finalPoints);
+      // Начинаем медленно вращать всю сцену
+      gsap.to(particles.rotation, { z: Math.PI * 2, duration: 60, repeat: -1, ease: "none" });
+  }, 8000);
 
   // --- ВЗАИМОДЕЙСТВИЕ С МЫШЬЮ ---
   const mouse = new THREE.Vector2(999, 999);
@@ -1339,19 +1354,19 @@ function initLegacyScene() {
     for (let i = 0; i < particleCount; i++) {
       let px = posArr[i*3], py = posArr[i*3+1], pz = posArr[i*3+2];
       
-      // Движение к цели
-      px += (targetPositions[i * 3] - px) * 0.08;
-      py += (targetPositions[i * 3 + 1] - py) * 0.08;
-      pz += (targetPositions[i * 3 + 2] - pz) * 0.08;
+      // Движение к цели (плавный морфинг)
+      px += (targetPositions[i * 3] - px) * 0.06;
+      py += (targetPositions[i * 3 + 1] - py) * 0.06;
+      pz += (targetPositions[i * 3 + 2] - pz) * 0.06;
       
       // Отталкивание от мыши (работает для всех фаз)
       if (mouse.x !== 999) {
           const dx = px - mouseWorld.x;
           const dy = py - mouseWorld.y;
           const d = Math.sqrt(dx * dx + dy * dy);
-          if (d < 3 && d > 0.1) {
-              px += (dx / d) * 0.2;
-              py += (dy / d) * 0.2;
+          if (d < 4 && d > 0.1) {
+              px += (dx / d) * 0.3;
+              py += (dy / d) * 0.3;
           }
       }
 
@@ -1360,10 +1375,10 @@ function initLegacyScene() {
           const dx = px - explosion.pos.x;
           const dy = py - explosion.pos.y;
           const d = Math.sqrt(dx*dx + dy*dy);
-          const waveR = explosion.time * 15;
+          const waveR = explosion.time * 20;
           const diff = Math.abs(d - waveR);
-          if(diff < 2 && d > 0.1) {
-              const f = (2 - diff) / 2 * 2.5;
+          if(diff < 3 && d > 0.1) {
+              const f = (3 - diff) / 3 * 4.0;
               px += (dx/d) * f;
               py += (dy/d) * f;
           }
@@ -1374,7 +1389,7 @@ function initLegacyScene() {
           const dx = blackHole.pos.x - px;
           const dy = blackHole.pos.y - py;
           const d = Math.sqrt(dx*dx + dy*dy);
-          const s = Math.sin(blackHole.time / 2 * Math.PI) * 1.5;
+          const s = Math.sin(blackHole.time / 2 * Math.PI) * 2.0;
           if(d > 0.1) {
               px += (dx/d) * s;
               py += (dy/d) * s;
@@ -1384,11 +1399,6 @@ function initLegacyScene() {
       posArr[i*3] = px; posArr[i*3+1] = py; posArr[i*3+2] = pz;
     }
     geometry.attributes.position.needsUpdate = true;
-
-    // Вращение системы
-    if (currentPhase >= 3) particles.rotation.z += 0.005;
-    else particles.rotation.z += (0 - particles.rotation.z) * 0.05;
-
     renderer.render(scene, camera);
   }
   animate();
@@ -1398,47 +1408,6 @@ function initLegacyScene() {
     camera.updateProjectionMatrix();
     renderer.setSize(innerWidth, innerHeight);
   });
-
-  // --- SCROLL TRIGGER ---
-  if (typeof ScrollTrigger !== 'undefined') {
-    ScrollTrigger.create({
-        trigger: ".legacy-wrapper",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1,
-        onUpdate: (self) => {
-            const progress = self.progress;
-            
-            // Фаза 1: Маски (0% - 25%)
-            if (progress < 0.25 && currentPhase !== 1) {
-                currentPhase = 1;
-                morphTo(masksPoints);
-            }
-            // Фаза 2: Валюты (25% - 50%)
-            else if (progress >= 0.25 && progress < 0.5 && currentPhase !== 2) {
-                currentPhase = 2;
-                morphTo(moneyPoints);
-            }
-            // Фаза 3: Солнечная система (50% - 80%)
-            else if (progress >= 0.5 && progress < 0.8 && currentPhase !== 3) {
-                currentPhase = 3;
-                morphTo(solarPoints);
-            }
-            // Фаза 4: Кольцо MELLFOR вокруг системы (80% - 100%)
-            else if (progress >= 0.8 && currentPhase !== 4) {
-                currentPhase = 4;
-                // Совмещаем кольцо с никнеймом и саму солнечную систему
-                const nameRingPoints = meLLForPoints.map(p => {
-                    // Превращаем текст в кольцо
-                    const angle = (p.x / 20) * Math.PI; // Растягиваем по кругу
-                    return { x: Math.cos(angle) * 24, y: Math.sin(angle) * 24, z: p.z };
-                });
-                const combinedPoints = [...solarPoints, ...nameRingPoints];
-                morphTo(combinedPoints);
-            }
-        }
-    });
-  }
 }
 
 // Инициализация раздела Legacy при загрузке
