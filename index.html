@@ -110,14 +110,33 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 .project-card-desc{font-size:13px;color:var(--muted);line-height:1.5}
 .project-card-hint{font-family:var(--font-mono);font-size:11px;color:var(--accent);letter-spacing:.15em;text-transform:uppercase;opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s;margin-top:16px}
 .project-card:hover .project-card-hint{opacity:1;transform:translateY(0)}
-@media(max-width:900px){.projects-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:600px){.projects-grid{grid-template-columns:1fr}.project-card{aspect-ratio:4/5}}
 
-/* MWIN CARD CUSTOM BG */
-.mwin-bg{background:radial-gradient(circle at 50% 50%,#ff0055 0%,#330011 60%,#000 100%)!important;opacity:.5!important}
-.mwin-roulette{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80%;height:80%;border-radius:50%;border:2px dashed rgba(255,255,255,.2);animation:spin 20s linear infinite;pointer-events:none;z-index:1}
-.mwin-roulette::before{content:'';position:absolute;inset:10px;border-radius:50%;border:2px solid #ff0055;box-shadow:0 0 20px #ff0055}
-@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+/* NCHAT CARD CUSTOM */
+.nchat-bg{background:radial-gradient(circle at 50% 50%,#00d4ff 0%,#004466 40%,#000 100%)!important;opacity:.4!important}
+.nchat-3d-text{position:absolute;top:45%;left:50%;transform:translate(-50%,-50%) perspective(600px) rotateX(25deg) rotateY(-15deg);font-size:4.5rem;font-weight:700;color:transparent;-webkit-text-stroke:1.5px rgba(0,212,255,0.8);text-shadow:0 1px 0 #00aacc,0 2px 0 #0088aa,0 3px 0 #006688,0 4px 0 #004466,0 5px 0 #002233,0 6px 15px rgba(0,212,255,0.6);letter-spacing:0.15em;z-index:1;pointer-events:none;animation:floatText 4s ease-in-out infinite alternate}
+@keyframes floatText{0%{transform:translate(-50%,-50%) perspective(600px) rotateX(25deg) rotateY(-15deg) translateZ(0)}100%{transform:translate(-50%,-50%) perspective(600px) rotateX(25deg) rotateY(-15deg) translateZ(30px)}}
+
+/* NM EXCHANGE CARD CUSTOM */
+.exchange-chart{position:absolute;bottom:15%;left:10%;right:10%;height:35%;display:flex;align-items:flex-end;gap:6px;z-index:1;opacity:0.5;pointer-events:none}
+.candle{flex:1;background:#00ffaa;border-radius:2px;position:relative;animation:candleGrow 2s infinite alternate}
+.candle::before{content:'';position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:2px;height:10px;background:inherit}
+.candle.red{background:#ff5c8a}
+.candle:nth-child(odd){animation-delay:0.5s;height:60%}
+.candle:nth-child(even){animation-delay:1s;height:40%}
+.candle:nth-child(3n){height:80%}
+.candle:nth-child(5n){height:90%}
+@keyframes candleGrow{0%{transform:scaleY(0.8)}100%{transform:scaleY(1.1)}}
+
+/* MWIN CARD CUSTOM */
+.mwin-bg{background:radial-gradient(circle at 50% 50%,#ff0055 0%,#330011 60%,#000 100%)!important;opacity:.6!important}
+.mwin-wheel{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:75%;aspect-ratio:1;border-radius:50%;background:conic-gradient(#ff0055 0deg 30deg,#111 30deg 60deg,#ff0055 60deg 90deg,#111 90deg 120deg,#ff0055 120deg 150deg,#111 150deg 180deg,#ff0055 180deg 210deg,#111 210deg 240deg,#ff0055 240deg 270deg,#111 270deg 300deg,#ff0055 300deg 330deg,#111 330deg 360deg);border:4px solid #ff0055;box-shadow:0 0 30px rgba(255,0,85,0.6),inset 0 0 20px rgba(0,0,0,0.9);animation:spinWheel 10s linear infinite;z-index:1}
+.mwin-wheel::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:20%;aspect-ratio:1;border-radius:50%;background:#000;border:2px solid #ff0055;box-shadow:0 0 15px #ff0055}
+.mwin-pointer{position:absolute;top:8%;left:50%;transform:translateX(-50%);width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-top:20px solid #ff0055;z-index:3;filter:drop-shadow(0 0 10px #ff0055);animation:pulsePointer 1s infinite alternate}
+@keyframes spinWheel{to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes pulsePointer{0%{transform:translateX(-50%) scale(1)}100%{transform:translateX(-50%) scale(1.2)}}
+
+@media(max-width:900px){.projects-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.projects-grid{grid-template-columns:1fr}.project-card{aspect-ratio:4/5}.nchat-3d-text{font-size:3.5rem}}
 
 .projects-more{display:flex;justify-content:space-between;align-items:center;margin-top:48px;font-family:var(--font-mono);font-size:13px;color:var(--muted)}
 .projects-more a{color:var(--accent)}
@@ -139,7 +158,7 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 .reveal{opacity:0;transform:translateY(40px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
 .reveal.in{opacity:1;transform:translateY(0)}
 
-/* PROJECT OVERLAY */
+/* OVERLAY */
 .project-overlay{position:fixed;inset:0;z-index:9998;background:#020202;visibility:hidden;opacity:0;transition:opacity .6s var(--ease),visibility .6s;overflow:hidden}
 .project-overlay.active{visibility:visible;opacity:1}
 #projectCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;display:block}
@@ -150,7 +169,6 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 .po-content{position:absolute;inset:0;z-index:5;pointer-events:none;padding:120px 60px 60px;display:flex;flex-direction:column;justify-content:center;max-width:750px}
 .po-content a,.po-content button{pointer-events:auto}
 
-/* CINEMATIC TEXT REVEAL */
 .po-num{font-family:var(--font-mono);font-size:13px;color:var(--accent);letter-spacing:.4em;margin-bottom:20px;opacity:0;transform:translateX(-20px);transition:all .6s var(--ease) .2s}
 .po-title{font-size:clamp(48px,8vw,100px);font-weight:500;line-height:.9;letter-spacing:-.04em;margin-bottom:40px;opacity:0;transform:translateX(-20px);transition:all .8s var(--ease) .35s;background:linear-gradient(135deg,var(--fg) 30%,var(--accent) 80%,var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
 
@@ -162,12 +180,12 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 .po-tag{font-family:var(--font-mono);font-size:11px;padding:7px 14px;border:1px solid rgba(124,92,255,.3);border-radius:100px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;background:rgba(124,92,255,.05)}
 .po-cta{opacity:0;transform:translateX(-20px);transition:all .8s var(--ease) 1.7s}
 
-/* DYNAMIC STORY ANIMATIONS */
 .project-overlay.active .po-num,.project-overlay.active .po-title{opacity:1;transform:translateX(0)}
 .project-overlay.active .story-line{opacity:1;transform:translateY(0)}
 .project-overlay.active .story-line:nth-child(1){transition-delay:.6s}
 .project-overlay.active .story-line:nth-child(2){transition-delay:.9s}
 .project-overlay.active .story-line:nth-child(3){transition-delay:1.2s}
+.project-overlay.active .story-line:nth-child(4){transition-delay:1.5s}
 .project-overlay.active .po-meta,.project-overlay.active .po-cta{opacity:1;transform:translateX(0)}
 
 .po-scene-label{position:absolute;bottom:32px;right:32px;z-index:8;font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);pointer-events:none;opacity:0;transition:opacity .8s var(--ease) 1s}
@@ -197,7 +215,7 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
     <li><a href="#contact" data-ru="Контакты" data-en="Contact">Контакты</a></li>
   </ul>
   <div class="nav-right">
-    <button id="soundToggle" class="nav-cta" title="Sound">🔊</button>
+    <button id="soundToggle" class="nav-cta" title="Sound">🔇</button>
     <button id="langToggle" class="nav-cta">EN</button>
     <a href="https://t.me/mellfor" target="_blank" class="nav-cta">Say hi ↗</a>
   </div>
@@ -255,7 +273,8 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
   </div>
   <div class="projects-grid">
     <button class="project-card" data-project="1">
-      <div class="project-card-bg" style="background:radial-gradient(circle at 30% 30%,#00d4ff,transparent 60%),radial-gradient(circle at 70% 80%,#7c5cff,transparent 60%)"></div>
+      <div class="project-card-bg nchat-bg"></div>
+      <div class="nchat-3d-text">NCHAT</div>
       <div class="project-card-content">
         <div class="project-card-num">01 / 03</div>
         <div>
@@ -268,6 +287,9 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
     
     <button class="project-card" data-project="2">
       <div class="project-card-bg" style="background:radial-gradient(circle at 30% 30%,#00ffaa,transparent 60%),radial-gradient(circle at 70% 80%,#7c5cff,transparent 60%)"></div>
+      <div class="exchange-chart">
+        <div class="candle red"></div><div class="candle"></div><div class="candle red"></div><div class="candle"></div><div class="candle red"></div><div class="candle"></div><div class="candle red"></div><div class="candle"></div><div class="candle red"></div>
+      </div>
       <div class="project-card-content">
         <div class="project-card-num">02 / 03</div>
         <div>
@@ -280,7 +302,8 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 
     <button class="project-card" data-project="3">
       <div class="project-card-bg mwin-bg"></div>
-      <div class="mwin-roulette"></div>
+      <div class="mwin-wheel"></div>
+      <div class="mwin-pointer"></div>
       <div class="project-card-content">
         <div class="project-card-num">03 / 03</div>
         <div>
@@ -317,7 +340,6 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
   <div class="footer-right" data-ru="Сделано командой MELLNECK" data-en="Built by MELLNECK team">Сделано командой MELLNECK</div>
 </footer>
 
-<!-- OVERLAY -->
 <div class="project-overlay" id="projectOverlay">
   <canvas id="projectCanvas"></canvas>
   <div class="po-vignette"></div>
@@ -327,9 +349,7 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
     <div class="po-num" id="poNum"></div>
     <h2 class="po-title" id="poTitle"></h2>
     
-    <div class="story-container" id="poStory">
-      <!-- Текст вставляется через JS -->
-    </div>
+    <div class="story-container" id="poStory"></div>
     
     <div class="po-meta" id="poMeta"></div>
     <div class="po-cta">
@@ -343,10 +363,10 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
-// ============ AUDIO ============
-const AudioCtx=window.AudioContext||window.webkitAudioContext;
-let audioCtx=null, audioEnabled=true;
-function initAudio(){ if(!audioCtx) audioCtx=new AudioCtx(); if(audioCtx.state==='suspended') audioCtx.resume(); }
+// ============ AUDIO (Выключено по умолчанию) ============
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null, audioEnabled = false; // <-- ВЫКЛЮЧЕНО
+function initAudio(){ if(!audioCtx) audioCtx = new AudioCtx(); if(audioCtx.state==='suspended') audioCtx.resume(); }
 function playTone(freq,dur,type='sine',vol=0.1){ if(!audioEnabled) return; initAudio(); const o=audioCtx.createOscillator(),g=audioCtx.createGain(); o.type=type; o.frequency.setValueAtTime(freq,audioCtx.currentTime); g.gain.setValueAtTime(vol,audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+dur); o.connect(g); g.connect(audioCtx.destination); o.start(); o.stop(audioCtx.currentTime+dur); }
 function playNoise(dur=0.5,vol=0.15){ if(!audioEnabled) return; initAudio(); const size=audioCtx.sampleRate*dur, buf=audioCtx.createBuffer(1,size,audioCtx.sampleRate), data=buf.getChannelData(0); for(let i=0;i<size;i++) data[i]=(Math.random()*2-1)*Math.pow(1-i/size,2); const s=audioCtx.createBufferSource(); s.buffer=buf; const g=audioCtx.createGain(); g.gain.setValueAtTime(vol,audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+dur); s.connect(g); g.connect(audioCtx.destination); s.start(); }
 function playExplosion(){ playNoise(0.6,0.18); playTone(80,0.4,'sine',0.15); }
@@ -540,71 +560,88 @@ document.querySelectorAll('.project-card').forEach(card=>{ card.addEventListener
 poClose.addEventListener('click',closeProject);
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&overlay.classList.contains('active')) closeProject(); });
 
-// ============ SCENE 1: NCHAT (Гиперпрыжок) ============
+// ============ SCENE 1: NCHAT (Гиперпрыжок / Warp Speed) ============
 function createNchatScene(){
   const w=projCanvas.clientWidth||innerWidth, h=projCanvas.clientHeight||innerHeight;
   const scene=new THREE.Scene();
-  scene.fog=new THREE.FogExp2(0x000000, 0.02);
+  scene.fog=new THREE.FogExp2(0x000000, 0.015);
   const camera=new THREE.PerspectiveCamera(70,w/h,0.1,1000);
-  camera.position.z=5;
+  camera.position.z = 0;
   
   const renderer=new THREE.WebGLRenderer({canvas:projCanvas,alpha:true,antialias:true});
   renderer.setSize(w,h); renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 
-  // Спираль из колец
-  const tunnelGroup=new THREE.Group();
-  scene.add(tunnelGroup);
-  const numRings=60;
-  const color=new THREE.Color('#00d4ff');
+  // Центральное свечение (Портал)
+  const glowGeo = new THREE.CircleGeometry(1.5, 32);
+  const glowMat = new THREE.MeshBasicMaterial({color:0x00d4ff, transparent:true, opacity:0.1, side:THREE.DoubleSide});
+  const glow = new THREE.Mesh(glowGeo, glowMat);
+  glow.position.z = -15;
+  scene.add(glow);
+
+  // Звездные линии (Warp Speed)
+  const N = 1500;
+  const positions = new Float32Array(N * 6); // start & end points
+  const colors = new Float32Array(N * 6);
+  const c = new THREE.Color('#00d4ff');
   
-  for(let i=0;i<numRings;i++){
-    const geo=new THREE.TorusGeometry(2, 0.02, 8, 64);
-    const mat=new THREE.MeshBasicMaterial({color:color, transparent:true, opacity:0.5});
-    const ring=new THREE.Mesh(geo,mat);
-    ring.position.z = -i * 4; // расстояние между кольцами
-    ring.rotation.z = i * 0.1;
-    tunnelGroup.add(ring);
-  }
+  for(let i=0; i<N; i++){
+    const x = (Math.random() - 0.5) * 40;
+    const y = (Math.random() - 0.5) * 40;
+    const z = -Math.random() * 150;
+    
+    // Start
+    positions[i*6] = x;
+    positions[i*6+1] = y;
+    positions[i*6+2] = z;
+    // End (line length)
+    positions[i*6+3] = x;
+    positions[i*6+4] = y;
+    positions[i*6+5] = z - 3.0;
 
-  // Частицы скорости
-  const N=2000;
-  const pos=new Float32Array(N*3);
-  for(let i=0;i<N;i++){
-    pos[i*3]=(Math.random()-0.5)*10;
-    pos[i*3+1]=(Math.random()-0.5)*10;
-    pos[i*3+2]=Math.random()*-200;
+    // Colors (fading out to white near the end)
+    colors[i*6] = c.r; colors[i*6+1] = c.g; colors[i*6+2] = c.b;
+    colors[i*6+3] = 1; colors[i*6+4] = 1; colors[i*6+5] = 1; 
   }
-  const pGeo=new THREE.BufferGeometry();
-  pGeo.setAttribute('position',new THREE.BufferAttribute(pos,3));
-  const pMat=new THREE.PointsMaterial({color:0xffffff,size:0.05,transparent:true,opacity:0.8});
-  const particles=new THREE.Points(pGeo,pMat);
-  scene.add(particles);
+  
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  
+  const mat = new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending });
+  const lines = new THREE.LineSegments(geo, mat);
+  scene.add(lines);
 
-  let speed=1.0;
-  let animId;
+  let speed = 1.0;
+  let animId, t = 0;
 
   function animate(){
     animId=requestAnimationFrame(animate);
-    speed += (3.0 - speed) * 0.05; // Ускорение полета
+    t += 0.01;
+    speed += (4.0 - speed) * 0.02; // Ускорение
 
-    // Двигаем кольца
-    tunnelGroup.children.forEach((ring, idx)=>{
-      ring.position.z += speed;
-      ring.rotation.z += 0.02;
-      if(ring.position.z > 5) {
-        ring.position.z = -numRings * 4;
+    const arr = geo.attributes.position.array;
+    
+    for(let i=0; i<N; i++){
+      const ix = i*6;
+      arr[ix+2] += speed;       // start z
+      arr[ix+5] += speed;       // end z
+
+      if(arr[ix+2] > 2) {
+        const newZ = -150 - Math.random() * 20;
+        const x = (Math.random() - 0.5) * 40;
+        const y = (Math.random() - 0.5) * 40;
+        
+        arr[ix] = x; arr[ix+1] = y; arr[ix+2] = newZ;
+        arr[ix+3] = x; arr[ix+4] = y; arr[ix+5] = newZ - (2.0 + speed*0.5);
       }
-    });
-
-    // Двигаем частицы
-    const pArr=pGeo.attributes.position.array;
-    for(let i=0;i<N;i++){
-      pArr[i*3+2] += speed * 1.5;
-      if(pArr[i*3+2] > 5) pArr[i*3+2] = -200;
     }
-    pGeo.attributes.position.needsUpdate=true;
+    geo.attributes.position.needsUpdate = true;
 
-    camera.rotation.z = Math.sin(Date.now()*0.001)*0.1;
+    // Пульсация портала
+    glow.scale.setScalar(1 + Math.sin(t*4)*0.2);
+    glow.material.opacity = 0.1 + Math.sin(t*4)*0.05;
+
+    camera.rotation.z = Math.sin(t)*0.05;
     renderer.render(scene,camera);
   }
   animate();
@@ -616,8 +653,7 @@ function createNchatScene(){
     dispose(){
       cancelAnimationFrame(animId);
       window.removeEventListener('resize',resize);
-      tunnelGroup.children.forEach(c=>{c.geometry.dispose();c.material.dispose()});
-      pGeo.dispose(); pMat.dispose(); renderer.dispose();
+      geo.dispose(); mat.dispose(); glowGeo.dispose(); glowMat.dispose(); renderer.dispose();
     }
   };
 }
@@ -640,7 +676,6 @@ function createExchangeScene(){
   const numNodes=60;
   const radius=3.5;
 
-  // Создаем узлы
   for(let i=0;i<numNodes;i++){
     const phi=Math.acos(-1+(2*i)/numNodes);
     const theta=Math.sqrt(numNodes*Math.PI)*phi;
@@ -657,7 +692,6 @@ function createExchangeScene(){
     group.add(sphere);
   }
 
-  // Соединяем близкие узлы линиями
   const linePositions=[];
   for(let i=0;i<numNodes;i++){
     for(let j=i+1;j<numNodes;j++){
@@ -683,7 +717,6 @@ function createExchangeScene(){
     group.rotation.y = t*0.2;
     group.rotation.x = Math.sin(t*0.5)*0.2;
     
-    // Пульсация размера шаров
     group.children.forEach((child, i)=>{
       if(child.type==='Mesh'){
         const s = 1 + Math.sin(t*3 + i)*0.3;
@@ -718,31 +751,24 @@ function createMwinScene(){
   const renderer=new THREE.WebGLRenderer({canvas:projCanvas,alpha:true,antialias:true});
   renderer.setSize(w,h); renderer.setPixelRatio(Math.min(devicePixelRatio,2));
   
-  // Свет
   const ambient=new THREE.AmbientLight(0xffffff, 0.6); scene.add(ambient);
   const dirLight=new THREE.DirectionalLight(0xff0055, 1.5); dirLight.position.set(2,3,4); scene.add(dirLight);
   const pointLight=new THREE.PointLight(0xffffff, 0.8); pointLight.position.set(-2,-2,2); scene.add(pointLight);
 
-  // Кубик
   const size=2;
   const geo=new THREE.BoxGeometry(size, size, size);
   const materials=[];
   
-  // Создаем CanvasTextures для граней кубика (от 1 до 6)
   function createDiceTexture(number){
     const canvas=document.createElement('canvas');
     canvas.width=256; canvas.height=256;
     const ctx=canvas.getContext('2d');
     
-    // Фон
     ctx.fillStyle='#111111'; ctx.fillRect(0,0,256,256);
-    
-    // Рамка
     ctx.strokeStyle='#ff0055'; ctx.lineWidth=15; ctx.strokeRect(10,10,236,236);
 
-    // Точки
     ctx.fillStyle='#ffffff';
-    const dot=24; // радиус точки
+    const dot=24; 
     const positions = {
       1: [[128,128]],
       2: [[70,70], [186,186]],
@@ -767,7 +793,6 @@ function createMwinScene(){
   const cube=new THREE.Mesh(geo, materials);
   scene.add(cube);
 
-  // Логика броска
   let isRolling=false;
   const canvasEl=projCanvas;
 
@@ -776,40 +801,33 @@ function createMwinScene(){
     isRolling=true;
     playDice();
     
-    // Случайный результат (1-6)
     const result = Math.floor(Math.random()*6) + 1;
     
-    // Углы для каждой грани
     const rotations = {
-      1: {x: 0, y: 0},             // Передняя
-      2: {x: 0, y: -Math.PI/2},    // Правая
-      3: {x: 0, y: Math.PI},       // Задняя
-      4: {x: 0, y: Math.PI/2},     // Левая
-      5: {x: -Math.PI/2, y: 0},    // Верхняя
-      6: {x: Math.PI/2, y: 0}      // Нижняя
+      1: {x: 0, y: 0},
+      2: {x: 0, y: -Math.PI/2},
+      3: {x: 0, y: Math.PI},
+      4: {x: 0, y: Math.PI/2},
+      5: {x: -Math.PI/2, y: 0},
+      6: {x: Math.PI/2, y: 0}
     };
 
     const targetRot = rotations[result];
     
-    // Добавляем случайные полные обороты для эффекта
     const finalX = targetRot.x + Math.PI * 2 * (Math.floor(Math.random()*3) + 2);
     const finalY = targetRot.y + Math.PI * 2 * (Math.floor(Math.random()*3) + 2);
 
-    // Анимация через GSAP
     gsap.killTweensOf(cube.rotation);
     gsap.killTweensOf(cube.position);
 
-    // Прыжок вверх
     gsap.to(cube.position, {y: 2.5, duration: 0.4, ease: "power2.out", yoyo: true, repeat: 1, onComplete: ()=>{ cube.position.y=0; }});
     
-    // Вращение
     gsap.to(cube.rotation, {
       x: finalX, 
       y: finalY, 
       duration: 1.5, 
       ease: "back.out(1.2)",
       onComplete: ()=>{
-        // Корректировка углов, чтобы значения не были астрономическими (опционально)
         cube.rotation.x = cube.rotation.x % (Math.PI*2);
         cube.rotation.y = cube.rotation.y % (Math.PI*2);
         isRolling=false;
@@ -819,7 +837,7 @@ function createMwinScene(){
 
   canvasEl.addEventListener('click', rollDice);
   canvasEl.addEventListener('touchstart', (e)=>{
-    e.preventDefault(); // Предотвращаем двойное срабатывание
+    e.preventDefault(); 
     rollDice();
   }, {passive:false});
 
@@ -828,7 +846,6 @@ function createMwinScene(){
     animId=requestAnimationFrame(animate);
     t+=0.01;
     
-    // Легкое парение, когда не крутится
     if(!isRolling){
       cube.position.y = Math.sin(t*2)*0.1;
       cube.rotation.z = Math.sin(t)*0.05;
@@ -846,7 +863,6 @@ function createMwinScene(){
       cancelAnimationFrame(animId);
       window.removeEventListener('resize',resize);
       canvasEl.removeEventListener('click', rollDice);
-      // Очищаем текстуры
       materials.forEach(m=>{ if(m.map) m.map.dispose(); m.dispose(); });
       geo.dispose(); renderer.dispose();
     }
@@ -868,8 +884,16 @@ if(statNumbers.length){
 const langToggleBtn=document.getElementById('langToggle');
 if(langToggleBtn){ langToggleBtn.addEventListener('click',()=>{ currentLang=currentLang==='ru'?'en':'ru'; langToggleBtn.innerText=currentLang==='ru'?'EN':'RU'; document.querySelectorAll('[data-ru]').forEach(el=>{ el.innerHTML=el.getAttribute(`data-${currentLang}`); }); playClick(); }); }
 
+// Инициализация звука (Кнопка)
 const soundToggleBtn=document.getElementById('soundToggle');
-if(soundToggleBtn){ soundToggleBtn.addEventListener('click',()=>{ audioEnabled=!audioEnabled; soundToggleBtn.innerText=audioEnabled?'🔊':'🔇'; if(audioEnabled) playClick(); }); }
+if(soundToggleBtn){ 
+  soundToggleBtn.innerText = audioEnabled ? '🔊' : '🔇';
+  soundToggleBtn.addEventListener('click',()=>{ 
+    audioEnabled=!audioEnabled; 
+    soundToggleBtn.innerText=audioEnabled?'🔊':'🔇'; 
+    if(audioEnabled) playClick(); 
+  }); 
+}
 
 document.querySelectorAll('.btn,.nav-cta').forEach(b=>{ if(b.id!=='langToggle'&&b.id!=='soundToggle'){ b.addEventListener('click',()=>playClick()); } });
 </script>
