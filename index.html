@@ -13,7 +13,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* ==================== ПЕРЕМЕННЫЕ И RESET ==================== */
         :root {
             --primary: #7C3AED;
             --secondary: #06B6D4;
@@ -37,13 +36,9 @@
         @media (prefers-reduced-motion: reduce) {
             * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
         }
-
-        /* ==================== CANVAS ==================== */
-        #particleCanvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;
-        }
-
-        /* ==================== ПРЕЛОАДЕР ==================== */
+        #particleCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        
+        /* Прелоадер */
         #preloader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -56,13 +51,12 @@
             background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: pulse 2s ease-in-out infinite;
         }
         .preloader-progress { width: 250px; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; margin: 2rem auto 1rem; position: relative; }
-        .preloader-bar { height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); width: 0%; border-radius: 2px; animation: loadingBar 1.5s ease-in-out forwards; }
+        .preloader-bar { height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); width: 0%; border-radius: 2px; }
         .preloader-text { font-size: 0.95rem; color: var(--text-muted); margin-top: 1.5rem; letter-spacing: 0.05em; }
         .preloader-percent { display: inline-block; color: var(--primary); font-weight: 600; font-size: 1.2rem; margin-top: 0.5rem; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
-        @keyframes loadingBar { 0% { width: 0%; } 100% { width: 100%; } }
 
-        /* ==================== КАСТОМНЫЙ КУРСОР ==================== */
+        /* Курсор */
         .cursor {
             position: fixed; width: 30px; height: 30px; border: 2px solid var(--primary); border-radius: 50%;
             pointer-events: none; z-index: 9998; display: none; left: -15px; top: -15px;
@@ -71,7 +65,7 @@
         .cursor.active { display: block; }
         .cursor.hover { width: 50px; height: 50px; left: -25px; top: -25px; border-color: var(--secondary); background: rgba(6, 182, 212, 0.1); }
 
-        /* ==================== HEADER ==================== */
+        /* Header */
         header {
             position: fixed; top: 0; left: 0; right: 0; padding: 1.5rem 0; z-index: 100;
             background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--border);
@@ -89,14 +83,14 @@
         nav a:hover::after { width: 100%; }
         @media (max-width: 768px) { nav { display: none; } }
 
-        /* ==================== ОСНОВНЫЕ ЭЛЕМЕНТЫ ==================== */
+        /* Секции */
         section { position: relative; z-index: 2; min-height: 100vh; display: flex; align-items: center; padding: 5rem 0; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; width: 100%; }
         h1, h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; line-height: 1.1; }
         h1 { font-size: clamp(2.5rem, 8vw, 5rem); }
         h2 { font-size: clamp(1.8rem, 5vw, 3rem); margin-bottom: 2rem; }
 
-        /* ==================== HERO SECTION ==================== */
+        /* Hero */
         #hero { padding-top: 8rem; }
         .hero-content { animation: fadeInUp 1s ease-out; }
         .hero-title { margin-bottom: 1.5rem; overflow: hidden; }
@@ -117,7 +111,7 @@
         .btn-secondary:hover { box-shadow: 0 15px 40px rgba(6, 182, 212, 0.3); }
         @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
 
-        /* ==================== ABOUT SECTION ==================== */
+        /* About */
         #about { background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(6, 182, 212, 0.05)); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
         .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
         .stat-box { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
@@ -125,7 +119,7 @@
         .stat-number { font-size: 3rem; font-weight: 700; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 0.5rem; font-family: 'Space Grotesk', sans-serif; }
         .stat-label { color: var(--text-muted); font-size: 0.95rem; }
 
-        /* ==================== PROJECTS SECTION ==================== */
+        /* Projects */
         #projects { border-top: 1px solid var(--border); }
         .projects-header { margin-bottom: 3rem; opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
         .projects-header.visible { opacity: 1; transform: translateY(0); }
@@ -142,7 +136,7 @@
         .project-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.8rem; color: var(--text); }
         .project-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; }
 
-        /* ==================== CONTACT / SOCIALS ==================== */
+        /* Contact */
         #contact { border-top: 1px solid var(--border); text-align: center; }
         .social-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
         .social-buttons.visible { opacity: 1; transform: translateY(0); }
@@ -160,7 +154,7 @@
         }
         .toast.show { transform: translateX(-50%) translateY(0); }
 
-        /* ==================== FOOTER ==================== */
+        /* Footer */
         footer { position: relative; z-index: 2; padding: 3rem 0; border-top: 1px solid var(--border); text-align: center; background: rgba(10, 10, 10, 0.5); }
         .footer-text { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; }
         .footer-warning { color: #ff9800; font-size: 0.85rem; font-weight: 600; max-width: 600px; margin: 1rem auto; padding: 1rem; border: 1px solid rgba(255, 152, 0, 0.3); border-radius: 8px; background: rgba(255, 152, 0, 0.05); }
@@ -168,7 +162,7 @@
         .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; transition: color var(--transition); }
         .footer-links a:hover { color: var(--primary); }
 
-        /* ==================== MARQUEE ==================== */
+        /* Marquee */
         .marquee { position: relative; z-index: 2; overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1rem 0; background: rgba(124, 58, 237, 0.03); }
         .marquee-content { display: flex; gap: 3rem; animation: marquee 20s linear infinite; white-space: nowrap; font-family: 'Space Grotesk', sans-serif; font-weight: 600; color: var(--text-muted); }
         .marquee-content span { color: var(--primary); }
@@ -177,22 +171,17 @@
 </head>
 <body>
 
-    <!-- Прелоадер -->
     <div id="preloader">
         <div class="preloader-content">
             <div class="preloader-logo">MELLFOR</div>
-            <div class="preloader-progress"><div class="preloader-bar"></div></div>
-            <div class="preloader-text">Загрузка вселенной <span class="preloader-percent">0%</span></div>
+            <div class="preloader-progress"><div class="preloader-bar" id="preloaderBar"></div></div>
+            <div class="preloader-text">Загрузка вселенной <span class="preloader-percent" id="preloaderPercent">0%</span></div>
         </div>
     </div>
 
-    <!-- Курсор -->
     <div class="cursor" id="cursor"></div>
-
-    <!-- Canvas для частиц -->
     <canvas id="particleCanvas"></canvas>
 
-    <!-- Header -->
     <header>
         <div class="header-inner">
             <a href="#" class="logo">MELLFOR</a>
@@ -204,7 +193,6 @@
         </div>
     </header>
 
-    <!-- Hero -->
     <section id="hero">
         <div class="container">
             <div class="hero-content">
@@ -218,14 +206,12 @@
         </div>
     </section>
 
-    <!-- Marquee -->
     <div class="marquee">
         <div class="marquee-content">
             <span>MELLFOR</span> • 260+ PROJECTS • <span>NCHAT</span> • NM EXCHANGE • <span>BBSMM</span> • MCASH • <span>BES TEAM</span> • MELLFOR • 260+ PROJECTS • <span>NCHAT</span> • NM EXCHANGE • <span>BBSMM</span> • MCASH • <span>BES TEAM</span> •
         </div>
     </div>
 
-    <!-- About -->
     <section id="about">
         <div class="container">
             <h2>Обо мне</h2>
@@ -238,7 +224,6 @@
         </div>
     </section>
 
-    <!-- Projects -->
     <section id="projects">
         <div class="container">
             <div class="projects-header">
@@ -255,7 +240,6 @@
         </div>
     </section>
 
-    <!-- Contact -->
     <section id="contact">
         <div class="container">
             <h2>На связи</h2>
@@ -291,29 +275,27 @@
     </footer>
 
     <script>
-        // ==================== CONFIG ====================
-        const CONFIG = {
-            socials: { telegram: 'https://t.me/mellfor', tiktok: 'https://www.tiktok.com/@mellfortg', username: '@mellfor' },
-            particleCount: window.innerWidth < 768 ? 40 : 80,
-            particleSpeed: 0.5
-        };
+        // 1. Безопасный прелоадер
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            const percentText = document.getElementById('preloaderPercent');
+            const bar = document.getElementById('preloaderBar');
+            let progress = 0;
+            
+            const interval = setInterval(() => {
+                progress += 20;
+                if (progress > 100) progress = 100;
+                percentText.textContent = progress + '%';
+                bar.style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => { preloader.classList.add('hidden'); }, 400);
+                }
+            }, 100);
+        });
 
-        // ==================== ПРЕЛОАДЕР ====================
-        const preloader = document.getElementById('preloader');
-        const preloaderPercent = document.querySelector('.preloader-percent');
-        let progress = 0;
-        const progressInterval = setInterval(() => {
-            progress += Math.random() * 15;
-            if (progress > 100) progress = 100;
-            preloaderPercent.textContent = Math.floor(progress) + '%';
-            if (progress >= 100) {
-                clearInterval(progressInterval);
-                setTimeout(() => preloader.classList.add('hidden'), 400);
-            }
-        }, 100);
-        setTimeout(() => preloader.classList.add('hidden'), 3000);
-
-        // ==================== КАСТОМНЫЙ КУРСОР ====================
+        // 2. Курсор
         const cursor = document.getElementById('cursor');
         if (window.matchMedia('(pointer: fine)').matches) {
             cursor.classList.add('active');
@@ -321,13 +303,9 @@
                 cursor.style.left = e.clientX + 'px';
                 cursor.style.top = e.clientY + 'px';
             });
-            document.querySelectorAll('a, button, .project-card').forEach(el => {
-                el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-                el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-            });
         }
 
-        // ==================== 2D CANVAS ЧАСТИЦЫ ====================
+        // 3. Частицы
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -340,18 +318,17 @@
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
 
-        window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
+        window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
         window.addEventListener('touchmove', (e) => {
             if (e.touches.length > 0) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }
         });
-        window.addEventListener('mouseout', () => { mouse.x = null; mouse.y = null; });
 
         class Particle {
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * CONFIG.particleSpeed;
-                this.vy = (Math.random() - 0.5) * CONFIG.particleSpeed;
+                this.vx = (Math.random() - 0.5) * 0.6;
+                this.vy = (Math.random() - 0.5) * 0.6;
                 this.radius = Math.random() * 2 + 1;
                 this.color = Math.random() > 0.5 ? '124, 58, 237' : '6, 182, 212';
             }
@@ -364,14 +341,12 @@
                     const dist = Math.sqrt(dx * dx + dy * dy);
                     if (dist < mouse.radius) {
                         const force = (mouse.radius - dist) / mouse.radius;
-                        this.x += (dx / dist) * force * 3;
-                        this.y += (dy / dist) * force * 3;
+                        this.x += (dx / dist) * force * 4;
+                        this.y += (dy / dist) * force * 4;
                     }
                 }
                 if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
                 if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-                if (this.x < 0) this.x = 0; if (this.x > canvas.width) this.x = canvas.width;
-                if (this.y < 0) this.y = 0; if (this.y > canvas.height) this.y = canvas.height;
             }
             draw() {
                 ctx.beginPath();
@@ -383,21 +358,15 @@
 
         function initParticles() {
             particles = [];
-            for (let i = 0; i < CONFIG.particleCount; i++) {
-                particles.push(new Particle());
-            }
+            const count = window.innerWidth < 768 ? 40 : 80;
+            for (let i = 0; i < count; i++) particles.push(new Particle());
         }
         initParticles();
-        
-        window.addEventListener('resize', () => {
-            CONFIG.particleCount = window.innerWidth < 768 ? 40 : 80;
-            initParticles();
-        });
+        window.addEventListener('resize', initParticles);
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => { p.update(); p.draw(); });
-            // Соединяющие линии
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
@@ -417,65 +386,55 @@
         }
         animate();
 
-        // ==================== АНИМАЦИЯ ЗАГОЛОВКА ====================
+        // 4. Анимация заголовка
         const heroTitle = document.getElementById('heroTitle');
-        const titleText = heroTitle.textContent;
-        heroTitle.textContent = '';
-        titleText.split('').forEach((char, i) => {
-            const span = document.createElement('span');
-            span.textContent = char;
-            span.className = 'hero-title-char';
-            span.style.animationDelay = (i * 0.05) + 's
-                            heroTitle.appendChild(span);
-        });
+        if (heroTitle) {
+            const text = heroTitle.textContent;
+            heroTitle.textContent = '';
+            text.split('').forEach((char, i) => {
+                const span = document.createElement('span');
+                span.textContent = char;
+                span.className = 'hero-title-char';
+                span.style.animationDelay = (i * 0.05) + 's';
+                heroTitle.appendChild(span);
+            });
+        }
 
-        // ==================== АНИМАЦИЯ ПОЯВЛЕНИЯ ПРИ СКРОЛЛЕ (IntersectionObserver) ====================
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
+        // 5. Появление при скролле
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    observer.unobserve(entry.target); // Анимируем только один раз
+                    observer.unobserve(entry.target);
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
-        // Наблюдаем за всеми элементами, которые должны появляться
         document.querySelectorAll('.stat-box, .projects-header, .project-card, .social-buttons').forEach(el => {
             observer.observe(el);
         });
 
-        // ==================== КОПИРОВАНИЕ В БУФЕР ОБМЕНА ====================
+        // 6. Копирование
         const copyBtn = document.getElementById('copyBtn');
         const toast = document.getElementById('toast');
 
-        copyBtn.addEventListener('click', () => {
-            // Копируем ник
-            navigator.clipboard.writeText(CONFIG.socials.username).then(() => {
-                // Показываем тост
-                toast.classList.add('show');
-                
-                // Прячем через 2.5 секунды
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 2500);
-            }).catch(err => {
-                console.error('Ошибка копирования: ', err);
-                // Фолбэк для старых браузеров
-                const textArea = document.createElement('textarea');
-                textArea.value = CONFIG.socials.username;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 2500);
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText('@mellfor').then(() => {
+                    toast.classList.add('show');
+                    setTimeout(() => toast.classList.remove('show'), 2500);
+                }).catch(() => {
+                    const el = document.createElement('textarea');
+                    el.value = '@mellfor';
+                    document.body.appendChild(el);
+                    el.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(el);
+                    toast.classList.add('show');
+                    setTimeout(() => toast.classList.remove('show'), 2500);
+                });
             });
-        });
+        }
     </script>
 </body>
-</html>
+    </html>
