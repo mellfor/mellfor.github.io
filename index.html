@@ -137,10 +137,12 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 .projects-more a{color:var(--accent)}@media(max-width:768px){.projects-more{flex-direction:column;gap:12px;align-items:flex-start}}
 
 /* ============ NEW LEGACY SECTION (STICKY) ============ */
-.legacy-wrapper { position: relative; height: 500vh; background: #000; }
+/* УМЕНЬШИЛ ВЫСОТУ ДО 250vh, ЧТОБЫ НЕ ЛИСТАТЬ ВЕЧНО */
+.legacy-wrapper { position: relative; height: 250vh; background: #000; }
 .legacy-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
 #legacyCanvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
-.legacy-quote-box { position: absolute; bottom: 8%; left: 50%; transform: translateX(-50%); z-index: 5; text-align: center; pointer-events: none; opacity: 1; }
+.legacy-quote-box { position: absolute; bottom: 6%; left: 50%; transform: translateX(-50%); z-index: 5; text-align: center; pointer-events: none; opacity: 1; transition: opacity 0.5s; }
+.legacy-quote-box.fade { opacity: 0; }
 .legacy-quote-text { font-size: 16px; color: #ccc; font-family: var(--font-sans); line-height: 1.6; max-width: 600px; }
 .legacy-quote-author { font-size: 14px; color: var(--muted); font-family: var(--font-mono); margin-top: 10px; }
 
@@ -417,7 +419,7 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 <section class="legacy-wrapper" id="legacy">
   <div class="legacy-sticky">
     <canvas id="legacyCanvas"></canvas>
-    <div class="legacy-quote-box">
+    <div class="legacy-quote-box" id="legacyQuote">
       <div class="legacy-quote-text" data-ru="Ты можешь не знать меня в лицо. Но ты наверняка уже слышал обо мне. Просто под другим именем." data-en="You might not know my face. But you've definitely heard of me. Just under a different name.">Ты можешь не знать меня в лицо. Но ты наверняка уже слышал обо мне. Просто под другим именем.</div>
       <div class="legacy-quote-author">— Dani "MellFor"</div>
     </div>
@@ -897,7 +899,7 @@ function initMwinGames(){
     if(activeScene && activeScene.roll) {
       activeScene.roll((result) => {
         window.isAnyGameActive = false;
-        if(result % 2 === 0) { updateBal(100); triggerEffect(true); } // Чет = победа
+        if(result % 2 === 0) { updateBal(100); triggerEffect(true); } 
         else { triggerEffect(false); }
       });
     }
@@ -1111,10 +1113,13 @@ function createMwinDiceScene(){
   camera.position.set(0,0,7);
   const renderer=new THREE.WebGLRenderer({canvas:projectCanvas,alpha:true,antialias:true});
   renderer.setSize(w,h); renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-  scene.add(new THREE.AmbientLight(0xffffff, 0.6));
-  const dirLight=new THREE.DirectionalLight(0xff0055, 1.5); dirLight.position.set(2,3,4); scene.add(dirLight);
-  const pointLight=new THREE.PointLight(0xffffff, 0.8); pointLight.position.set(-2,-2,2); scene.add(pointLight);
   
+  scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+  const dirLight=new THREE.DirectionalLight(0xff0055, 1.5); 
+  dirLight.position.set(2,3,4); scene.add(dirLight);
+  const pointLight=new THREE.PointLight(0xffffff, 0.8); 
+  pointLight.position.set(-2,-2,2); scene.add(pointLight);
+
   const materials=[];
   function createDiceTexture(number){
     const canvas=document.createElement('canvas'); canvas.width=256; canvas.height=256;
@@ -1122,14 +1127,20 @@ function createMwinDiceScene(){
     ctx.fillStyle='#111111'; ctx.fillRect(0,0,256,256);
     ctx.strokeStyle='#ff0055'; ctx.lineWidth=15; ctx.strokeRect(10,10,236,236); 
     ctx.fillStyle='#ffffff';
+    
     const dot=24, positions = {1: [[128,128]], 2: [[70,70], [186,186]], 3: [[70,70], [128,128], [186,186]], 4: [[70,70], [186,70], [70,186], [186,186]], 5: [[70,70], [186,70], [128,128], [70,186], [186,186]], 6: [[70,70], [70,128], [70,186], [186,70], [186,128], [186,186]]};
-    positions[number].forEach(pos=>{ ctx.beginPath(); ctx.arc(pos[0], pos[1], dot, 0, Math.PI*2); ctx.fill(); });
+    positions[number].forEach(pos=>{ 
+      ctx.beginPath(); ctx.arc(pos[0], pos[1], dot, 0, Math.PI*2); ctx.fill(); 
+    });
     return new THREE.MeshStandardMaterial({map:new THREE.CanvasTexture(canvas), roughness:0.2, metalness:0.3});
   }
+  
   for(let i=1; i<=6; i++){ materials.push(createDiceTexture(i)); }
-  const cube=new THREE.Mesh(new THREE.BoxGeometry(2, 2, 2), materials); scene.add(cube);
+  const cube=new THREE.Mesh(new THREE.BoxGeometry(2, 2, 2), materials); 
+  scene.add(cube);
 
   let isRolling=false, rollStartTime = 0, startRot = {x:0,y:0,z:0}, targetRot = {x:0,y:0,z:0}, callbackFn = null;
+  
   function roll(callback){
     if(isRolling) return; 
     isRolling=true; callbackFn = callback;
@@ -1240,8 +1251,8 @@ function initLegacyScene() {
   
   // Генерация кольца для финала
   const ringPoints = [];
-  for(let i=0; i<1000; i++) {
-      const angle = (i / 1000) * Math.PI * 2;
+  for(let i=0; i<1500; i++) {
+      const angle = (i / 1500) * Math.PI * 2;
       ringPoints.push({ x: Math.cos(angle) * 18, y: Math.sin(angle) * 18, z: (Math.random()-0.5)*2 });
   }
 
