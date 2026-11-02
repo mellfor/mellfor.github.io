@@ -111,7 +111,7 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 .project-card-hint{font-family:var(--font-mono);font-size:11px;color:var(--accent);letter-spacing:.15em;text-transform:uppercase;opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s;margin-top:16px}
 .project-card:hover .project-card-hint{opacity:1;transform:translateY(0)}
 
-/* NCHAT CARD CUSTOM (Голограмма) */
+/* NCHAT CARD CUSTOM */
 .nchat-bg{background:radial-gradient(circle at 50% 50%,#00d4ff 0%,#004466 40%,#000 100%)!important;opacity:.4!important}
 .nchat-holo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:120px;height:120px;border:2px solid rgba(0,212,255,0.4);border-radius:20px;z-index:1;display:flex;align-items:center;justify-content:center;box-shadow:0 0 30px rgba(0,212,255,0.2) inset;animation:floatHolo 4s infinite alternate}
 .nchat-holo::before{content:'🔒';font-size:40px;filter:drop-shadow(0 0 10px #00d4ff)}
@@ -165,7 +165,9 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 /* OVERLAY */
 .project-overlay{position:fixed;inset:0;z-index:9998;background:#020202;visibility:hidden;opacity:0;transition:opacity .6s var(--ease),visibility .6s;overflow:hidden}
 .project-overlay.active{visibility:visible;opacity:1}
-#projectCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;display:block}
+/* ФИКС БАГА: Канвас скрыт по умолчанию */
+#projectCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;display:none}
+#projectCanvas.active{display:block}
 .po-vignette{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.95) 0%,rgba(0,0,0,.8) 30%,transparent 70%),radial-gradient(circle at 70% 50%,transparent 20%,rgba(0,0,0,.5) 90%)}
 .po-close{position:absolute;top:32px;right:32px;width:56px;height:56px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--fg);font-size:22px;cursor:none;z-index:10;transition:all .3s var(--ease);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center}
 .po-close:hover{border-color:var(--accent);transform:rotate(90deg);background:var(--accent);color:#fff}
@@ -198,8 +200,8 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 /* NCHAT CHAT UI */
 #nchat-ui{position:absolute;inset:0;z-index:10;display:none;flex-direction:column;justify-content:flex-end;padding:0 50px 50px;pointer-events:none;background:radial-gradient(circle at 70% 30%,rgba(0,212,255,0.05),transparent 50%)}
 #nchat-ui.active{display:flex}
-.chat-window{width:100%;max-width:600px;margin:0 auto;background:rgba(0,20,30,0.8);border:1px solid rgba(0,212,255,0.3);border-radius:20px;padding:24px;backdrop-filter:blur(20px);pointer-events:auto;box-shadow:0 20px 50px rgba(0,0,0,0.5);display:flex;flex-direction:column;gap:16px}
-.chat-msg{background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.2);padding:12px 20px;border-radius:12px;border-bottom-left-radius:2px;align-self:flex-start;max-width:80%;font-size:15px;color:#fff;animation:msgIn 0.4s ease forwards}
+.chat-window{width:100%;max-width:600px;margin:0 auto;background:rgba(0,20,30,0.8);border:1px solid rgba(0,212,255,0.3);border-radius:20px;padding:24px;backdrop-filter:blur(20px);pointer-events:auto;box-shadow:0 20px 50px rgba(0,0,0,0.5);display:flex;flex-direction:column;gap:16px;max-height: 60vh; overflow-y: auto;}
+.chat-msg{background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.2);padding:12px 20px;border-radius:12px;border-bottom-left-radius:2px;align-self:flex-start;max-width:85%;font-size:15px;color:#fff;animation:msgIn 0.4s ease forwards}
 .chat-msg.user{background:rgba(124,92,255,0.2);border-color:rgba(124,92,255,0.4);border-radius:12px;border-bottom-right-radius:2px;align-self:flex-end}
 .chat-options{display:flex;flex-direction:column;gap:10px;margin-top:10px}
 .chat-opt{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:14px 20px;border-radius:12px;cursor:none;text-align:left;font-family:var(--font-sans);font-size:14px;transition:all 0.2s}
@@ -207,27 +209,34 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 @keyframes msgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
 /* EXCHANGE GAME UI */
-#exchange-ui{position:absolute;inset:0;z-index:10;display:none;flex-direction:column;justify-content:center;align-items:center;pointer-events:none;padding:20px}
+#exchange-ui{position:absolute;inset:0;z-index:10;display:none;flex-direction:column;justify-content:center;align-items:center;pointer-events:none;padding:20px;background:radial-gradient(circle at 50% 50%,rgba(0,255,170,0.05),transparent 70%)}
 #exchange-ui.active{display:flex}
-.exchange-panel{width:100%;max-width:800px;background:rgba(5,20,15,0.85);border:1px solid rgba(0,255,170,0.3);border-radius:24px;padding:40px;backdrop-filter:blur(20px);pointer-events:auto;display:flex;flex-direction:column;gap:30px;box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+.exchange-panel{width:100%;max-width:900px;background:rgba(5,20,15,0.85);border:1px solid rgba(0,255,170,0.3);border-radius:24px;padding:30px;backdrop-filter:blur(20px);pointer-events:auto;display:flex;flex-direction:column;gap:20px;box-shadow:0 20px 60px rgba(0,0,0,0.6)}
 .ex-top{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:20px}
-.ex-balance{display:flex;flex-direction:column;gap:5px}
-.ex-label{font-family:var(--font-mono);font-size:12px;color:#888;text-transform:uppercase;letter-spacing:0.1em}
-.ex-val{font-size:32px;font-weight:700;color:#00ffaa;text-shadow:0 0 20px rgba(0,255,170,0.4)}
-.ex-price{text-align:right}
-.ex-chart-container{height:200px;width:100%;border-radius:12px;background:rgba(0,0,0,0.4);position:relative;overflow:hidden;border:1px solid rgba(0,255,170,0.1)}
+.ex-col{display:flex;flex-direction:column;gap:5px}
+.ex-label{font-family:var(--font-mono);font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.1em}
+.ex-val{font-size:28px;font-weight:700;color:#00ffaa;text-shadow:0 0 20px rgba(0,255,170,0.4);font-family:var(--font-mono)}
+.ex-val.secondary{color:#fff;text-shadow:none;}
+.ex-event-box{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);padding:10px;border-radius:8px;text-align:center;font-family:var(--font-mono);font-size:12px;color:#aaa;min-height:40px;display:flex;align-items:center;justify-content:center}
+.ex-event-box.flash{animation:flashBg 1s}
+@keyframes flashBg{0%,100%{background:rgba(255,255,255,0.05)}50%{background:rgba(0,255,170,0.3);color:#fff}}
+.ex-chart-container{height:220px;width:100%;border-radius:12px;background:rgba(0,0,0,0.4);position:relative;overflow:hidden;border:1px solid rgba(0,255,170,0.1)}
 .ex-chart-svg{width:100%;height:100%;display:block}
-.ex-actions{display:flex;gap:20px}
-.ex-btn{flex:1;padding:20px;border-radius:12px;border:none;font-family:var(--font-mono);font-size:16px;font-weight:700;cursor:none;transition:all 0.3s;letter-spacing:0.1em}
+.ex-actions{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.ex-btn{padding:18px;border-radius:12px;border:none;font-family:var(--font-mono);font-size:14px;font-weight:700;cursor:none;transition:all 0.3s;letter-spacing:0.1em;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.ex-btn span{font-size:11px;opacity:0.7;font-weight:400}
 .ex-btn.buy{background:rgba(0,255,170,0.15);color:#00ffaa;border:1px solid #00ffaa}
 .ex-btn.buy:hover{background:#00ffaa;color:#000;box-shadow:0 0 30px rgba(0,255,170,0.5)}
 .ex-btn.sell{background:rgba(255,92,138,0.15);color:#ff5c8a;border:1px solid #ff5c8a}
 .ex-btn.sell:hover{background:#ff5c8a;color:#fff;box-shadow:0 0 30px rgba(255,92,138,0.5)}
-.ex-btn:disabled{opacity:0.5;pointer-events:none}
+.ex-upgrades{display:flex;gap:10px;margin-top:10px}
+.ex-up-btn{flex:1;background:rgba(124,92,255,0.1);border:1px solid rgba(124,92,255,0.4);color:#b0b0ff;padding:12px;border-radius:8px;cursor:none;font-family:var(--font-mono);font-size:12px;transition:all 0.3s;text-align:center}
+.ex-up-btn:hover{background:rgba(124,92,255,0.3);border-color:#7c5cff;color:#fff}
+.ex-up-btn:disabled{opacity:0.5;cursor:not-allowed;border-color:rgba(255,255,255,0.1);color:#555}
 
 @media(max-width:768px){.project-overlay{padding:0}.po-close{top:20px;right:20px;width:48px;height:48px;font-size:18px}.po-content{padding:100px 24px 40px;justify-content:flex-end;background:linear-gradient(to top,rgba(0,0,0,.95) 40%,transparent 90%)}.story-line{font-size:14px}.po-vignette{background:radial-gradient(circle at 50% 30%,transparent 10%,rgba(0,0,0,.7) 80%)}.po-title{font-size:clamp(32px,10vw,64px)}
-#nchat-ui{padding:0 10px 20px}.chat-window{padding:16px}.chat-msg{font-size:13px;padding:10px 14px}.chat-opt{font-size:13px;padding:10px 14px}
-#exchange-ui{padding:10px}.exchange-panel{padding:20px;gap:20px}.ex-val{font-size:24px}.ex-btn{padding:15px;font-size:14px}.ex-chart-container{height:150px}}
+#nchat-ui{padding:0 10px 20px}.chat-window{padding:16px;max-height:70vh}.chat-msg{font-size:13px;padding:10px 14px}.chat-opt{font-size:13px;padding:10px 14px}
+#exchange-ui{padding:10px}.exchange-panel{padding:20px;gap:15px}.ex-val{font-size:20px}.ex-btn{padding:14px;font-size:12px}.ex-chart-container{height:150px}.ex-actions{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -394,32 +403,48 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
   
   <!-- UI для NCHAT -->
   <div id="nchat-ui">
-    <div class="chat-window" id="chatWindow">
-      <!-- Сообщения добавляются через JS -->
-    </div>
+    <div class="chat-window" id="chatWindow"></div>
   </div>
 
   <!-- UI для NM EXCHANGE -->
   <div id="exchange-ui">
     <div class="exchange-panel">
       <div class="ex-top">
-        <div class="ex-balance">
-          <span class="ex-label" data-ru="Твой баланс" data-en="Your balance">Твой баланс</span>
-          <span class="ex-val" id="exBalance">1000 TRC</span>
+        <div class="ex-col">
+          <span class="ex-label" data-ru="Кэш ($)" data-en="Cash ($)">Кэш ($)</span>
+          <span class="ex-val" id="exCash">$1000</span>
         </div>
-        <div class="ex-price">
+        <div class="ex-col" style="text-align:center">
+          <span class="ex-label" data-ru="Трафик (ед.)" data-en="Traffic (units)">Трафик (ед.)</span>
+          <span class="ex-val secondary" id="exTraffic">0</span>
+        </div>
+        <div class="ex-col" style="text-align:right">
           <span class="ex-label" data-ru="Цена трафика" data-en="Traffic price">Цена трафика</span>
-          <span class="ex-val" id="exPrice" style="color:#fff;text-shadow:none;">$50.00</span>
+          <span class="ex-val" id="exPrice">$50.00</span>
         </div>
       </div>
+      
+      <div class="ex-event-box" id="exEventBox" data-ru="Рынок стабилен..." data-en="Market is stable...">Рынок стабилен...</div>
+
       <div class="ex-chart-container">
         <svg class="ex-chart-svg" id="exChart" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <polyline id="exLine" fill="none" stroke="#00ffaa" stroke-width="2" points=""/>
+          <polyline id="exLine" fill="none" stroke="#00ffaa" stroke-width="1.5" points=""/>
         </svg>
       </div>
+
+      <div class="ex-upgrades">
+         <button class="ex-up-btn" id="btnUpgrade" data-ru="Купить Бот-Ферму ($500)" data-en="Buy Bot Farm ($500)">Купить Бот-Ферму ($500)</button>
+      </div>
+
       <div class="ex-actions">
-        <button class="ex-btn buy" id="btnBuy" data-ru="КУПИТЬ ТРАФИК" data-en="BUY TRAFFIC">КУПИТЬ ТРАФИК</button>
-        <button class="ex-btn sell" id="btnSell" data-ru="ПРОДАТЬ ТРАФИК" data-en="SELL TRAFFIC">ПРОДАТЬ ТРАФИК</button>
+        <button class="ex-btn buy" id="btnBuy">
+          <div data-ru="КУПИТЬ ТРАФИК" data-en="BUY TRAFFIC">КУПИТЬ ТРАФИК</div>
+          <span id="buyCost" data-ru="за $50" data-en="for $50">за $50</span>
+        </button>
+        <button class="ex-btn sell" id="btnSell">
+          <div data-ru="ПРОДАТЬ ТРАФИК" data-en="SELL TRAFFIC">ПРОДАТЬ ТРАФИК</div>
+          <span id="sellGain" data-ru="за $50" data-en="for $50">за $50</span>
+        </button>
       </div>
     </div>
   </div>
@@ -590,17 +615,22 @@ const projectsData={
 const overlay=document.getElementById('projectOverlay'), poNum=document.getElementById('poNum'), poTitle=document.getElementById('poTitle'), poStory=document.getElementById('poStory'), poMeta=document.getElementById('poMeta'), poClose=document.getElementById('poClose');
 const nchatUI = document.getElementById('nchat-ui');
 const exchangeUI = document.getElementById('exchange-ui');
+const projectCanvas = document.getElementById('projectCanvas');
 let currentLang='ru';
 let activeScene=null;
 let currentGameInterval = null;
-const projCanvas=document.getElementById('projectCanvas');
+let currentEventInterval = null;
+let currentBotInterval = null;
 
 function cleanupScene(){
   if(activeScene && activeScene.dispose){ try{ activeScene.dispose(); }catch(e){ console.warn(e); } }
   activeScene=null;
   if(currentGameInterval) { clearInterval(currentGameInterval); currentGameInterval = null; }
+  if(currentEventInterval) { clearInterval(currentEventInterval); currentEventInterval = null; }
+  if(currentBotInterval) { clearInterval(currentBotInterval); currentBotInterval = null; }
   nchatUI.classList.remove('active');
   exchangeUI.classList.remove('active');
+  projectCanvas.classList.remove('active'); // ФИКС: Скрываем 3D-канвас
   document.getElementById('chatWindow').innerHTML = '';
 }
 
@@ -627,6 +657,7 @@ function openProject(id){
       startExchangeGame(); 
     }
     else if(p.scene==='mwin'){ 
+      projectCanvas.classList.add('active'); // ФИКС: Включаем 3D-канвас только тут
       activeScene=createMwinScene(); 
     }
   }, 100);
@@ -670,7 +701,7 @@ function startNchatGame(){
         btn.onclick = () => {
           chatWindow.removeChild(div);
           addMsg(opt.text, true, 100);
-          setTimeout(opt.action, 1000);
+          setTimeout(opt.action, 800);
         };
         div.appendChild(btn);
       });
@@ -679,49 +710,79 @@ function startNchatGame(){
     }, 1000);
   }
 
-  // Сценарий
-  addMsg("Привет. Добро пожаловать в <strong>NCHAT</strong>.", false, 300);
-  addMsg("Это не просто мессенджер. Это протокол нового поколения.", false, 1500);
+  // Начало
+  addMsg("Привет. Ты подключился к <strong>NCHAT</strong>.", false, 300);
+  addMsg("Я — Смотритель. Мой протокол защищает миллионы сообщений.", false, 1500);
+  addMsg("С чего начнем тестирование?", false, 2500);
   
   addOptions([
     { text: "Какие технологии используются?", action: () => {
         addMsg("Квантовое шифрование и децентрализованные узлы.", false, 500);
-        addMsg("Никто, кроме тебя и получателя, не может прочитать сообщение.", false, 1500);
-        setTimeout(endSequence, 3000);
+        addMsg("Даже суперкомпьютер не взломает это за миллион лет.", false, 1200);
+        setTimeout(() => {
+          addMsg("Кстати, основатель MELLNECK лично курировал архитектуру ядра.", false, 2000);
+          addMsg("Спросишь про него?", false, 3000);
+          addOptions([
+            { text: "Да, расскажи про Даню (MellFor)", action: () => {
+                addMsg("Dani MellFor. 18 лет. Основал компанию MELLNECK.", false, 500);
+                addMsg("Он не пишет код, он строит империи. Мы — его цифровая армия.", false, 1200);
+                addMsg("Его видение: полная приватность в интернете. NCHAT — первый шаг.", false, 2000);
+                setTimeout(endSequence, 3000);
+            }},
+            { text: "Нет, вернемся к взлому", action: () => {
+                addMsg("Взлом? Попробуй. Найди уязвимость.", false, 500);
+                addMsg("[СИСТЕМА]: Обнаружена попытка несанкционированного доступа.", false, 1200);
+                addMsg("Шутка. Ты в безопасности. Но бдительность не помешает.", false, 2500);
+                setTimeout(endSequence, 3500);
+            }}
+          ]);
+        }, 2000);
     }},
-    { text: "А это безопасно?", action: () => {
-        addMsg("На 100%. Мы используем Zero-Knowledge Proof.", false, 500);
-        addMsg("Сервер не знает, кто ты и что ты пишешь. Только математика.", false, 1500);
+    { text: "Кто ты такой?", action: () => {
+        addMsg("Я — ИИ, рожденный в недрах NCHAT.", false, 500);
+        addMsg("Моя задача — следить за порядком, но я не читаю ваши сообщения.", false, 1200);
+        addMsg("Я вижу только зашифрованный шум. Красота, правда?", false, 2000);
         setTimeout(endSequence, 3000);
     }}
   ]);
 
   function endSequence() {
-    addMsg("Твой канал защищен. Передаю эстафету в MELLNECK.", false, 1000);
-    addMsg("[СИСТЕМА]: Добро пожаловать в будущее.", false, 2000);
+    addMsg("[СИСТЕМА]: Тестирование завершено. Канал закрыт.", false, 1000);
+    addMsg("Увидимся в MELLNECK.", false, 2000);
   }
 }
 
-// ============ GAME 2: NM EXCHANGE (Биржа) ============
+// ============ GAME 2: NM EXCHANGE (Трейдинг-симулятор) ============
 function startExchangeGame(){
-  const exBalance = document.getElementById('exBalance');
+  const exCash = document.getElementById('exCash');
+  const exTraffic = document.getElementById('exTraffic');
   const exPrice = document.getElementById('exPrice');
   const exLine = document.getElementById('exLine');
   const btnBuy = document.getElementById('btnBuy');
   const btnSell = document.getElementById('btnSell');
+  const exEventBox = document.getElementById('exEventBox');
+  const btnUpgrade = document.getElementById('btnUpgrade');
+  const buyCost = document.getElementById('buyCost');
+  const sellGain = document.getElementById('sellGain');
 
   let state = {
-    balance: 1000,
+    cash: 1000,
     traffic: 0,
     price: 50.0,
-    history: Array(20).fill(50) // Начальный график
+    botFarm: false,
+    history: Array(30).fill(50)
   };
 
   function updateUI() {
-    exBalance.innerText = `${Math.floor(state.balance)} TRC (${state.traffic} трафика)`;
+    exCash.innerText = `$${Math.floor(state.cash)}`;
+    exTraffic.innerText = state.traffic;
     exPrice.innerText = `$${state.price.toFixed(2)}`;
     
-    // Обновляем SVG график
+    // Кнопки
+    buyCost.innerText = `за $${state.price.toFixed(2)}`;
+    sellGain.innerText = `за $${state.price.toFixed(2)}`;
+
+    // График
     const points = state.history.map((p, i) => {
       const x = (i / (state.history.length - 1)) * 100;
       const y = 100 - ((p - 10) / 140) * 100; 
@@ -730,22 +791,56 @@ function startExchangeGame(){
     exLine.setAttribute('points', points);
   }
 
-  // Логика рынка
+  // Основной цикл рынка
   currentGameInterval = setInterval(() => {
-    // Случайное блуждание
-    const change = (Math.random() - 0.5) * 15;
-    state.price = Math.max(10, Math.min(150, state.price + change));
+    const noise = (Math.random() - 0.5) * 10;
+    const wave = Math.sin(Date.now() / 2000) * 5;
+    state.price = Math.max(10, Math.min(150, state.price + noise + wave));
     
     state.history.shift();
     state.history.push(state.price);
     
     updateUI();
-  }, 2000);
+  }, 1500);
 
-  // Кнопка КУПИТЬ
+  // Бот-Ферма (пассивный доход)
+  currentBotInterval = setInterval(() => {
+    if(state.botFarm) {
+      state.traffic += 1;
+      updateUI();
+    }
+  }, 4000);
+
+  // Случайные события
+  currentEventInterval = setInterval(() => {
+    if(Math.random() > 0.4) { // 60% шанс события
+      const events = [
+        { text: "🔥 Вирусный пост! Трафик растет.", type: "up" },
+        { text: "🚨 DDOS-атака! Трафик падает.", type: "down" },
+        { text: "📈 Крупный инвестор закупил трафик.", type: "up" },
+        { text: "📉 Паника на рынке. Слив трафика.", type: "down" }
+      ];
+      const ev = events[Math.floor(Math.random()*events.length)];
+      
+      if(ev.type === "up") state.price *= 1.2;
+      else state.price *= 0.8;
+      state.price = Math.max(10, Math.min(150, state.price));
+
+      exEventBox.innerText = ev.text;
+      exEventBox.classList.remove('flash');
+      void exEventBox.offsetWidth; // Триггер рефлоу для перезапуска анимации
+      exEventBox.classList.add('flash');
+      
+      updateUI();
+    } else {
+      exEventBox.innerText = "Рынок стабилен...";
+    }
+  }, 12000);
+
+  // Купить
   btnBuy.onclick = () => {
-    if(state.balance >= state.price) {
-      state.balance -= state.price;
+    if(state.cash >= state.price) {
+      state.cash -= state.price;
       state.traffic += 1;
       playSuccess();
       updateUI();
@@ -756,11 +851,11 @@ function startExchangeGame(){
     }
   };
 
-  // Кнопка ПРОДАТЬ
+  // Продать
   btnSell.onclick = () => {
     if(state.traffic > 0) {
       state.traffic -= 1;
-      state.balance += state.price;
+      state.cash += state.price;
       playSuccess();
       updateUI();
     } else {
@@ -770,17 +865,33 @@ function startExchangeGame(){
     }
   };
 
+  // Апгрейд
+  btnUpgrade.onclick = () => {
+    if(!state.botFarm && state.cash >= 500) {
+      state.cash -= 500;
+      state.botFarm = true;
+      btnUpgrade.disabled = true;
+      btnUpgrade.innerText = "Бот-Ферма активна";
+      playSuccess();
+      updateUI();
+    } else if (state.cash < 500) {
+      playError();
+      btnUpgrade.style.borderColor = '#ff0000';
+      setTimeout(()=>btnUpgrade.style.borderColor = 'rgba(124,92,255,0.4)', 500);
+    }
+  };
+
   updateUI();
 }
 
 // ============ GAME 3: MWIN (3D Кубик) ============
 function createMwinScene(){
-  const w=projCanvas.clientWidth||innerWidth, h=projCanvas.clientHeight||innerHeight;
+  const w=projectCanvas.clientWidth||innerWidth, h=projectCanvas.clientHeight||innerHeight;
   const scene=new THREE.Scene();
   const camera=new THREE.PerspectiveCamera(50,w/h,0.1,100);
   camera.position.set(0,0,7);
   
-  const renderer=new THREE.WebGLRenderer({canvas:projCanvas,alpha:true,antialias:true});
+  const renderer=new THREE.WebGLRenderer({canvas:projectCanvas,alpha:true,antialias:true});
   renderer.setSize(w,h); renderer.setPixelRatio(Math.min(devicePixelRatio,2));
   
   const ambient=new THREE.AmbientLight(0xffffff, 0.6); scene.add(ambient);
@@ -819,8 +930,7 @@ function createMwinScene(){
   const cube=new THREE.Mesh(geo, materials); scene.add(cube);
 
   let isRolling=false;
-  const canvasEl=projCanvas;
-
+  
   function rollDice(){
     if(isRolling) return;
     isRolling=true;
@@ -845,8 +955,8 @@ function createMwinScene(){
     });
   }
 
-  canvasEl.addEventListener('click', rollDice);
-  canvasEl.addEventListener('touchstart', (e)=>{ e.preventDefault(); rollDice(); }, {passive:false});
+  projectCanvas.addEventListener('click', rollDice);
+  projectCanvas.addEventListener('touchstart', (e)=>{ e.preventDefault(); rollDice(); }, {passive:false});
 
   let animId, t=0;
   function animate(){
@@ -856,14 +966,14 @@ function createMwinScene(){
   }
   animate();
 
-  function resize(){ const w=projCanvas.clientWidth, h=projCanvas.clientHeight; if(!w||!h) return; camera.aspect=w/h; camera.updateProjectionMatrix(); renderer.setSize(w,h); }
+  function resize(){ const w=projectCanvas.clientWidth, h=projectCanvas.clientHeight; if(!w||!h) return; camera.aspect=w/h; camera.updateProjectionMatrix(); renderer.setSize(w,h); }
   window.addEventListener('resize',resize); setTimeout(resize,100);
 
   return {
     dispose(){
       cancelAnimationFrame(animId);
       window.removeEventListener('resize',resize);
-      canvasEl.removeEventListener('click', rollDice);
+      projectCanvas.removeEventListener('click', rollDice);
       materials.forEach(m=>{ if(m.map) m.map.dispose(); m.dispose(); });
       geo.dispose(); renderer.dispose();
     }
