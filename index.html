@@ -3,25 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="MellFor (Dani) — 18 лет, основатель 260+ проектов в Telegram-экосистеме, криптовалютах и финтехе. NCHAT, NM EXCHANGE, BBSMM, MCASH.">
+    <meta name="description" content="MellFor (Dani) — 18 лет, основатель 260+ проектов. Telegram, крипта, финтех.">
     <meta name="theme-color" content="#050505">
-    <meta property="og:title" content="MellFor — Dani, 18 | 260+ проектов">
-    <meta property="og:description" content="Founder, entrepreneur, builder. Telegram ecosystem, crypto, fintech.">
-    <meta property="og:type" content="website">
-    <title>MellFor — Dani, 18 | 260+ проектов</title>
+    <title>MellFor — 3D Portfolio 2026</title>
     
+    <!-- Шрифты -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     
+    <!-- Three.js через надежный ESM CDN -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://esm.sh/three@0.160.0"
+            }
+        }
+    </script>
+
     <style>
         :root {
             --primary: #7C3AED;
             --secondary: #06B6D4;
             --bg: #050505;
             --text: #ffffff;
-            --text-muted: #a1a1aa;
-            --border: rgba(255, 255, 255, 0.08);
+            --text-muted: #8888a0;
+            --border: rgba(255, 255, 255, 0.1);
             --glass: rgba(255, 255, 255, 0.03);
         }
 
@@ -34,188 +41,182 @@
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
-            cursor: none; /* Скрываем стандартный курсор для ПК */
+            cursor: default;
         }
 
-        /* На телефонах возвращаем стандартный курсор */
-        @media (max-width: 1024px) {
-            body { cursor: auto; }
-            .custom-cursor, .custom-cursor-follower { display: none !important; }
+        /* --- 3D CANVAS (Фон) --- */
+        #webgl-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none; /* Чтобы клики проходили сквозь 3D на сайт */
+            opacity: 0.8;
         }
 
-        /* --- КАСТОМНЫЙ КУРСОР --- */
-        .custom-cursor {
-            position: fixed; width: 12px; height: 12px; background: #fff; border-radius: 50%;
+        /* --- КАСТОМНЫЙ КУРСОР (ПК) --- */
+        .cursor-dot {
+            position: fixed; width: 8px; height: 8px; background: #fff; border-radius: 50%;
+            pointer-events: none; z-index: 10000; transform: translate(-50%, -50%);
+            mix-blend-mode: difference; transition: width 0.2s, height 0.2s;
+        }
+        .cursor-ring {
+            position: fixed; width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.3); border-radius: 50%;
             pointer-events: none; z-index: 9999; transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s, background 0.3s;
-            mix-blend-mode: difference;
+            transition: width 0.3s, height 0.3s, border-color 0.3s; transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
         }
-        .custom-cursor-follower {
-            position: fixed; width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.4); border-radius: 50%;
-            pointer-events: none; z-index: 9998; transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s, border-color 0.3s, background 0.3s;
-            transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+        .cursor-dot.hover { width: 12px; height: 12px; background: var(--primary); }
+        .cursor-ring.hover { width: 60px; height: 60px; border-color: var(--primary); background: rgba(124, 58, 237, 0.1); }
+
+        @media (max-width: 1024px) {
+            .cursor-dot, .cursor-ring { display: none !important; }
         }
-        .custom-cursor.hover { width: 60px; height: 60px; background: rgba(255,255,255,0.1); }
-        .custom-cursor-follower.hover { width: 80px; height: 80px; border-color: var(--primary); background: rgba(124, 58, 237, 0.1); }
 
-        /* --- ЧАСТИЦЫ --- */
-        #particleCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-
-        /* --- HEADER --- */
+        /* --- ХЕДЕР --- */
         header {
             position: fixed; top: 0; left: 0; right: 0; padding: 1.5rem 0; z-index: 100;
-            background: rgba(5, 5, 5, 0.5); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            background: rgba(5, 5, 5, 0.6); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
-            transform: translateY(-100%); animation: slideDown 1s 0.5s forwards cubic-bezier(0.16, 1, 0.3, 1);
         }
-        @keyframes slideDown { to { transform: translateY(0); } }
         .header-inner { max-width: 1400px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
         .logo {
             font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; letter-spacing: 0.1em;
-            background: linear-gradient(135deg, #fff, var(--text-muted)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-decoration: none; cursor: none;
+            background: linear-gradient(90deg, #fff, var(--text-muted)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-decoration: none; z-index: 10;
         }
-        nav { display: flex; gap: 3rem; }
+        nav { display: flex; gap: 2rem; }
         nav a {
             color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.05em;
-            text-transform: uppercase; transition: color 0.3s; cursor: none;
+            text-transform: uppercase; transition: color 0.3s; z-index: 10;
         }
-        nav a:hover { color: var(--text); }
+        nav a:hover { color: var(--primary); }
         @media (max-width: 768px) { nav { display: none; } }
 
-        /* --- БАЗОВАЯ СТРУКТУРА --- */
-        section { position: relative; z-index: 2; min-height: 100vh; display: flex; align-items: center; padding: 6rem 2rem; }
-        .container { max-width: 1400px; margin: 0 auto; width: 100%; }
-        h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
-        
-        /* --- HERO SECTION --- */
-        #hero { padding-top: 8rem; perspective: 1000px; }
-        .hero-scene { transform-style: preserve-3d; transition: transform 0.1s ease-out; }
+        /* --- НОВЫЙ HERO (СПЛИТ) --- */
+        #hero {
+            position: relative; z-index: 10; min-height: 100vh;
+            display: grid; grid-template-columns: 1fr 1fr; align-items: center;
+            max-width: 1400px; margin: 0 auto; padding: 0 2rem;
+        }
+        .hero-left { padding-right: 2rem; }
+        .hero-tag {
+            display: inline-block; padding: 0.5rem 1rem; border-radius: 50px; background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3); color: var(--primary); font-weight: 600; font-size: 0.85rem; margin-bottom: 2rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+        }
         .hero-title {
-            font-size: clamp(4rem, 15vw, 12rem); line-height: 0.9; margin-bottom: 2rem;
-            background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.4) 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-shadow: 0 20px 50px rgba(124, 58, 237, 0.2);
-            display: flex; flex-wrap: wrap;
+            font-family: 'Space Grotesk', sans-serif; font-size: clamp(3rem, 7vw, 7rem); font-weight: 700; line-height: 0.95;
+            margin-bottom: 1.5rem; letter-spacing: -0.03em;
         }
-        .hero-char {
-            display: inline-block; transform: translateY(120%) rotateX(-90deg); opacity: 0;
-            animation: charReveal 1s forwards cubic-bezier(0.16, 1, 0.3, 1);
-            transform-origin: bottom center;
-        }
-        @keyframes charReveal { to { transform: translateY(0) rotateX(0); opacity: 1; } }
-        .hero-subtitle {
-            font-size: clamp(1.1rem, 2vw, 1.5rem); color: var(--text-muted); max-width: 600px; margin-bottom: 3rem;
-            opacity: 0; animation: fadeIn 1s 0.8s forwards;
-        }
-        @keyframes fadeIn { to { opacity: 1; } }
+        .hero-title span { display: block; color: var(--primary); }
+        .hero-desc { font-size: 1.1rem; color: var(--text-muted); max-width: 450px; margin-bottom: 3rem; }
         
-        .hero-buttons { display: flex; gap: 1.5rem; flex-wrap: wrap; opacity: 0; animation: fadeIn 1s 1s forwards; }
-        
-        /* --- КНОПКИ С МАГНИТОМ --- */
+        /* Кнопки */
         .btn {
-            position: relative; padding: 1.2rem 2.5rem; border-radius: 50px; font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600;
-            text-decoration: none; color: var(--text); overflow: hidden; cursor: none; border: 1px solid var(--border);
-            background: var(--glass); backdrop-filter: blur(10px); transition: border-color 0.3s, transform 0.2s ease-out;
             display: inline-flex; align-items: center; justify-content: center;
+            padding: 1rem 2.5rem; border-radius: 50px; font-weight: 600; font-size: 1rem;
+            text-decoration: none; transition: all 0.3s ease; z-index: 10; position: relative; overflow: hidden;
+            cursor: pointer; border: none;
         }
-        .btn::before {
-            content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; background: var(--primary);
-            border-radius: 50%; transform: translate(-50%, -50%); transition: width 0.5s ease, height 0.5s ease; z-index: -1;
+        .btn-primary {
+            background: #fff; color: #000;
         }
-        .btn:hover::before { width: 300px; height: 300px; }
-        .btn:hover { border-color: transparent; color: #fff; }
-        .btn-primary { background: #fff; color: #000; border: none; }
-        .btn-primary::before { background: var(--primary); }
-        .btn-primary:hover { color: #fff; }
+        .btn-primary:hover { background: var(--primary); color: #fff; transform: translateY(-3px); box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4); }
+        .btn-outline {
+            background: transparent; color: #fff; border: 1px solid var(--border); margin-left: 1rem;
+        }
+        .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.05); }
 
-        /* --- MARQUEE (БЕГУЩАЯ СТРОКА) --- */
-        .marquee-container {
-            position: relative; z-index: 2; overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-            padding: 1.5rem 0; background: rgba(255,255,255,0.01); display: flex;
+        /* Пустое место справа для 3D-объекта */
+        .hero-right { height: 100vh; position: relative; }
+        .hero-right::after {
+            content: 'Взаимодействуй с 3D'; position: absolute; bottom: 10%; right: 0;
+            font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.2em;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+        @media (max-width: 1024px) {
+            #hero { grid-template-columns: 1fr; padding-top: 8rem; text-align: center; }
+            .hero-left { padding-right: 0; display: flex; flex-direction: column; align-items: center; }
+            .hero-desc { margin: 0 auto 2rem; }
+            .hero-right { height: 50vh; }
+            .btn-outline { margin-left: 0; margin-top: 1rem; }
+        }
+
+        /* --- БЕГУЩАЯ СТРОКА --- */
+        .marquee {
+            position: relative; z-index: 10; display: flex; overflow: hidden; white-space: nowrap;
+            border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+            padding: 1.5rem 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px);
         }
         .marquee-content {
-            display: flex; gap: 4rem; white-space: nowrap; font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700;
-            color: rgba(255,255,255,0.2); animation: marquee 20s linear infinite; padding-right: 4rem;
+            display: flex; animation: scroll 20s linear infinite;
+            font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700;
+            color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.2);
         }
-        .marquee-content span { color: var(--text); }
-        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        .marquee-content span { color: var(--primary); -webkit-text-stroke: 0; margin: 0 2rem; }
+        @keyframes scroll { 100% { transform: translateX(-50%); } }
 
-        /* --- ABOUT SECTION --- */
-        #about { border-bottom: 1px solid var(--border); }
-        .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
-        .stat-box {
-            background: var(--glass); border: 1px solid var(--border); padding: 2.5rem; border-radius: 24px;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; transform: translateY(40px);
+        /* --- СЕКЦИИ --- */
+        section { position: relative; z-index: 10; padding: 8rem 2rem; border-bottom: 1px solid var(--border); }
+        .container { max-width: 1400px; margin: 0 auto; }
+        h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 4rem); font-weight: 700; margin-bottom: 4rem; letter-spacing: -0.02em; }
+        
+        /* --- ПРОЕКТЫ (СПИСОК) --- */
+        .project-list { display: flex; flex-direction: column; }
+        .project-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 3rem 0; border-top: 1px solid var(--border); transition: all 0.4s ease;
+            text-decoration: none; color: #fff;
         }
-        .stat-box.visible { opacity: 1; transform: translateY(0); }
-        .stat-box:hover { background: rgba(124, 58, 237, 0.05); border-color: rgba(124, 58, 237, 0.3); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-        .stat-number {
-            font-size: 4rem; font-weight: 700; line-height: 1; margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .stat-label { color: var(--text-muted); font-size: 1rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+        .project-row:hover { background: rgba(255,255,255,0.02); padding-left: 2rem; padding-right: 2rem; }
+        .project-num { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; color: var(--primary); width: 50px; }
+        .project-name { font-size: 2.5rem; font-weight: 700; flex: 1; }
+        .project-type { font-size: 1rem; color: var(--text-muted); text-align: right; }
+        .project-arrow { margin-left: 2rem; opacity: 0; transform: translateX(-20px); transition: all 0.3s; }
+        .project-row:hover .project-arrow { opacity: 1; transform: translateX(0); }
 
-        /* --- 3D PROJECTS SECTION --- */
-        #projects { perspective: 1200px; }
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; transform-style: preserve-3d; }
-        .project-card {
-            background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
-            border: 1px solid var(--border); padding: 3rem; border-radius: 32px;
-            transition: transform 0.1s ease-out, border-color 0.3s, box-shadow 0.3s; transform-style: preserve-3d;
-            position: relative; overflow: hidden; opacity: 0; transform: translateY(40px); cursor: none;
+        @media (max-width: 768px) {
+            .project-name { font-size: 1.5rem; }
+            .project-type { display: none; }
         }
-        .project-card.visible { opacity: 1; transform: translateY(0); }
-        .project-card:hover { border-color: rgba(124, 58, 237, 0.4); box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(124, 58, 237, 0.1); }
-        .project-card > * { transform: translateZ(40px); pointer-events: none; }
-        .project-number { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; color: var(--primary); margin-bottom: 1.5rem; font-weight: 600; }
-        .project-title { font-size: 2rem; font-weight: 700; margin-bottom: 1rem; color: #fff; }
-        .project-desc { font-size: 1.05rem; color: var(--text-muted); line-height: 1.6; }
 
-        /* --- CONTACT SECTION --- */
-        #contact { text-align: center; border-top: 1px solid var(--border); }
-        .social-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 3rem; }
+        /* --- КОНТАКТЫ --- */
+        #contact { text-align: center; }
+        .social-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 3rem; }
         .social-btn {
-            display: inline-flex; align-items: center; gap: 0.8rem; padding: 1.2rem 2.5rem;
-            background: var(--glass); border: 1px solid var(--border); border-radius: 50px;
-            color: var(--text); text-decoration: none; font-weight: 600; font-size: 1rem; cursor: none;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; transform: translateY(20px);
+            display: inline-flex; align-items: center; gap: 0.8rem; padding: 1.2rem 2rem;
+            border: 1px solid var(--border); border-radius: 12px; color: #fff; text-decoration: none;
+            font-weight: 600; transition: all 0.3s; background: var(--glass); cursor: pointer;
         }
-        .social-btn.visible { opacity: 1; transform: translateY(0); }
-        .social-btn:hover { background: #fff; color: #000; transform: translateY(-5px); box-shadow: 0 15px 30px rgba(255,255,255,0.1); }
-        .social-btn svg { width: 22px; height: 22px; fill: currentColor; }
+        .social-btn:hover { background: rgba(124, 58, 237, 0.1); border-color: var(--primary); transform: translateY(-5px); }
+        .social-btn svg { width: 24px; height: 24px; fill: currentColor; }
 
         /* --- FOOTER --- */
-        footer { position: relative; z-index: 2; padding: 4rem 2rem; border-top: 1px solid var(--border); text-align: center; background: #000; }
-        .footer-warning {
-            color: #f59e0b; font-size: 0.9rem; font-weight: 500; max-width: 600px; margin: 1.5rem auto;
-            padding: 1rem; border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 12px; background: rgba(245, 158, 11, 0.05);
-        }
-        .footer-links { display: flex; gap: 2rem; justify-content: center; margin-top: 2rem; }
-        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; cursor: none; }
-        .footer-links a:hover { color: #fff; }
-
+        footer { position: relative; z-index: 10; padding: 4rem 2rem; background: #000; text-align: center; }
+        .footer-warning { color: #f59e0b; font-size: 0.9rem; max-width: 600px; margin: 0 auto 2rem; padding: 1rem; border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 12px; background: rgba(245, 158, 11, 0.05); }
+        
         /* --- TOAST --- */
         .toast {
-            position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(100px);
-            background: #fff; color: #000; padding: 1rem 2rem; border-radius: 50px; font-weight: 600; z-index: 10000;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 10px 30px rgba(255,255,255,0.2);
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: var(--primary); color: #fff; padding: 1rem 2rem; border-radius: 50px;
+            font-weight: 600; z-index: 10000; transition: transform 0.3s;
         }
         .toast.show { transform: translateX(-50%) translateY(0); }
     </style>
 </head>
 <body>
 
+    <!-- 3D ФОН -->
+    <canvas id="webgl-canvas"></canvas>
+
     <!-- Курсоры -->
-    <div class="custom-cursor" id="cursor"></div>
-    <div class="custom-cursor-follower" id="cursorFollower"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
 
-    <!-- Фон -->
-    <canvas id="particleCanvas"></canvas>
-
-    <!-- Шапка -->
-    <header id="header">
+    <!-- ХЕДЕР -->
+    <header>
         <div class="header-inner">
             <a href="#" class="logo">MELLFOR</a>
             <nav>
@@ -226,93 +227,107 @@
         </div>
     </header>
 
-    <!-- Главная -->
+    <!-- HERO -->
     <section id="hero">
-        <div class="container">
-            <div class="hero-scene" id="heroScene">
-                <h1 class="hero-title" id="heroTitle">MELLFOR</h1>
-                <p class="hero-subtitle">Основатель 260+ проектов. 18 лет. Строю будущее в Telegram-экосистеме, крипте и финтехе.</p>
-                <div class="hero-buttons">
-                    <a href="#projects" class="btn btn-primary magnetic">Смотреть проекты</a>
-                    <a href="https://t.me/mellfor" target="_blank" rel="noopener" class="btn magnetic">Связаться</a>
-                </div>
+        <div class="hero-left">
+            <div class="hero-tag">Основатель 260+ проектов</div>
+            <h1 class="hero-title">
+                Я — Даня <span>MellFor</span>
+            </h1>
+            <p class="hero-desc">18 лет. Строю экосистемы в Telegram, криптовалютах и финтехе. Создаю проекты, которые меняют рынок.</p>
+            <div>
+                <a href="#projects" class="btn btn-primary">Мои работы</a>
+                <a href="https://t.me/mellfor" target="_blank" rel="noopener" class="btn btn-outline">Связаться</a>
             </div>
+        </div>
+        <div class="hero-right">
+            <!-- 3D Объект рендерится на фоне -->
         </div>
     </section>
 
-    <!-- Бегущая строка -->
-    <div class="marquee-container">
+    <!-- БЕГУЩАЯ СТРОКА -->
+    <div class="marquee">
         <div class="marquee-content">
-            <span>MELLFOR</span> • 260+ PROJECTS • <span>NCHAT</span> • NM EXCHANGE • <span>BBSMM</span> • MCASH • <span>BES TEAM</span> • 
-        </div>
-        <div class="marquee-content">
-            <span>MELLFOR</span> • 260+ PROJECTS • <span>NCHAT</span> • NM EXCHANGE • <span>BBSMM</span> • MCASH • <span>BES TEAM</span> • 
+            <div>MELLFOR <span>•</span> 260+ PROJECTS <span>•</span> NCHAT <span>•</span> NM EXCHANGE <span>•</span> BBSMM <span>•</span> MCASH <span>•</span> BES TEAM <span>•</span></div>
+            <div>MELLFOR <span>•</span> 260+ PROJECTS <span>•</span> NCHAT <span>•</span> NM EXCHANGE <span>•</span> BBSMM <span>•</span> MCASH <span>•</span> BES TEAM <span>•</span></div>
         </div>
     </div>
 
-    <!-- Обо мне -->
+    <!-- ОБО МНЕ -->
     <section id="about">
         <div class="container">
-            <h2 style="font-size: 3rem; margin-bottom: 3rem;">Обо мне</h2>
-            <div class="about-grid">
-                <div class="stat-box reveal"><div class="stat-number">260+</div><div class="stat-label">Проектов</div></div>
-                <div class="stat-box reveal"><div class="stat-number">18</div><div class="stat-label">Лет</div></div>
-                <div class="stat-box reveal"><div class="stat-number">5+</div><div class="stat-label">Экосистем</div></div>
-                <div class="stat-box reveal"><div class="stat-number">∞</div><div class="stat-label">Идей</div></div>
+            <h2>Обо мне</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
+                <div style="padding: 2rem; border: 1px solid var(--border); border-radius: 16px; background: var(--glass);">
+                    <div style="font-size: 3rem; font-weight: 700; color: var(--primary);">260+</div>
+                    <div style="color: var(--text-muted);">Запущенных проектов</div>
+                </div>
+                <div style="padding: 2rem; border: 1px solid var(--border); border-radius: 16px; background: var(--glass);">
+                    <div style="font-size: 3rem; font-weight: 700; color: var(--secondary);">18</div>
+                    <div style="color: var(--text-muted);">Лет от роду</div>
+                </div>
+                <div style="padding: 2rem; border: 1px solid var(--border); border-radius: 16px; background: var(--glass);">
+                    <div style="font-size: 3rem; font-weight: 700; color: var(--primary);">5+</div>
+                    <div style="color: var(--text-muted);">Крупных экосистем</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Проекты -->
+    <!-- ПРОЕКТЫ -->
     <section id="projects">
         <div class="container">
-            <h2 style="font-size: 3rem; margin-bottom: 3rem;">Selected Works</h2>
-            <div class="projects-grid">
-                <div class="project-card tilt">
-                    <div class="project-number">01</div>
-                    <div class="project-title">NCHAT</div>
-                    <div class="project-desc">Telegram-чат нового поколения с уникальными механиками и комьюнити.</div>
-                </div>
-                <div class="project-card tilt">
-                    <div class="project-number">02</div>
-                    <div class="project-title">NM EXCHANGE</div>
-                    <div class="project-desc">Обменник криптовалют с быстрыми транзакциями и надежной защитой.</div>
-                </div>
-                <div class="project-card tilt">
-                    <div class="project-number">03</div>
-                    <div class="project-title">BBSMM</div>
-                    <div class="project-desc">SMM-панель и сервис продвижения для роста аудитории в соцсетях.</div>
-                </div>
-                <div class="project-card tilt">
-                    <div class="project-number">04</div>
-                    <div class="project-title">MCASH</div>
-                    <div class="project-desc">Финансовая платформа и кэш-сервис для быстрых переводов.</div>
-                </div>
-                <div class="project-card tilt">
-                    <div class="project-number">05</div>
-                    <div class="project-title">BES TEAM</div>
-                    <div class="project-desc">Команда профессионалов и закрытое комьюнити для совместного роста.</div>
-                </div>
+            <h2>Selected Works</h2>
+            <div class="project-list">
+                <a href="#" class="project-row">
+                    <div class="project-num">01</div>
+                    <div class="project-name">NCHAT</div>
+                    <div class="project-type">Telegram-экосистема</div>
+                    <svg class="project-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="#" class="project-row">
+                    <div class="project-num">02</div>
+                    <div class="project-name">NM EXCHANGE</div>
+                    <div class="project-type">Крипто-обменник</div>
+                    <svg class="project-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="#" class="project-row">
+                    <div class="project-num">03</div>
+                    <div class="project-name">BBSMM</div>
+                    <div class="project-type">SMM-панель</div>
+                    <svg class="project-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="#" class="project-row">
+                    <div class="project-num">04</div>
+                    <div class="project-name">MCASH</div>
+                    <div class="project-type">Финтех-сервис</div>
+                    <svg class="project-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="#" class="project-row">
+                    <div class="project-num">05</div>
+                    <div class="project-name">BES TEAM</div>
+                    <div class="project-type">Комьюнити</div>
+                    <svg class="project-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Контакты -->
+    <!-- КОНТАКТЫ -->
     <section id="contact">
         <div class="container">
-            <h2 style="font-size: 4rem; margin-bottom: 1rem;">На связи</h2>
-            <p style="color: var(--text-muted); font-size: 1.2rem; max-width: 600px; margin: 0 auto;">Открыт к коллаборациям, инвестициям и новым проектам. Пиши в официальные аккаунты.</p>
-            
-            <div class="social-buttons">
-                <a href="https://t.me/mellfor" target="_blank" rel="noopener" class="social-btn magnetic reveal">
+            <h2>На связи</h2>
+            <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto;">Открыт к коллаборациям. Пиши только в официальные аккаунты.</p>
+            <div class="social-links">
+                <a href="https://t.me/mellfor" target="_blank" rel="noopener" class="social-btn">
                     <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-                    Telegram
+                    Telegram @mellfor
                 </a>
-                <a href="https://www.tiktok.com/@mellfortg" target="_blank" rel="noopener" class="social-btn magnetic reveal">
+                <a href="https://www.tiktok.com/@mellfortg" target="_blank" rel="noopener" class="social-btn">
                     <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
-                    TikTok
+                    TikTok @mellfortg
                 </a>
-                <button class="social-btn magnetic reveal" id="copyBtn">
+                <button id="copyBtn" class="social-btn">
                     <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: currentColor;"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
                     Копировать @mellfor
                 </button>
@@ -322,285 +337,172 @@
 
     <div class="toast" id="toast">Скопировано!</div>
 
-    <!-- Подвал -->
+    <!-- FOOTER -->
     <footer>
         <div class="container">
-            <div class="logo" style="margin-bottom: 1rem; font-size: 2rem;">MELLFOR</div>
-            <div class="footer-warning">⚠️ Внимание: Официальные аккаунты — только те, что указаны выше (Telegram @mellfor, TikTok @mellfortg). Остальные — фейки!</div>
-            <div class="footer-links">
-                <a href="https://t.me/mellfor" target="_blank" rel="noopener">Telegram</a>
-                <a href="https://www.tiktok.com/@mellfortg" target="_blank" rel="noopener">TikTok</a>
-            </div>
-            <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 2rem;">© 2025 MellFor. Все права защищены.</p>
+            <div class="footer-warning">⚠️ Официальные аккаунты — только Telegram @mellfor и TikTok @mellfortg. Остальные — фейки!</div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">© 2026 MellFor. Все права защищены.</p>
         </div>
     </footer>
 
-    <script>
-    // ==========================================
-    // 1. АНИМАЦИЯ ЗАГОЛОВКА (Разбиваем на буквы)
-    // ==========================================
-    document.addEventListener('DOMContentLoaded', () => {
-        const title = document.getElementById('heroTitle');
-        if (title) {
-            const text = title.innerText;
-            title.innerHTML = '';
-            text.split('').forEach((char, index) => {
-                const span = document.createElement('span');
-                span.textContent = char;
-                span.className = 'hero-char';
-                span.style.animationDelay = `${index * 0.08}s`;
-                title.appendChild(span);
+    <!-- JAVASCRIPT -->
+    <script type="module">
+        import * as THREE from 'three';
+
+        // ==========================================
+        // 1. THREE.JS (3D ИНТЕРАКТИВНЫЙ ОБЪЕКТ)
+        // ==========================================
+        const canvas = document.getElementById('webgl-canvas');
+        
+        try {
+            // Сцена
+            const scene = new THREE.Scene();
+            // Туман для глубины
+            scene.fog = new THREE.FogExp2(0x050505, 0.002);
+
+            // Камера
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 30;
+
+            // Рендерер
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // --- 3D ОБЪЕКТ (Торус из точек) ---
+            const geometry = new THREE.TorusKnotGeometry(10, 3, 200, 32);
+            const material = new THREE.PointsMaterial({
+                color: 0x7C3AED,
+                size: 0.15,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
             });
-        }
-    });
+            const torusKnot = new THREE.Points(geometry, material);
+            scene.add(torusKnot);
 
-    // ==========================================
-    // 2. КАСТОМНЫЙ КУРСОР И МАГНИТНЫЕ КНОПКИ
-    // ==========================================
-    const cursor = document.getElementById('cursor');
-    const follower = document.getElementById('cursorFollower');
-    const links = document.querySelectorAll('a, button, .project-card');
+            // Второй объект (внутреннее кольцо)
+            const geometry2 = new THREE.TorusGeometry(15, 0.1, 16, 100);
+            const material2 = new THREE.MeshBasicMaterial({ color: 0x06B6D4, transparent: true, opacity: 0.3 });
+            const torus = new THREE.Mesh(geometry2, material2);
+            torus.rotation.x = Math.PI / 2;
+            scene.add(torus);
 
-    // Проверяем, что у пользователя есть мышка (не телефон)
-    if (window.matchMedia("(pointer: fine)").matches && cursor && follower) {
-        let mouseX = 0, mouseY = 0;
-        let followerX = 0, followerY = 0;
+            // --- ИНТЕРАКТИВНОСТЬ (МЫШЬ) ---
+            let mouseX = 0;
+            let mouseY = 0;
+            let targetX = 0;
+            let targetY = 0;
 
-        // Отслеживаем движение мыши
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            
-            // Точка двигается моментально
-            cursor.style.left = mouseX + 'px';
-            cursor.style.top = mouseY + 'px';
-        });
+            const windowHalfX = window.innerWidth / 2;
+            const windowHalfY = window.innerHeight / 2;
 
-        // Круг (follower) догоняет с задержкой (эффект плавности)
-        function animateFollower() {
-            followerX += (mouseX - followerX) * 0.15;
-            followerY += (mouseY - followerY) * 0.15;
-            follower.style.left = followerX + 'px';
-            follower.style.top = followerY + 'px';
-            requestAnimationFrame(animateFollower);
-        }
-        animateFollower();
-
-        // Увеличение курсора при наведении на ссылки/карточки
-        links.forEach(link => {
-            link.addEventListener('mouseenter', () => {
-                cursor.classList.add('hover');
-                follower.classList.add('hover');
+            document.addEventListener('mousemove', (event) => {
+                mouseX = (event.clientX - windowHalfX);
+                mouseY = (event.clientY - windowHalfY);
             });
-            link.addEventListener('mouseleave', () => {
-                cursor.classList.remove('hover');
-                follower.classList.remove('hover');
-            });
-        });
 
-        // МАГНИТНЫЙ ЭФФЕКТ ДЛЯ КНОПОК
-        const magnets = document.querySelectorAll('.magnetic');
-        magnets.forEach(magnet => {
-            magnet.addEventListener('mousemove', (e) => {
-                const rect = magnet.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                // Кнопка тянется к курсору на 30% от расстояния
-                magnet.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-            });
-            magnet.addEventListener('mouseleave', () => {
-                magnet.style.transform = `translate(0px, 0px)`;
-            });
-        });
-    }
+            // --- АНИМАЦИЯ ---
+            const clock = new THREE.Clock();
 
-    // ==========================================
-    // 3. 3D ПАРАЛЛАКС ГЛАВНОГО ЭКРАНА
-    // ==========================================
-    const heroScene = document.getElementById('heroScene');
-    if (heroScene && window.innerWidth > 768) {
-        document.addEventListener('mousemove', (e) => {
-            const xAxis = (window.innerWidth / 2 - e.pageX) / 50;
-            const yAxis = (window.innerHeight / 2 - e.pageY) / 50;
-            heroScene.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-        });
-    }
+            function animate3D() {
+                const elapsedTime = clock.getElapsedTime();
 
-    // ==========================================
-    // 4. 3D ТИЛТ ДЛЯ КАРТОЧЕК ПРОЕКТОВ
-    // ==========================================
-    const cards = document.querySelectorAll('.tilt');
-    cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const rotateX = ((y - centerY) / centerY) * -15;
-            const rotateY = ((x - centerX) / centerX) * 15;
+                // Плавное следование за мышкой
+                targetX = mouseX * 0.001;
+                targetY = mouseY * 0.001;
 
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-        });
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
-        });
-    });
+                // Вращение объектов
+                torusKnot.rotation.y += 0.005;
+                torusKnot.rotation.x += 0.002;
+                torus.rotation.z += 0.01;
 
-    // ==========================================
-    // 5. ЧАСТИЦЫ НА ФОНЕ (CANVAS)
-    // ==========================================
-    const canvas = document.getElementById('particleCanvas');
-    if (canvas) {
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        let mouse = { x: null, y: null, radius: 150 };
+                // Наклон сцены за мышкой
+                scene.rotation.y += 0.05 * (targetX - scene.rotation.y);
+                scene.rotation.x += 0.05 * (targetY - scene.rotation.x);
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
+                // Пульсация размера точек
+                material.size = 0.15 + Math.sin(elapsedTime * 2) * 0.05;
 
-        window.addEventListener('mousemove', (e) => { 
-            mouse.x = e.clientX; 
-            mouse.y = e.clientY; 
-        });
-        window.addEventListener('touchmove', (e) => {
-            if (e.touches.length > 0) { 
-                mouse.x = e.touches[0].clientX; 
-                mouse.y = e.touches[0].clientY; 
+                renderer.render(scene, camera);
+                requestAnimationFrame(animate3D);
             }
-        });
-        window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+            animate3D();
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.radius = Math.random() * 2 + 1;
-                // Смешиваем фиолетовый и голубой
-                this.color = Math.random() > 0.7 ? '6, 182, 212' : '124, 58, 237';
-            }
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                
-                // Отталкивание от мыши
-                if (mouse.x != null) {
-                    const dx = this.x - mouse.x;
-                    const dy = this.y - mouse.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < mouse.radius) {
-                        const force = (mouse.radius - dist) / mouse.radius;
-                        this.x += (dx / dist) * force * 4;
-                        this.y += (dy / dist) * force * 4;
-                    }
-                }
-                
-                // Отскок от стен
-                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-            }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${this.color}, 0.6)`;
-                ctx.fill();
-            }
+            // Ресайз
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+        } catch (e) {
+            console.log("WebGL не поддерживается или Three.js не загрузился. Сайт работает в 2D.");
+            canvas.style.display = 'none';
         }
 
-        function initParticles() {
-            particles = [];
-            // На телефонах меньше частиц, чтобы не лагало
-            const count = window.innerWidth < 768 ? 30 : 70;
-            for (let i = 0; i < count; i++) {
-                particles.push(new Particle());
-            }
-        }
-        initParticles();
-        window.addEventListener('resize', initParticles);
+        // ==========================================
+        // 2. КАСТОМНЫЙ КУРСОР (ПК)
+        // ==========================================
+        const cursorDot = document.getElementById('cursorDot');
+        const cursorRing = document.getElementById('cursorRing');
+        const links = document.querySelectorAll('a, button');
 
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            particles.forEach(p => { 
-                p.update(); 
-                p.draw(); 
+        if (window.matchMedia("(pointer: fine)").matches && cursorDot && cursorRing) {
+            let mouseX = 0, mouseY = 0;
+            let ringX = 0, ringY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                cursorDot.style.left = mouseX + 'px';
+                cursorDot.style.top = mouseY + 'px';
             });
 
-            // Соединяющие линии
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (dist < 150) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = `rgba(124, 58, 237, ${0.15 * (1 - dist / 150)})`;
-                        ctx.lineWidth = 1;
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
+            function animateCursor() {
+                ringX += (mouseX - ringX) * 0.15;
+                ringY += (mouseY - ringY) * 0.15;
+                cursorRing.style.left = ringX + 'px';
+                cursorRing.style.top = ringY + 'px';
+                requestAnimationFrame(animateCursor);
             }
-            requestAnimationFrame(animate);
-        }
-        animate();
-    }
+            animateCursor();
 
-    // ==========================================
-    // 6. ПОЯВЛЕНИЕ БЛОКОВ ПРИ СКРОЛЛЕ
-    // ==========================================
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    document.querySelectorAll('.reveal, .stat-box, .project-card, .social-btn').forEach(el => {
-        observer.observe(el);
-    });
-
-    // ==========================================
-    // 7. КОПИРОВАНИЕ ТЕКСТА (@mellfor)
-    // ==========================================
-    const copyBtn = document.getElementById('copyBtn');
-    const toast = document.getElementById('toast');
-    
-    if (copyBtn && toast) {
-        copyBtn.addEventListener('click', () => {
-            navigator.clipboard.writeText('@mellfor').then(() => {
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 2500);
-            }).catch(() => {
-                // Фолбэк для старых браузеров
-                const el = document.createElement('textarea');
-                el.value = '@mellfor';
-                document.body.appendChild(el);
-                el.select();
-                document.execCommand('copy');
-                document.body.removeChild(el);
-                
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 2500);
+            links.forEach(link => {
+                link.addEventListener('mouseenter', () => {
+                    cursorDot.classList.add('hover');
+                    cursorRing.classList.add('hover');
+                });
+                link.addEventListener('mouseleave', () => {
+                    cursorDot.classList.remove('hover');
+                    cursorRing.classList.remove('hover');
+                });
             });
-        });
-    }
-</script>
+        }
 
+        // ==========================================
+        // 3. КОПИРОВАНИЕ @mellfor
+        // ==========================================
+        const copyBtn = document.getElementById('copyBtn');
+        const toast = document.getElementById('toast');
+        
+        if (copyBtn && toast) {
+            copyBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText('@mellfor').then(() => {
+                    toast.classList.add('show');
+                    setTimeout(() => toast.classList.remove('show'), 2500);
+                }).catch(() => {
+                    const el = document.createElement('textarea');
+                    el.value = '@mellfor';
+                    document.body.appendChild(el);
+                    el.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(el);
+                    toast.classList.add('show');
+                    setTimeout(() => toast.classList.remove('show'), 2500);
+                });
+            });
+        }
+    </script>
 </body>
-    </html>
+        </html>
