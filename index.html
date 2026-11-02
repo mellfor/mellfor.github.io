@@ -111,10 +111,13 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 .project-card-hint{font-family:var(--font-mono);font-size:11px;color:var(--accent);letter-spacing:.15em;text-transform:uppercase;opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s;margin-top:16px}
 .project-card:hover .project-card-hint{opacity:1;transform:translateY(0)}
 
-/* NCHAT CARD CUSTOM */
+/* NCHAT CARD CUSTOM (Голограмма) */
 .nchat-bg{background:radial-gradient(circle at 50% 50%,#00d4ff 0%,#004466 40%,#000 100%)!important;opacity:.4!important}
-.nchat-3d-text{position:absolute;top:45%;left:50%;transform:translate(-50%,-50%) perspective(600px) rotateX(25deg) rotateY(-15deg);font-size:4.5rem;font-weight:700;color:transparent;-webkit-text-stroke:1.5px rgba(0,212,255,0.8);text-shadow:0 1px 0 #00aacc,0 2px 0 #0088aa,0 3px 0 #006688,0 4px 0 #004466,0 5px 0 #002233,0 6px 15px rgba(0,212,255,0.6);letter-spacing:0.15em;z-index:1;pointer-events:none;animation:floatText 4s ease-in-out infinite alternate}
-@keyframes floatText{0%{transform:translate(-50%,-50%) perspective(600px) rotateX(25deg) rotateY(-15deg) translateZ(0)}100%{transform:translate(-50%,-50%) perspective(600px) rotateX(25deg) rotateY(-15deg) translateZ(30px)}}
+.nchat-holo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:120px;height:120px;border:2px solid rgba(0,212,255,0.4);border-radius:20px;z-index:1;display:flex;align-items:center;justify-content:center;box-shadow:0 0 30px rgba(0,212,255,0.2) inset;animation:floatHolo 4s infinite alternate}
+.nchat-holo::before{content:'🔒';font-size:40px;filter:drop-shadow(0 0 10px #00d4ff)}
+.nchat-holo::after{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:#00d4ff;box-shadow:0 0 10px #00d4ff;animation:scan 3s linear infinite}
+@keyframes floatHolo{0%{transform:translate(-50%,-50%) translateY(0)}100%{transform:translate(-50%,-50%) translateY(-10px)}}
+@keyframes scan{0%{top:0}100%{top:100%}}
 
 /* NM EXCHANGE CARD CUSTOM */
 .exchange-chart{position:absolute;bottom:15%;left:10%;right:10%;height:35%;display:flex;align-items:flex-end;gap:6px;z-index:1;opacity:0.5;pointer-events:none}
@@ -124,8 +127,9 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 .candle:nth-child(odd){animation-delay:0.5s;height:60%}
 .candle:nth-child(even){animation-delay:1s;height:40%}
 .candle:nth-child(3n){height:80%}
-.candle:nth-child(5n){height:90%}
 @keyframes candleGrow{0%{transform:scaleY(0.8)}100%{transform:scaleY(1.1)}}
+.exchange-arrow{position:absolute;top:30%;right:15%;width:60px;height:60px;border-top:6px solid #00ffaa;border-right:6px solid #00ffaa;transform:rotate(-45deg);filter:drop-shadow(0 0 15px #00ffaa);z-index:1;animation:arrowFloat 2s infinite alternate}
+@keyframes arrowFloat{0%{transform:rotate(-45deg) translate(0,0)}100%{transform:rotate(-45deg) translate(10px,-10px)}}
 
 /* MWIN CARD CUSTOM */
 .mwin-bg{background:radial-gradient(circle at 50% 50%,#ff0055 0%,#330011 60%,#000 100%)!important;opacity:.6!important}
@@ -136,7 +140,7 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 @keyframes pulsePointer{0%{transform:translateX(-50%) scale(1)}100%{transform:translateX(-50%) scale(1.2)}}
 
 @media(max-width:900px){.projects-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:600px){.projects-grid{grid-template-columns:1fr}.project-card{aspect-ratio:4/5}.nchat-3d-text{font-size:3.5rem}}
+@media(max-width:600px){.projects-grid{grid-template-columns:1fr}.project-card{aspect-ratio:4/5}}
 
 .projects-more{display:flex;justify-content:space-between;align-items:center;margin-top:48px;font-family:var(--font-mono);font-size:13px;color:var(--muted)}
 .projects-more a{color:var(--accent)}
@@ -191,7 +195,39 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 .po-scene-label{position:absolute;bottom:32px;right:32px;z-index:8;font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);pointer-events:none;opacity:0;transition:opacity .8s var(--ease) 1s}
 .project-overlay.active .po-scene-label{opacity:1}
 
-@media(max-width:768px){.project-overlay{padding:0}.po-close{top:20px;right:20px;width:48px;height:48px;font-size:18px}.po-content{padding:100px 24px 40px;justify-content:flex-end;background:linear-gradient(to top,rgba(0,0,0,.95) 40%,transparent 90%)}.story-line{font-size:14px}.po-vignette{background:radial-gradient(circle at 50% 30%,transparent 10%,rgba(0,0,0,.7) 80%)}.po-title{font-size:clamp(32px,10vw,64px)}}
+/* NCHAT CHAT UI */
+#nchat-ui{position:absolute;inset:0;z-index:10;display:none;flex-direction:column;justify-content:flex-end;padding:0 50px 50px;pointer-events:none;background:radial-gradient(circle at 70% 30%,rgba(0,212,255,0.05),transparent 50%)}
+#nchat-ui.active{display:flex}
+.chat-window{width:100%;max-width:600px;margin:0 auto;background:rgba(0,20,30,0.8);border:1px solid rgba(0,212,255,0.3);border-radius:20px;padding:24px;backdrop-filter:blur(20px);pointer-events:auto;box-shadow:0 20px 50px rgba(0,0,0,0.5);display:flex;flex-direction:column;gap:16px}
+.chat-msg{background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.2);padding:12px 20px;border-radius:12px;border-bottom-left-radius:2px;align-self:flex-start;max-width:80%;font-size:15px;color:#fff;animation:msgIn 0.4s ease forwards}
+.chat-msg.user{background:rgba(124,92,255,0.2);border-color:rgba(124,92,255,0.4);border-radius:12px;border-bottom-right-radius:2px;align-self:flex-end}
+.chat-options{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.chat-opt{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:14px 20px;border-radius:12px;cursor:none;text-align:left;font-family:var(--font-sans);font-size:14px;transition:all 0.2s}
+.chat-opt:hover{background:rgba(0,212,255,0.2);border-color:#00d4ff;transform:translateX(5px)}
+@keyframes msgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* EXCHANGE GAME UI */
+#exchange-ui{position:absolute;inset:0;z-index:10;display:none;flex-direction:column;justify-content:center;align-items:center;pointer-events:none;padding:20px}
+#exchange-ui.active{display:flex}
+.exchange-panel{width:100%;max-width:800px;background:rgba(5,20,15,0.85);border:1px solid rgba(0,255,170,0.3);border-radius:24px;padding:40px;backdrop-filter:blur(20px);pointer-events:auto;display:flex;flex-direction:column;gap:30px;box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+.ex-top{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:20px}
+.ex-balance{display:flex;flex-direction:column;gap:5px}
+.ex-label{font-family:var(--font-mono);font-size:12px;color:#888;text-transform:uppercase;letter-spacing:0.1em}
+.ex-val{font-size:32px;font-weight:700;color:#00ffaa;text-shadow:0 0 20px rgba(0,255,170,0.4)}
+.ex-price{text-align:right}
+.ex-chart-container{height:200px;width:100%;border-radius:12px;background:rgba(0,0,0,0.4);position:relative;overflow:hidden;border:1px solid rgba(0,255,170,0.1)}
+.ex-chart-svg{width:100%;height:100%;display:block}
+.ex-actions{display:flex;gap:20px}
+.ex-btn{flex:1;padding:20px;border-radius:12px;border:none;font-family:var(--font-mono);font-size:16px;font-weight:700;cursor:none;transition:all 0.3s;letter-spacing:0.1em}
+.ex-btn.buy{background:rgba(0,255,170,0.15);color:#00ffaa;border:1px solid #00ffaa}
+.ex-btn.buy:hover{background:#00ffaa;color:#000;box-shadow:0 0 30px rgba(0,255,170,0.5)}
+.ex-btn.sell{background:rgba(255,92,138,0.15);color:#ff5c8a;border:1px solid #ff5c8a}
+.ex-btn.sell:hover{background:#ff5c8a;color:#fff;box-shadow:0 0 30px rgba(255,92,138,0.5)}
+.ex-btn:disabled{opacity:0.5;pointer-events:none}
+
+@media(max-width:768px){.project-overlay{padding:0}.po-close{top:20px;right:20px;width:48px;height:48px;font-size:18px}.po-content{padding:100px 24px 40px;justify-content:flex-end;background:linear-gradient(to top,rgba(0,0,0,.95) 40%,transparent 90%)}.story-line{font-size:14px}.po-vignette{background:radial-gradient(circle at 50% 30%,transparent 10%,rgba(0,0,0,.7) 80%)}.po-title{font-size:clamp(32px,10vw,64px)}
+#nchat-ui{padding:0 10px 20px}.chat-window{padding:16px}.chat-msg{font-size:13px;padding:10px 14px}.chat-opt{font-size:13px;padding:10px 14px}
+#exchange-ui{padding:10px}.exchange-panel{padding:20px;gap:20px}.ex-val{font-size:24px}.ex-btn{padding:15px;font-size:14px}.ex-chart-container{height:150px}}
 </style>
 </head>
 <body>
@@ -274,13 +310,13 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
   <div class="projects-grid">
     <button class="project-card" data-project="1">
       <div class="project-card-bg nchat-bg"></div>
-      <div class="nchat-3d-text">NCHAT</div>
+      <div class="nchat-holo"></div>
       <div class="project-card-content">
         <div class="project-card-num">01 / 03</div>
         <div>
           <h3 class="project-card-title">NCHAT</h3>
           <p class="project-card-desc" data-ru="Мессенджер будущего" data-en="Messenger of the future">Мессенджер будущего</p>
-          <div class="project-card-hint" data-ru="Совершить прыжок →" data-en="Jump in →">Совершить прыжок →</div>
+          <div class="project-card-hint" data-ru="Войти в систему →" data-en="Enter system →">Войти в систему →</div>
         </div>
       </div>
     </button>
@@ -290,12 +326,13 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
       <div class="exchange-chart">
         <div class="candle red"></div><div class="candle"></div><div class="candle red"></div><div class="candle"></div><div class="candle red"></div><div class="candle"></div><div class="candle red"></div><div class="candle"></div><div class="candle red"></div>
       </div>
+      <div class="exchange-arrow"></div>
       <div class="project-card-content">
         <div class="project-card-num">02 / 03</div>
         <div>
           <h3 class="project-card-title">NM EXCHANGE</h3>
           <p class="project-card-desc" data-ru="Первая биржа трафика" data-en="World's first traffic exchange">Первая биржа трафика</p>
-          <div class="project-card-hint" data-ru="Войти в сеть →" data-en="Enter network →">Войти в сеть →</div>
+          <div class="project-card-hint" data-ru="Начать торговлю →" data-en="Start trading →">Начать торговлю →</div>
         </div>
       </div>
     </button>
@@ -348,14 +385,45 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
   <div class="po-content">
     <div class="po-num" id="poNum"></div>
     <h2 class="po-title" id="poTitle"></h2>
-    
     <div class="story-container" id="poStory"></div>
-    
     <div class="po-meta" id="poMeta"></div>
     <div class="po-cta">
       <a href="https://t.me/mellfor" target="_blank" class="btn btn-primary"><span data-ru="Обсудить проект" data-en="Discuss project">Обсудить проект</span> ↗</a>
     </div>
   </div>
+  
+  <!-- UI для NCHAT -->
+  <div id="nchat-ui">
+    <div class="chat-window" id="chatWindow">
+      <!-- Сообщения добавляются через JS -->
+    </div>
+  </div>
+
+  <!-- UI для NM EXCHANGE -->
+  <div id="exchange-ui">
+    <div class="exchange-panel">
+      <div class="ex-top">
+        <div class="ex-balance">
+          <span class="ex-label" data-ru="Твой баланс" data-en="Your balance">Твой баланс</span>
+          <span class="ex-val" id="exBalance">1000 TRC</span>
+        </div>
+        <div class="ex-price">
+          <span class="ex-label" data-ru="Цена трафика" data-en="Traffic price">Цена трафика</span>
+          <span class="ex-val" id="exPrice" style="color:#fff;text-shadow:none;">$50.00</span>
+        </div>
+      </div>
+      <div class="ex-chart-container">
+        <svg class="ex-chart-svg" id="exChart" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <polyline id="exLine" fill="none" stroke="#00ffaa" stroke-width="2" points=""/>
+        </svg>
+      </div>
+      <div class="ex-actions">
+        <button class="ex-btn buy" id="btnBuy" data-ru="КУПИТЬ ТРАФИК" data-en="BUY TRAFFIC">КУПИТЬ ТРАФИК</button>
+        <button class="ex-btn sell" id="btnSell" data-ru="ПРОДАТЬ ТРАФИК" data-en="SELL TRAFFIC">ПРОДАТЬ ТРАФИК</button>
+      </div>
+    </div>
+  </div>
+
   <div class="po-scene-label" id="poSceneLabel">drag to explore</div>
 </div>
 
@@ -365,7 +433,7 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 <script>
 // ============ AUDIO (Выключено по умолчанию) ============
 const AudioCtx = window.AudioContext || window.webkitAudioContext;
-let audioCtx = null, audioEnabled = false; // <-- ВЫКЛЮЧЕНО
+let audioCtx = null, audioEnabled = false;
 function initAudio(){ if(!audioCtx) audioCtx = new AudioCtx(); if(audioCtx.state==='suspended') audioCtx.resume(); }
 function playTone(freq,dur,type='sine',vol=0.1){ if(!audioEnabled) return; initAudio(); const o=audioCtx.createOscillator(),g=audioCtx.createGain(); o.type=type; o.frequency.setValueAtTime(freq,audioCtx.currentTime); g.gain.setValueAtTime(vol,audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+dur); o.connect(g); g.connect(audioCtx.destination); o.start(); o.stop(audioCtx.currentTime+dur); }
 function playNoise(dur=0.5,vol=0.15){ if(!audioEnabled) return; initAudio(); const size=audioCtx.sampleRate*dur, buf=audioCtx.createBuffer(1,size,audioCtx.sampleRate), data=buf.getChannelData(0); for(let i=0;i<size;i++) data[i]=(Math.random()*2-1)*Math.pow(1-i/size,2); const s=audioCtx.createBufferSource(); s.buffer=buf; const g=audioCtx.createGain(); g.gain.setValueAtTime(vol,audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+dur); s.connect(g); g.connect(audioCtx.destination); s.start(); }
@@ -374,10 +442,12 @@ function playWhoosh(){ playTone(1500,0.35,'sawtooth',0.05); playTone(300,0.35,'s
 function playClick(){ playTone(800,0.05,'square',0.04); }
 function playBlackHole(){ playTone(60,1.5,'sawtooth',0.15); }
 function playDice(){ playTone(600,0.1,'square',0.05); setTimeout(()=>playTone(400,0.1,'square',0.05),100); }
+function playSuccess(){ playTone(600,0.1,'sine',0.1); setTimeout(()=>playTone(800,0.2,'sine',0.1),100); }
+function playError(){ playTone(200,0.2,'sawtooth',0.1); }
 
 // ============ CURSOR ============
 const cursor=document.getElementById('cursor'), cursorDot=document.getElementById('cursorDot');
-const hoverTargets=document.querySelectorAll('a,button,.project-card,.about-card');
+const hoverTargets=document.querySelectorAll('a,button,.project-card,.about-card,.chat-opt');
 let mouseX=0,mouseY=0,cursorX=0,cursorY=0,dotX=0,dotY=0;
 document.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY});
 function animateCursor(){ cursorX+=(mouseX-cursorX)*.15; cursorY+=(mouseY-cursorY)*.15; dotX+=(mouseX-dotX)*.5; dotY+=(mouseY-dotY)*.5; if(cursor&&cursorDot){ cursor.style.transform=`translate(${cursorX}px,${cursorY}px) translate(-50%,-50%)`; cursorDot.style.transform=`translate(${dotX}px,${dotY}px) translate(-50%,-50%)`; } requestAnimationFrame(animateCursor); }
@@ -518,15 +588,20 @@ const projectsData={
 };
 
 const overlay=document.getElementById('projectOverlay'), poNum=document.getElementById('poNum'), poTitle=document.getElementById('poTitle'), poStory=document.getElementById('poStory'), poMeta=document.getElementById('poMeta'), poClose=document.getElementById('poClose');
+const nchatUI = document.getElementById('nchat-ui');
+const exchangeUI = document.getElementById('exchange-ui');
 let currentLang='ru';
 let activeScene=null;
+let currentGameInterval = null;
 const projCanvas=document.getElementById('projectCanvas');
 
 function cleanupScene(){
-  if(activeScene && activeScene.dispose){
-    try{ activeScene.dispose(); }catch(e){ console.warn(e); }
-  }
+  if(activeScene && activeScene.dispose){ try{ activeScene.dispose(); }catch(e){ console.warn(e); } }
   activeScene=null;
+  if(currentGameInterval) { clearInterval(currentGameInterval); currentGameInterval = null; }
+  nchatUI.classList.remove('active');
+  exchangeUI.classList.remove('active');
+  document.getElementById('chatWindow').innerHTML = '';
 }
 
 function openProject(id){
@@ -543,9 +618,17 @@ function openProject(id){
   
   setTimeout(()=>{
     cleanupScene();
-    if(p.scene==='nchat') activeScene=createNchatScene();
-    else if(p.scene==='exchange') activeScene=createExchangeScene();
-    else if(p.scene==='mwin') activeScene=createMwinScene();
+    if(p.scene==='nchat'){ 
+      nchatUI.classList.add('active'); 
+      startNchatGame(); 
+    }
+    else if(p.scene==='exchange'){ 
+      exchangeUI.classList.add('active'); 
+      startExchangeGame(); 
+    }
+    else if(p.scene==='mwin'){ 
+      activeScene=createMwinScene(); 
+    }
   }, 100);
 }
 
@@ -560,188 +643,137 @@ document.querySelectorAll('.project-card').forEach(card=>{ card.addEventListener
 poClose.addEventListener('click',closeProject);
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&overlay.classList.contains('active')) closeProject(); });
 
-// ============ SCENE 1: NCHAT (Гиперпрыжок / Warp Speed) ============
-function createNchatScene(){
-  const w=projCanvas.clientWidth||innerWidth, h=projCanvas.clientHeight||innerHeight;
-  const scene=new THREE.Scene();
-  scene.fog=new THREE.FogExp2(0x000000, 0.015);
-  const camera=new THREE.PerspectiveCamera(70,w/h,0.1,1000);
-  camera.position.z = 0;
+// ============ GAME 1: NCHAT (Чат-квест) ============
+function startNchatGame(){
+  const chatWindow = document.getElementById('chatWindow');
+  chatWindow.innerHTML = '';
   
-  const renderer=new THREE.WebGLRenderer({canvas:projCanvas,alpha:true,antialias:true});
-  renderer.setSize(w,h); renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-
-  // Центральное свечение (Портал)
-  const glowGeo = new THREE.CircleGeometry(1.5, 32);
-  const glowMat = new THREE.MeshBasicMaterial({color:0x00d4ff, transparent:true, opacity:0.1, side:THREE.DoubleSide});
-  const glow = new THREE.Mesh(glowGeo, glowMat);
-  glow.position.z = -15;
-  scene.add(glow);
-
-  // Звездные линии (Warp Speed)
-  const N = 1500;
-  const positions = new Float32Array(N * 6); // start & end points
-  const colors = new Float32Array(N * 6);
-  const c = new THREE.Color('#00d4ff');
-  
-  for(let i=0; i<N; i++){
-    const x = (Math.random() - 0.5) * 40;
-    const y = (Math.random() - 0.5) * 40;
-    const z = -Math.random() * 150;
-    
-    // Start
-    positions[i*6] = x;
-    positions[i*6+1] = y;
-    positions[i*6+2] = z;
-    // End (line length)
-    positions[i*6+3] = x;
-    positions[i*6+4] = y;
-    positions[i*6+5] = z - 3.0;
-
-    // Colors (fading out to white near the end)
-    colors[i*6] = c.r; colors[i*6+1] = c.g; colors[i*6+2] = c.b;
-    colors[i*6+3] = 1; colors[i*6+4] = 1; colors[i*6+5] = 1; 
+  function addMsg(text, isUser = false, delay = 500) {
+    setTimeout(() => {
+      const div = document.createElement('div');
+      div.className = `chat-msg ${isUser ? 'user' : ''}`;
+      div.innerHTML = text;
+      chatWindow.appendChild(div);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+      playClick();
+    }, delay);
   }
-  
-  const geo = new THREE.BufferGeometry();
-  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-  
-  const mat = new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending });
-  const lines = new THREE.LineSegments(geo, mat);
-  scene.add(lines);
 
-  let speed = 1.0;
-  let animId, t = 0;
-
-  function animate(){
-    animId=requestAnimationFrame(animate);
-    t += 0.01;
-    speed += (4.0 - speed) * 0.02; // Ускорение
-
-    const arr = geo.attributes.position.array;
-    
-    for(let i=0; i<N; i++){
-      const ix = i*6;
-      arr[ix+2] += speed;       // start z
-      arr[ix+5] += speed;       // end z
-
-      if(arr[ix+2] > 2) {
-        const newZ = -150 - Math.random() * 20;
-        const x = (Math.random() - 0.5) * 40;
-        const y = (Math.random() - 0.5) * 40;
-        
-        arr[ix] = x; arr[ix+1] = y; arr[ix+2] = newZ;
-        arr[ix+3] = x; arr[ix+4] = y; arr[ix+5] = newZ - (2.0 + speed*0.5);
-      }
-    }
-    geo.attributes.position.needsUpdate = true;
-
-    // Пульсация портала
-    glow.scale.setScalar(1 + Math.sin(t*4)*0.2);
-    glow.material.opacity = 0.1 + Math.sin(t*4)*0.05;
-
-    camera.rotation.z = Math.sin(t)*0.05;
-    renderer.render(scene,camera);
+  function addOptions(opts) {
+    setTimeout(() => {
+      const div = document.createElement('div');
+      div.className = 'chat-options';
+      opts.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'chat-opt';
+        btn.innerText = opt.text;
+        btn.onclick = () => {
+          chatWindow.removeChild(div);
+          addMsg(opt.text, true, 100);
+          setTimeout(opt.action, 1000);
+        };
+        div.appendChild(btn);
+      });
+      chatWindow.appendChild(div);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    }, 1000);
   }
-  animate();
 
-  function resize(){ const w=projCanvas.clientWidth, h=projCanvas.clientHeight; if(!w||!h) return; camera.aspect=w/h; camera.updateProjectionMatrix(); renderer.setSize(w,h); }
-  window.addEventListener('resize',resize); setTimeout(resize,100);
+  // Сценарий
+  addMsg("Привет. Добро пожаловать в <strong>NCHAT</strong>.", false, 300);
+  addMsg("Это не просто мессенджер. Это протокол нового поколения.", false, 1500);
+  
+  addOptions([
+    { text: "Какие технологии используются?", action: () => {
+        addMsg("Квантовое шифрование и децентрализованные узлы.", false, 500);
+        addMsg("Никто, кроме тебя и получателя, не может прочитать сообщение.", false, 1500);
+        setTimeout(endSequence, 3000);
+    }},
+    { text: "А это безопасно?", action: () => {
+        addMsg("На 100%. Мы используем Zero-Knowledge Proof.", false, 500);
+        addMsg("Сервер не знает, кто ты и что ты пишешь. Только математика.", false, 1500);
+        setTimeout(endSequence, 3000);
+    }}
+  ]);
 
-  return {
-    dispose(){
-      cancelAnimationFrame(animId);
-      window.removeEventListener('resize',resize);
-      geo.dispose(); mat.dispose(); glowGeo.dispose(); glowMat.dispose(); renderer.dispose();
-    }
-  };
+  function endSequence() {
+    addMsg("Твой канал защищен. Передаю эстафету в MELLNECK.", false, 1000);
+    addMsg("[СИСТЕМА]: Добро пожаловать в будущее.", false, 2000);
+  }
 }
 
-// ============ SCENE 2: NM EXCHANGE (Сеть узлов) ============
-function createExchangeScene(){
-  const w=projCanvas.clientWidth||innerWidth, h=projCanvas.clientHeight||innerHeight;
-  const scene=new THREE.Scene();
-  const camera=new THREE.PerspectiveCamera(60,w/h,0.1,100);
-  camera.position.set(0,0,8);
-  
-  const renderer=new THREE.WebGLRenderer({canvas:projCanvas,alpha:true,antialias:true});
-  renderer.setSize(w,h); renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-  scene.add(new THREE.AmbientLight(0xffffff, 1));
+// ============ GAME 2: NM EXCHANGE (Биржа) ============
+function startExchangeGame(){
+  const exBalance = document.getElementById('exBalance');
+  const exPrice = document.getElementById('exPrice');
+  const exLine = document.getElementById('exLine');
+  const btnBuy = document.getElementById('btnBuy');
+  const btnSell = document.getElementById('btnSell');
 
-  const group=new THREE.Group();
-  scene.add(group);
+  let state = {
+    balance: 1000,
+    traffic: 0,
+    price: 50.0,
+    history: Array(20).fill(50) // Начальный график
+  };
 
-  const nodesData=[];
-  const numNodes=60;
-  const radius=3.5;
-
-  for(let i=0;i<numNodes;i++){
-    const phi=Math.acos(-1+(2*i)/numNodes);
-    const theta=Math.sqrt(numNodes*Math.PI)*phi;
-    const x=radius*Math.cos(theta)*Math.sin(phi);
-    const y=radius*Math.sin(theta)*Math.sin(phi);
-    const z=radius*Math.cos(phi);
-
-    nodesData.push(new THREE.Vector3(x,y,z));
-
-    const geo=new THREE.SphereGeometry(0.08, 8, 8);
-    const mat=new THREE.MeshBasicMaterial({color: i%2===0 ? 0x00ffaa : 0x7c5cff});
-    const sphere=new THREE.Mesh(geo,mat);
-    sphere.position.set(x,y,z);
-    group.add(sphere);
-  }
-
-  const linePositions=[];
-  for(let i=0;i<numNodes;i++){
-    for(let j=i+1;j<numNodes;j++){
-      const dist=nodesData[i].distanceTo(nodesData[j]);
-      if(dist < 1.8){
-        linePositions.push(nodesData[i].x, nodesData[i].y, nodesData[i].z);
-        linePositions.push(nodesData[j].x, nodesData[j].y, nodesData[j].z);
-      }
-    }
-  }
-
-  const lineGeo=new THREE.BufferGeometry();
-  lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
-  const lineMat=new THREE.LineBasicMaterial({color:0x00d4ff, transparent:true, opacity:0.2});
-  const lines=new THREE.LineSegments(lineGeo, lineMat);
-  group.add(lines);
-
-  let animId, t=0;
-  
-  function animate(){
-    animId=requestAnimationFrame(animate);
-    t+=0.01;
-    group.rotation.y = t*0.2;
-    group.rotation.x = Math.sin(t*0.5)*0.2;
+  function updateUI() {
+    exBalance.innerText = `${Math.floor(state.balance)} TRC (${state.traffic} трафика)`;
+    exPrice.innerText = `$${state.price.toFixed(2)}`;
     
-    group.children.forEach((child, i)=>{
-      if(child.type==='Mesh'){
-        const s = 1 + Math.sin(t*3 + i)*0.3;
-        child.scale.set(s,s,s);
-      }
-    });
-
-    renderer.render(scene,camera);
+    // Обновляем SVG график
+    const points = state.history.map((p, i) => {
+      const x = (i / (state.history.length - 1)) * 100;
+      const y = 100 - ((p - 10) / 140) * 100; 
+      return `${x},${y}`;
+    }).join(' ');
+    exLine.setAttribute('points', points);
   }
-  animate();
 
-  function resize(){ const w=projCanvas.clientWidth, h=projCanvas.clientHeight; if(!w||!h) return; camera.aspect=w/h; camera.updateProjectionMatrix(); renderer.setSize(w,h); }
-  window.addEventListener('resize',resize); setTimeout(resize,100);
+  // Логика рынка
+  currentGameInterval = setInterval(() => {
+    // Случайное блуждание
+    const change = (Math.random() - 0.5) * 15;
+    state.price = Math.max(10, Math.min(150, state.price + change));
+    
+    state.history.shift();
+    state.history.push(state.price);
+    
+    updateUI();
+  }, 2000);
 
-  return {
-    dispose(){
-      cancelAnimationFrame(animId);
-      window.removeEventListener('resize',resize);
-      group.children.forEach(c=>{ if(c.geometry)c.geometry.dispose(); if(c.material)c.material.dispose(); });
-      lineGeo.dispose(); lineMat.dispose(); renderer.dispose();
+  // Кнопка КУПИТЬ
+  btnBuy.onclick = () => {
+    if(state.balance >= state.price) {
+      state.balance -= state.price;
+      state.traffic += 1;
+      playSuccess();
+      updateUI();
+    } else {
+      playError();
+      btnBuy.style.borderColor = '#ff0000';
+      setTimeout(()=>btnBuy.style.borderColor = '', 500);
     }
   };
+
+  // Кнопка ПРОДАТЬ
+  btnSell.onclick = () => {
+    if(state.traffic > 0) {
+      state.traffic -= 1;
+      state.balance += state.price;
+      playSuccess();
+      updateUI();
+    } else {
+      playError();
+      btnSell.style.borderColor = '#ff0000';
+      setTimeout(()=>btnSell.style.borderColor = '', 500);
+    }
+  };
+
+  updateUI();
 }
 
-// ============ SCENE 3: MWIN (3D Кубик) ============
+// ============ GAME 3: MWIN (3D Кубик) ============
 function createMwinScene(){
   const w=projCanvas.clientWidth||innerWidth, h=projCanvas.clientHeight||innerHeight;
   const scene=new THREE.Scene();
@@ -770,11 +802,8 @@ function createMwinScene(){
     ctx.fillStyle='#ffffff';
     const dot=24; 
     const positions = {
-      1: [[128,128]],
-      2: [[70,70], [186,186]],
-      3: [[70,70], [128,128], [186,186]],
-      4: [[70,70], [186,70], [70,186], [186,186]],
-      5: [[70,70], [186,70], [128,128], [70,186], [186,186]],
+      1: [[128,128]], 2: [[70,70], [186,186]], 3: [[70,70], [128,128], [186,186]],
+      4: [[70,70], [186,70], [70,186], [186,186]], 5: [[70,70], [186,70], [128,128], [70,186], [186,186]],
       6: [[70,70], [70,128], [70,186], [186,70], [186,128], [186,186]]
     };
     
@@ -786,12 +815,8 @@ function createMwinScene(){
     return new THREE.MeshStandardMaterial({map:tex, roughness:0.2, metalness:0.3});
   }
 
-  for(let i=1; i<=6; i++){
-    materials.push(createDiceTexture(i));
-  }
-
-  const cube=new THREE.Mesh(geo, materials);
-  scene.add(cube);
+  for(let i=1; i<=6; i++){ materials.push(createDiceTexture(i)); }
+  const cube=new THREE.Mesh(geo, materials); scene.add(cube);
 
   let isRolling=false;
   const canvasEl=projCanvas;
@@ -802,55 +827,31 @@ function createMwinScene(){
     playDice();
     
     const result = Math.floor(Math.random()*6) + 1;
-    
     const rotations = {
-      1: {x: 0, y: 0},
-      2: {x: 0, y: -Math.PI/2},
-      3: {x: 0, y: Math.PI},
-      4: {x: 0, y: Math.PI/2},
-      5: {x: -Math.PI/2, y: 0},
-      6: {x: Math.PI/2, y: 0}
+      1: {x: 0, y: 0}, 2: {x: 0, y: -Math.PI/2}, 3: {x: 0, y: Math.PI},
+      4: {x: 0, y: Math.PI/2}, 5: {x: -Math.PI/2, y: 0}, 6: {x: Math.PI/2, y: 0}
     };
 
     const targetRot = rotations[result];
-    
     const finalX = targetRot.x + Math.PI * 2 * (Math.floor(Math.random()*3) + 2);
     const finalY = targetRot.y + Math.PI * 2 * (Math.floor(Math.random()*3) + 2);
 
-    gsap.killTweensOf(cube.rotation);
-    gsap.killTweensOf(cube.position);
+    gsap.killTweensOf(cube.rotation); gsap.killTweensOf(cube.position);
 
     gsap.to(cube.position, {y: 2.5, duration: 0.4, ease: "power2.out", yoyo: true, repeat: 1, onComplete: ()=>{ cube.position.y=0; }});
-    
     gsap.to(cube.rotation, {
-      x: finalX, 
-      y: finalY, 
-      duration: 1.5, 
-      ease: "back.out(1.2)",
-      onComplete: ()=>{
-        cube.rotation.x = cube.rotation.x % (Math.PI*2);
-        cube.rotation.y = cube.rotation.y % (Math.PI*2);
-        isRolling=false;
-      }
+      x: finalX, y: finalY, duration: 1.5, ease: "back.out(1.2)",
+      onComplete: ()=>{ cube.rotation.x = cube.rotation.x % (Math.PI*2); cube.rotation.y = cube.rotation.y % (Math.PI*2); isRolling=false; }
     });
   }
 
   canvasEl.addEventListener('click', rollDice);
-  canvasEl.addEventListener('touchstart', (e)=>{
-    e.preventDefault(); 
-    rollDice();
-  }, {passive:false});
+  canvasEl.addEventListener('touchstart', (e)=>{ e.preventDefault(); rollDice(); }, {passive:false});
 
   let animId, t=0;
   function animate(){
-    animId=requestAnimationFrame(animate);
-    t+=0.01;
-    
-    if(!isRolling){
-      cube.position.y = Math.sin(t*2)*0.1;
-      cube.rotation.z = Math.sin(t)*0.05;
-    }
-    
+    animId=requestAnimationFrame(animate); t+=0.01;
+    if(!isRolling){ cube.position.y = Math.sin(t*2)*0.1; cube.rotation.z = Math.sin(t)*0.05; }
     renderer.render(scene,camera);
   }
   animate();
@@ -884,15 +885,10 @@ if(statNumbers.length){
 const langToggleBtn=document.getElementById('langToggle');
 if(langToggleBtn){ langToggleBtn.addEventListener('click',()=>{ currentLang=currentLang==='ru'?'en':'ru'; langToggleBtn.innerText=currentLang==='ru'?'EN':'RU'; document.querySelectorAll('[data-ru]').forEach(el=>{ el.innerHTML=el.getAttribute(`data-${currentLang}`); }); playClick(); }); }
 
-// Инициализация звука (Кнопка)
 const soundToggleBtn=document.getElementById('soundToggle');
 if(soundToggleBtn){ 
   soundToggleBtn.innerText = audioEnabled ? '🔊' : '🔇';
-  soundToggleBtn.addEventListener('click',()=>{ 
-    audioEnabled=!audioEnabled; 
-    soundToggleBtn.innerText=audioEnabled?'🔊':'🔇'; 
-    if(audioEnabled) playClick(); 
-  }); 
+  soundToggleBtn.addEventListener('click',()=>{ audioEnabled=!audioEnabled; soundToggleBtn.innerText=audioEnabled?'🔊':'🔇'; if(audioEnabled) playClick(); }); 
 }
 
 document.querySelectorAll('.btn,.nav-cta').forEach(b=>{ if(b.id!=='langToggle'&&b.id!=='soundToggle'){ b.addEventListener('click',()=>playClick()); } });
