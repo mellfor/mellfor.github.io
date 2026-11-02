@@ -3,472 +3,479 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="MellFor (Dani) — 18 лет, основатель 260+ проектов в Telegram-экосистеме, крипто и финтехе. NCHAT, NM EXCHANGE, BBSMM, MCASH.">
-    <meta name="theme-color" content="#0a0e27">
-    
-    <!-- OG-теги -->
+    <meta name="description" content="MellFor (Dani) — 18 лет, основатель 260+ проектов в Telegram-экосистеме, криптовалютах и финтехе. NCHAT, NM EXCHANGE, BBSMM, MCASH.">
+    <meta name="theme-color" content="#0a0a0a">
     <meta property="og:title" content="MellFor — Dani, 18 | 260+ проектов">
     <meta property="og:description" content="Founder, entrepreneur, builder. Telegram ecosystem, crypto, fintech.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://mellfor.com">
-    
     <title>MellFor — Dani, 18 | 260+ проектов</title>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* ================== ПЕРЕМЕННЫЕ ================== */
+        /* ==================== ПЕРЕМЕННЫЕ И RESET ==================== */
         :root {
-            --primary: #00ff88;
-            --primary-dark: #00cc6f;
-            --bg-dark: #0a0e27;
-            --bg-darker: #050709;
-            --text-light: #e0e0e0;
-            --text-muted: #888888;
-            --accent-blue: #0088ff;
-            --accent-purple: #aa00ff;
-            --border-color: rgba(0, 255, 136, 0.1);
+            --primary: #7C3AED;
+            --secondary: #06B6D4;
+            --bg: #0a0a0a;
+            --text: #e0e0e0;
+            --text-muted: #8888a0;
+            --border: rgba(124, 58, 237, 0.2);
+            --transition: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
-        /* ================== RESET ================== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(0, 136, 255, 0.03) 0%, transparent 50%);
+            background-image: radial-gradient(circle at 20% 50%, rgba(124, 58, 237, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
             background-attachment: fixed;
         }
+        @media (prefers-reduced-motion: reduce) {
+            * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+        }
 
-        /* ================== ПРЕЛОАДЕР ================== */
+        /* ==================== CANVAS ==================== */
+        #particleCanvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;
+        }
+
+        /* ==================== ПРЕЛОАДЕР ==================== */
         #preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-darker);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            opacity: 1;
-            transition: opacity 0.8s ease-out;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 9999; opacity: 1; visibility: visible; transition: opacity 0.8s ease, visibility 0.8s ease;
         }
-
-        #preloader.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .preloader-content {
-            text-align: center;
-        }
-
+        #preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .preloader-content { text-align: center; }
         .preloader-logo {
-            font-size: 3rem;
-            font-weight: 900;
-            margin-bottom: 2rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: pulse 1.5s ease-in-out infinite;
+            font-family: 'Space Grotesk', sans-serif; font-size: 3.5rem; font-weight: 700; margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: pulse 2s ease-in-out infinite;
         }
+        .preloader-progress { width: 250px; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; margin: 2rem auto 1rem; position: relative; }
+        .preloader-bar { height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); width: 0%; border-radius: 2px; animation: loadingBar 1.5s ease-in-out forwards; }
+        .preloader-text { font-size: 0.95rem; color: var(--text-muted); margin-top: 1.5rem; letter-spacing: 0.05em; }
+        .preloader-percent { display: inline-block; color: var(--primary); font-weight: 600; font-size: 1.2rem; margin-top: 0.5rem; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+        @keyframes loadingBar { 0% { width: 0%; } 100% { width: 100%; } }
 
-        .preloader-progress {
-            width: 200px;
-            height: 4px;
-            background: var(--border-color);
-            border-radius: 2px;
-            overflow: hidden;
-            margin-bottom: 1rem;
-        }
-
-        .preloader-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--accent-blue));
-            width: 0%;
-            border-radius: 2px;
-        }
-
-        .preloader-text {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 1rem;
-        }
-
-        .preloader-percent {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        /* ================== CANVAS (частицы) ================== */
-        #canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        /* ================== CUSTOM CURSOR ================== */
+        /* ==================== КАСТОМНЫЙ КУРСОР ==================== */
         .cursor {
-            position: fixed;
-            width: 30px;
-            height: 30px;
-            border: 2px solid var(--primary);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10000;
-            display: none;
+            position: fixed; width: 30px; height: 30px; border: 2px solid var(--primary); border-radius: 50%;
+            pointer-events: none; z-index: 9998; display: none; left: -15px; top: -15px;
+            transition: width 0.2s, height 0.2s, border-color 0.2s, background 0.2s; mix-blend-mode: difference;
         }
+        .cursor.active { display: block; }
+        .cursor.hover { width: 50px; height: 50px; left: -25px; top: -25px; border-color: var(--secondary); background: rgba(6, 182, 212, 0.1); }
 
-        .cursor.active {
-            display: block;
-        }
-
-        .cursor.hover {
-            width: 50px;
-            height: 50px;
-            background: rgba(0, 255, 136, 0.1);
-            border-width: 1px;
-        }
-
-        /* ================== ТИПОГРАФИЯ ================== */
-        h1, h2, h3 {
-            font-weight: 900;
-            letter-spacing: -0.02em;
-        }
-
-        h1 {
-            font-size: clamp(2rem, 8vw, 6rem);
-        }
-
-        h2 {
-            font-size: clamp(1.8rem, 5vw, 3rem);
-        }
-
-        /* ================== ОСНОВНЫЕ КОМПОНЕНТЫ ================== */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        section {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 2rem 0;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* ================== HEADER/NAV ================== */
+        /* ==================== HEADER ==================== */
         header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 1.5rem 0;
-            z-index: 100;
-            background: rgba(10, 14, 39, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
+            position: fixed; top: 0; left: 0; right: 0; padding: 1.5rem 0; z-index: 100;
+            background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--border);
         }
-
-        .header-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
+        .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; display: flex; justify-content: space-between; align-items: center; }
         .logo {
-            font-size: 1.5rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--primary), var(--accent-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 0.1em;
+            font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            letter-spacing: 0.1em; cursor: pointer; text-decoration: none;
         }
+        nav { display: flex; gap: 2.5rem; }
+        nav a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: color var(--transition); position: relative; }
+        nav a:hover { color: var(--primary); }
+        nav a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, var(--primary), var(--secondary)); transition: width var(--transition); }
+        nav a:hover::after { width: 100%; }
+        @media (max-width: 768px) { nav { display: none; } }
 
-        nav a {
-            color: var(--text-muted);
-            text-decoration: none;
-            margin-left: 2rem;
-            font-size: 0.9rem;
-            transition: color 0.3s;
-            position: relative;
+        /* ==================== ОСНОВНЫЕ ЭЛЕМЕНТЫ ==================== */
+        section { position: relative; z-index: 2; min-height: 100vh; display: flex; align-items: center; padding: 5rem 0; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; width: 100%; }
+        h1, h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; line-height: 1.1; }
+        h1 { font-size: clamp(2.5rem, 8vw, 5rem); }
+        h2 { font-size: clamp(1.8rem, 5vw, 3rem); margin-bottom: 2rem; }
+
+        /* ==================== HERO SECTION ==================== */
+        #hero { padding-top: 8rem; }
+        .hero-content { animation: fadeInUp 1s ease-out; }
+        .hero-title { margin-bottom: 1.5rem; overflow: hidden; }
+        .hero-title-char { display: inline-block; opacity: 0; animation: charReveal 0.7s ease-out forwards; margin-right: -0.05em; }
+        @keyframes charReveal { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+        .hero-subtitle { font-size: 1.3rem; color: var(--text-muted); margin-bottom: 2.5rem; max-width: 500px; animation: fadeInUp 1s ease-out 0.2s both; }
+        .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeInUp 1s ease-out 0.4s both; }
+        .btn {
+            padding: 0.9rem 2rem; border: 2px solid var(--primary); background: transparent; color: var(--text); border-radius: 6px;
+            font-size: 1rem; font-weight: 600; cursor: pointer; transition: all var(--transition); position: relative; overflow: hidden;
+            font-family: 'Inter', sans-serif; text-decoration: none; display: inline-block; z-index: 1;
         }
+        .btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--primary); transition: left var(--transition); z-index: -1; }
+        .btn:hover::before { left: 0; }
+        .btn:hover { color: var(--bg); transform: translateY(-2px); box-shadow: 0 15px 40px rgba(124, 58, 237, 0.3); }
+        .btn-secondary { border-color: var(--secondary); }
+        .btn-secondary::before { background: var(--secondary); }
+        .btn-secondary:hover { box-shadow: 0 15px 40px rgba(6, 182, 212, 0.3); }
+        @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
 
-        nav a:hover {
-            color: var(--primary);
-        }
+        /* ==================== ABOUT SECTION ==================== */
+        #about { background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(6, 182, 212, 0.05)); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
+        .stat-box { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .stat-box.visible { opacity: 1; transform: translateY(0); }
+        .stat-number { font-size: 3rem; font-weight: 700; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 0.5rem; font-family: 'Space Grotesk', sans-serif; }
+        .stat-label { color: var(--text-muted); font-size: 0.95rem; }
 
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width 0.3s;
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        /* ================== HERO SECTION ================== */
-        #hero {
-            padding-top: 6rem;
-            justify-content: flex-start;
-        }
-
-        .hero-content {
-            animation-name: fadeInUp;
-            animation-duration: 1.2s;
-            animation-fill-mode: forwards;
-            opacity: 0;
-        }
-
-        .hero-title {
-            line-height: 1;
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-
-        .hero-title .char {
-            display: inline-block;
-            opacity: 0;
-            animation: charFadeIn 0.6s ease-out forwards;
-        }
-
-        @keyframes charFadeIn {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero-subtitle {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            max-width: 500px;
-            animation: fadeInUp 1s ease-out 0.5s forwards;
-            opacity: 0;
-        }
-
-        .hero-cta {
-            display: inline-block;
-            padding: 0.75rem 2rem;
-            background: var(--primary);
-            color: var(--bg-dark);
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: 600;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-            animation: fadeInUp 1s ease-out 0.7s forwards;
-            opacity: 0;
-            cursor: pointer;
-            border: none;
-        }
-
-        .hero-cta::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: var(--primary-dark);
-            transition: left 0.3s;
-            z-index: -1;
-        }
-
-        .hero-cta:hover::before {
-            left: 0;
-        }
-
-        .hero-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.2);
-        }
-
-        @keyframes fadeInUp {
-            0% {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ================== ABOUT SECTION ================== */
-        #about {
-            padding: 4rem 0;
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .about-stat {
-            margin-bottom: 2rem;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--primary);
-            line-height: 1;
-        }
-
-        .stat-label {
-            color: var(--text-muted);
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        /* ================== PROJECTS SECTION ================== */
-        #projects {
-            padding: 4rem 0;
-        }
-
-        .projects-header {
-            margin-bottom: 3rem;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
+        /* ==================== PROJECTS SECTION ==================== */
+        #projects { border-top: 1px solid var(--border); }
+        .projects-header { margin-bottom: 3rem; opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .projects-header.visible { opacity: 1; transform: translateY(0); }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
         .project-card {
-            background: rgba(0, 255, 136, 0.03);
-            border: 1px solid var(--border-color);
-            padding: 2rem;
-            border-radius: 8px;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
+            background: rgba(124, 58, 237, 0.05); border: 1px solid var(--border); padding: 2rem; border-radius: 12px;
+            transition: all var(--transition); position: relative; overflow: hidden; opacity: 0; transform: translateY(30px); cursor: default; z-index: 1;
         }
+        .project-card.visible { opacity: 1; transform: translateY(0); }
+        .project-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.1), transparent); transition: left 0.6s; z-index: -1; }
+        .project-card:hover::before { left: 100%; }
+        .project-card:hover { border-color: var(--primary); background: rgba(124, 58, 237, 0.1); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(124, 58, 237, 0.15); }
+        .project-card.visible:hover { transform: translateY(-5px); }
+        .project-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.8rem; color: var(--text); }
+        .project-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; }
 
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.05), transparent);
-            transition: left 0.6s;
-        }
-
-        .project-card:hover::before {
-            left: 100%;
-        }
-
-        .project-card:hover {
-            border-color: var(--primary);
-            background: rgba(0, 255, 136, 0.08);
-            transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(0, 255, 136, 0.15);
-        }
-
-        .project-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary), var(--accent-blue));
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .project-name {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-light);
-        }
-
-        .project-desc {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        /* ================== CONTACTS SECTION ================== */
-        #contacts {
-            padding: 4rem 0;
-            text-align: center;
-        }
-
-        .contacts-content {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .social-buttons {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-
+        /* ==================== CONTACT / SOCIALS ==================== */
+        #contact { border-top: 1px solid var(--border); text-align: center; }
+        .social-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .social-buttons.visible { opacity: 1; transform: translateY(0); }
         .social-btn {
-            width: 120px;
-            height: 120px;
-            border-radius: 12px;
-            border: 2px solid var(--border-color);
-            background: rgba(0, 255, 136, 0.05);
-            color: var(--text-light);
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.85rem;
-            font-weight: 600;
-            transition: all 0.3
+            display: inline-flex; align-items: center; gap: 0.6rem; padding: 1rem 2rem; background: rgba(124, 58, 237, 0.1); border: 1px solid var(--border);
+            border-radius: 8px; color: var(--text); text-decoration: none; font-weight: 600; transition: all var(--transition); font-size: 1rem; cursor: pointer; font-family: 'Inter', sans-serif;
+        }
+        .social-btn:hover { background: rgba(124, 58, 237, 0.2); border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2); }
+        .social-btn svg { width: 20px; height: 20px; fill: currentColor; }
+        
+        .toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 1rem 2rem; border-radius: 8px;
+            font-weight: 600; z-index: 10000; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+
+        /* ==================== FOOTER ==================== */
+        footer { position: relative; z-index: 2; padding: 3rem 0; border-top: 1px solid var(--border); text-align: center; background: rgba(10, 10, 10, 0.5); }
+        .footer-text { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; }
+        .footer-warning { color: #ff9800; font-size: 0.85rem; font-weight: 600; max-width: 600px; margin: 1rem auto; padding: 1rem; border: 1px solid rgba(255, 152, 0, 0.3); border-radius: 8px; background: rgba(255, 152, 0, 0.05); }
+        .footer-links { display: flex; gap: 1.5rem; justify-content: center; margin-top: 1.5rem; flex-wrap: wrap; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; transition: color var(--transition); }
+        .footer-links a:hover { color: var(--primary); }
+
+        /* ==================== MARQUEE ==================== */
+        .marquee { position: relative; z-index: 2; overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1rem 0; background: rgba(124, 58, 237, 0.03); }
+        .marquee-content { display: flex; gap: 3rem; animation: marquee 20s linear infinite; white-space: nowrap; font-family: 'Space Grotesk', sans-serif; font-weight: 600; color: var(--text-muted); }
+        .marquee-content span { color: var(--primary); }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    </style>
+</head>
+<body>
+
+    <!-- Прелоадер -->
+    <div id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo">MELLFOR</div>
+            <div class="preloader-progress"><div class="preloader-bar"></div></div>
+            <div class="preloader-text">Загрузка вселенной <span class="preloader-percent">0%</span></div>
+        </div>
+    </div>
+
+    <!-- Курсор -->
+    <div class="cursor" id="cursor"></div>
+
+    <!-- Canvas для частиц -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Header -->
+    <header>
+        <div class="header-inner">
+            <a href="#" class="logo">MELLFOR</a>
+            <nav>
+                <a href="#about">Обо мне</a>
+                <a href="#projects">Проекты</a>
+                <a href="#contact">Контакты</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title" id="heroTitle">MELLFOR</h1>
+                <p class="hero-subtitle">Основатель 260+ проектов. 18 лет. Строю будущее в Telegram-экосистеме, крипте и финтехе.</p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn">Смотреть проекты</a>
+                    <a href="https://t.me/mellfor" target="_blank" rel="noopener" class="btn btn-secondary">Связаться</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marquee -->
+    <div class="marquee">
+        <div class="marquee-content">
+            <span>MELLFOR</span> • 260+ PROJECTS • <span>NCHAT</span> • NM EXCHANGE • <span>BBSMM</span> • MCASH • <span>BES TEAM</span> • MELLFOR • 260+ PROJECTS • <span>NCHAT</span> • NM EXCHANGE • <span>BBSMM</span> • MCASH • <span>BES TEAM</span> •
+        </div>
+    </div>
+
+    <!-- About -->
+    <section id="about">
+        <div class="container">
+            <h2>Обо мне</h2>
+            <div class="about-grid">
+                <div class="stat-box"><div class="stat-number">260+</div><div class="stat-label">Проектов основано</div></div>
+                <div class="stat-box"><div class="stat-number">18</div><div class="stat-label">Лет</div></div>
+                <div class="stat-box"><div class="stat-number">5+</div><div class="stat-label">Крупных экосистем</div></div>
+                <div class="stat-box"><div class="stat-number">∞</div><div class="stat-label">Идей впереди</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+        <div class="container">
+            <div class="projects-header">
+                <h2>Selected Works</h2>
+                <p style="color: var(--text-muted);">Ключевые проекты, которые я основал и развиваю.</p>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card"><div class="project-title">NCHAT</div><div class="project-desc">Telegram-чат нового поколения с уникальными механиками и комьюнити.</div></div>
+                <div class="project-card"><div class="project-title">NM EXCHANGE</div><div class="project-desc">Обменник криптовалют с быстрыми транзакциями и надежной защитой.</div></div>
+                <div class="project-card"><div class="project-title">BBSMM</div><div class="project-desc">SMM-панель и сервис продвижения для роста аудитории в соцсетях.</div></div>
+                <div class="project-card"><div class="project-title">MCASH</div><div class="project-desc">Финансовая платформа и кэш-сервис для быстрых переводов.</div></div>
+                <div class="project-card"><div class="project-title">BES TEAM</div><div class="project-desc">Команда профессионалов и закрытое комьюнити для совместного роста.</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <div class="container">
+            <h2>На связи</h2>
+            <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto;">Открыт к коллаборациям, инвестициям и новым проектам. Пиши в официальные аккаунты.</p>
+            <div class="social-buttons">
+                <a href="https://t.me/mellfor" target="_blank" rel="noopener" class="social-btn">
+                    <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    Telegram @mellfor
+                </a>
+                <a href="https://www.tiktok.com/@mellfortg" target="_blank" rel="noopener" class="social-btn">
+                    <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+                    TikTok @mellfortg
+                </a>
+                <button class="social-btn" id="copyBtn">
+                    <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: currentColor;"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                    Скопировать @mellfor
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <div class="toast" id="toast">Скопировано!</div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-text">© 2025 MellFor. Все права защищены.</div>
+            <div class="footer-warning">⚠️ Внимание: Официальные аккаунты — только те, что указаны выше (Telegram @mellfor, TikTok @mellfortg). Остальные — фейки!</div>
+            <div class="footer-links">
+                <a href="https://t.me/mellfor" target="_blank" rel="noopener">Telegram</a>
+                <a href="https://www.tiktok.com/@mellfortg" target="_blank" rel="noopener">TikTok</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== CONFIG ====================
+        const CONFIG = {
+            socials: { telegram: 'https://t.me/mellfor', tiktok: 'https://www.tiktok.com/@mellfortg', username: '@mellfor' },
+            particleCount: window.innerWidth < 768 ? 40 : 80,
+            particleSpeed: 0.5
+        };
+
+        // ==================== ПРЕЛОАДЕР ====================
+        const preloader = document.getElementById('preloader');
+        const preloaderPercent = document.querySelector('.preloader-percent');
+        let progress = 0;
+        const progressInterval = setInterval(() => {
+            progress += Math.random() * 15;
+            if (progress > 100) progress = 100;
+            preloaderPercent.textContent = Math.floor(progress) + '%';
+            if (progress >= 100) {
+                clearInterval(progressInterval);
+                setTimeout(() => preloader.classList.add('hidden'), 400);
+            }
+        }, 100);
+        setTimeout(() => preloader.classList.add('hidden'), 3000);
+
+        // ==================== КАСТОМНЫЙ КУРСОР ====================
+        const cursor = document.getElementById('cursor');
+        if (window.matchMedia('(pointer: fine)').matches) {
+            cursor.classList.add('active');
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+            document.querySelectorAll('a, button, .project-card').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+            });
+        }
+
+        // ==================== 2D CANVAS ЧАСТИЦЫ ====================
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null, radius: 120 };
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
+        window.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }
+        });
+        window.addEventListener('mouseout', () => { mouse.x = null; mouse.y = null; });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * CONFIG.particleSpeed;
+                this.vy = (Math.random() - 0.5) * CONFIG.particleSpeed;
+                this.radius = Math.random() * 2 + 1;
+                this.color = Math.random() > 0.5 ? '124, 58, 237' : '6, 182, 212';
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (mouse.x != null && mouse.y != null) {
+                    const dx = this.x - mouse.x;
+                    const dy = this.y - mouse.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < mouse.radius) {
+                        const force = (mouse.radius - dist) / mouse.radius;
+                        this.x += (dx / dist) * force * 3;
+                        this.y += (dy / dist) * force * 3;
+                    }
+                }
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                if (this.x < 0) this.x = 0; if (this.x > canvas.width) this.x = canvas.width;
+                if (this.y < 0) this.y = 0; if (this.y > canvas.height) this.y = canvas.height;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${this.color}, 0.6)`;
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < CONFIG.particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+        initParticles();
+        
+        window.addEventListener('resize', () => {
+            CONFIG.particleCount = window.innerWidth < 768 ? 40 : 80;
+            initParticles();
+        });
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            // Соединяющие линии
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(124, 58, 237, ${0.15 * (1 - dist / 120)})`;
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // ==================== АНИМАЦИЯ ЗАГОЛОВКА ====================
+        const heroTitle = document.getElementById('heroTitle');
+        const titleText = heroTitle.textContent;
+        heroTitle.textContent = '';
+        titleText.split('').forEach((char, i) => {
+            const span = document.createElement('span');
+            span.textContent = char;
+            span.className = 'hero-title-char';
+            span.style.animationDelay = (i * 0.05) + 's
+                            heroTitle.appendChild(span);
+        });
+
+        // ==================== АНИМАЦИЯ ПОЯВЛЕНИЯ ПРИ СКРОЛЛЕ (IntersectionObserver) ====================
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // Анимируем только один раз
+                }
+            });
+        }, observerOptions);
+
+        // Наблюдаем за всеми элементами, которые должны появляться
+        document.querySelectorAll('.stat-box, .projects-header, .project-card, .social-buttons').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ==================== КОПИРОВАНИЕ В БУФЕР ОБМЕНА ====================
+        const copyBtn = document.getElementById('copyBtn');
+        const toast = document.getElementById('toast');
+
+        copyBtn.addEventListener('click', () => {
+            // Копируем ник
+            navigator.clipboard.writeText(CONFIG.socials.username).then(() => {
+                // Показываем тост
+                toast.classList.add('show');
+                
+                // Прячем через 2.5 секунды
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2500);
+            }).catch(err => {
+                console.error('Ошибка копирования: ', err);
+                // Фолбэк для старых браузеров
+                const textArea = document.createElement('textarea');
+                textArea.value = CONFIG.socials.username;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2500);
+            });
+        });
+    </script>
+</body>
+</html>
