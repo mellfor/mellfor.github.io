@@ -35,28 +35,29 @@
 <nav class="nav">
   <a href="#" class="nav-logo">MELLFOR<span>©</span></a>
   <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#stack">Stack</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#about" data-ru="Обо мне" data-en="About">Обо мне</a></li>
+    <li><a href="#projects" data-ru="Проекты" data-en="Projects">Проекты</a></li>
+    <li><a href="#contact" data-ru="Контакты" data-en="Contact">Контакты</a></li>
   </ul>
-  <a href="https://t.me/mellfor" target="_blank" class="nav-cta">Say hi ↗</a>
+  <div class="nav-right">
+    <button id="langToggle" class="nav-cta">EN</button>
+    <a href="https://t.me/mellfor" target="_blank" class="nav-cta">Say hi ↗</a>
+  </div>
 </nav>
 
 <section class="hero" id="hero">
   <canvas id="webgl"></canvas>
   <div class="hero-content">
-    <div class="hero-eyebrow"><span class="dot"></span> Available for epic things · 2026</div>
+    <div class="hero-eyebrow"><span class="dot"></span> <span data-ru="Открыт к сотрудничеству · 2026" data-en="Available for epic things · 2026">Открыт к сотрудничеству · 2026</span></div>
     <h1 class="hero-title">
-      <span class="line"><span>Digital</span></span>
-      <span class="line"><span><em>Architect</em></span></span>
+      <span class="line"><span data-ru="Цифровой" data-en="Digital">Цифровой</span></span>
+      <span class="line"><span><em data-ru="Архитектор" data-en="Architect">Архитектор</em></span></span>
     </h1>
-    <p class="hero-sub">
-      I'm Dani "MellFor" — 18 y.o. founder.<br>
-      I built 260+ projects. This is one of them.
+    <p class="hero-sub" data-ru="Я Даня 'MellFor' — 18-летний основатель.<br>Запустил 260+ проектов. Этот сайт — один из них." data-en="I'm Dani 'MellFor' — 18 y.o. founder.<br>I built 260+ projects. This is one of them.">
+      Я Даня "MellFor" — 18-летний основатель.<br>Запустил 260+ проектов. Этот сайт — один из них.
     </p>
     <div class="hero-cta">
-      <a href="#projects" class="btn btn-primary">Explore work <span>↓</span></a>
+      <a href="#projects" class="btn btn-primary"><span data-ru="Смотреть работы" data-en="Explore work">Смотреть работы</span> <span>↓</span></a>
       <a href="https://t.me/mellfor" target="_blank" class="btn btn-ghost">Telegram ↗</a>
     </div>
   </div>
@@ -66,23 +67,23 @@
 <section class="section about" id="about">
   <div class="section-head">
     <span class="section-num">01</span>
-    <h2 class="section-title">Who's behind<br>the code</h2>
+    <h2 class="section-title" data-ru="Кто за<br>кодом" data-en="Who's behind<br>the code">Кто за<br>кодом</h2>
   </div>
   <div class="about-grid">
     <div class="about-text">
-      <p class="lead">I don't wait for permission to build.</p>
-      <p>At 18, I've shipped 260+ projects — from browser experiments to full products. Every one matters, because it does.</p>
-      <p>This site is my playground: Three.js, custom shaders, GSAP — all of it.</p>
+      <p class="lead" data-ru="Я не жду разрешения, чтобы создавать." data-en="I don't wait for permission to build.">Я не жду разрешения, чтобы создавать.</p>
+      <p data-ru="В 18 лет я запустил 260+ проектов — от браузерных экспериментов до полноценных продуктов." data-en="At 18, I've shipped 260+ projects — from browser experiments to full products.">В 18 лет я запустил 260+ проектов — от браузерных экспериментов до полноценных продуктов.</p>
+      <p data-ru="Этот сайт — моя песочница: Three.js, кастомные шейдеры, GSAP." data-en="This site is my playground: Three.js, custom shaders, GSAP.">Этот сайт — моя песочница: Three.js, кастомные шейдеры, GSAP.</p>
       <div class="about-stats">
-        <div class="stat"><span class="stat-num" data-count="260">0</span><span class="stat-label">Projects</span></div>
-        <div class="stat"><span class="stat-num" data-count="18">0</span><span class="stat-label">Years old</span></div>
-        <div class="stat"><span class="stat-num" data-count="2026">0</span><span class="stat-label">Year</span></div>
+        <div class="stat"><span class="stat-num" data-count="260">0</span><span class="stat-label" data-ru="Проектов" data-en="Projects">Проектов</span></div>
+        <div class="stat"><span class="stat-num" data-count="18">0</span><span class="stat-label" data-ru="Лет" data-en="Years old">Лет</span></div>
+        <div class="stat"><span class="stat-num" data-count="2026">0</span><span class="stat-label" data-ru="Год" data-en="Year">Год</span></div>
       </div>
     </div>
     <div class="about-side">
-      <div class="about-card"><div class="card-label">Currently</div><div class="card-value">Building the next thing</div></div>
-      <div class="about-card"><div class="card-label">Based</div><div class="card-value">Internet</div></div>
-      <div class="about-card"><div class="card-label">Focus</div><div class="card-value">WebGL · Motion · Product</div></div>
+      <div class="about-card"><div class="card-label" data-ru="Сейчас" data-en="Currently">Сейчас</div><div class="card-value" data-ru="Строю следующее" data-en="Building the next thing">Строю следующее</div></div>
+      <div class="about-card"><div class="card-label" data-ru="Локация" data-en="Based">Локация</div><div class="card-value" data-ru="Интернет" data-en="Internet">Интернет</div></div>
+      <div class="about-card"><div class="card-label" data-ru="Фокус" data-en="Focus">Фокус</div><div class="card-value" data-ru="WebGL · Motion · Продукт" data-en="WebGL · Motion · Product">WebGL · Motion · Продукт</div></div>
     </div>
   </div>
 </section>
@@ -90,47 +91,35 @@
 <section class="section projects" id="projects">
   <div class="section-head">
     <span class="section-num">02</span>
-    <h2 class="section-title">Selected<br>work</h2>
+    <h2 class="section-title" data-ru="Избранные<br>работы" data-en="Selected<br>work">Избранные<br>работы</h2>
   </div>
   <div class="projects-list">
     <a href="https://t.me/mellfor" target="_blank" class="project-item">
       <span class="proj-idx">01</span>
-      <div class="proj-body"><h3 class="proj-title">Project One</h3><p class="proj-desc">WebGL experience · Three.js · Shaders</p></div>
+      <div class="proj-body"><h3 class="proj-title" data-ru="Проект Один" data-en="Project One">Проект Один</h3><p class="proj-desc" data-ru="WebGL опыт · Three.js · Шейдеры" data-en="WebGL experience · Three.js · Shaders">WebGL опыт · Three.js · Шейдеры</p></div>
       <span class="proj-year">2026</span><span class="proj-arrow">↗</span>
     </a>
     <a href="https://t.me/mellfor" target="_blank" class="project-item">
       <span class="proj-idx">02</span>
-      <div class="proj-body"><h3 class="proj-title">Project Two</h3><p class="proj-desc">Product · Full-stack · Motion</p></div>
+      <div class="proj-body"><h3 class="proj-title" data-ru="Проект Два" data-en="Project Two">Проект Два</h3><p class="proj-desc" data-ru="Продукт · Full-stack · Анимации" data-en="Product · Full-stack · Motion">Продукт · Full-stack · Анимации</p></div>
       <span class="proj-year">2025</span><span class="proj-arrow">↗</span>
     </a>
     <a href="https://t.me/mellfor" target="_blank" class="project-item">
       <span class="proj-idx">03</span>
-      <div class="proj-body"><h3 class="proj-title">Project Three</h3><p class="proj-desc">Brand site · GSAP · Cinematic</p></div>
+      <div class="proj-body"><h3 class="proj-title" data-ru="Проект Три" data-en="Project Three">Проект Три</h3><p class="proj-desc" data-ru="Сайт бренда · GSAP · Кинематографичность" data-en="Brand site · GSAP · Cinematic">Сайт бренда · GSAP · Кинематографичность</p></div>
       <span class="proj-year">2025</span><span class="proj-arrow">↗</span>
     </a>
   </div>
   <div class="projects-more">
-    <span>+257 more in the vault</span>
-    <a href="https://t.me/mellfor" target="_blank">Ask for access ↗</a>
-  </div>
-</section>
-
-<section class="section stack" id="stack">
-  <div class="section-head">
-    <span class="section-num">03</span>
-    <h2 class="section-title">Stack &<br>tooling</h2>
-  </div>
-  <div class="stack-grid">
-    <div class="stack-col"><div class="stack-label">Frontend</div><ul><li>HTML / CSS / JS</li><li>React · Next.js</li><li>Three.js · WebGL</li><li>GSAP</li></ul></div>
-    <div class="stack-col"><div class="stack-label">Backend</div><ul><li>Node.js</li><li>Python</li><li>PostgreSQL</li><li>Redis</li></ul></div>
-    <div class="stack-col"><div class="stack-label">Tools</div><ul><li>Git · GitHub</li><li>Figma</li><li>Blender</li><li>Vercel</li></ul></div>
+    <span data-ru="+257 других в хранилище" data-en="+257 more in the vault">+257 других в хранилище</span>
+    <a href="https://t.me/mellfor" target="_blank" data-ru="Запросить доступ ↗" data-en="Ask for access ↗">Запросить доступ ↗</a>
   </div>
 </section>
 
 <section class="section contact" id="contact">
   <div class="section-head">
-    <span class="section-num">04</span>
-    <h2 class="section-title">Let's build<br>something huge</h2>
+    <span class="section-num">03</span>
+    <h2 class="section-title" data-ru="Давай создадим<br>что-то огромное" data-en="Let's build<br>something huge">Давай создадим<br>что-то огромное</h2>
   </div>
   <div class="contact-body">
     <a href="https://t.me/mellfor" target="_blank" class="contact-email">@mellfor ↗</a>
@@ -143,8 +132,8 @@
 </section>
 
 <footer class="footer">
-  <div class="footer-left">© 2026 MellFor · All rights reserved</div>
-  <div class="footer-right">Built with chaos & care</div>
+  <div class="footer-left" data-ru="© 2026 MellFor · Все права защищены" data-en="© 2026 MellFor · All rights reserved">© 2026 MellFor · Все права защищены</div>
+  <div class="footer-right" data-ru="Сделано с хаосом и любовью" data-en="Built with chaos & care">Сделано с хаосом и любовью</div>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
