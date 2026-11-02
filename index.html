@@ -111,7 +111,7 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 .project-card-hint{font-family:var(--font-mono);font-size:11px;color:var(--accent);letter-spacing:.15em;text-transform:uppercase;opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s;margin-top:16px}
 .project-card:hover .project-card-hint{opacity:1;transform:translateY(0)}
 
-/* NCHAT CARD CUSTOM */
+/* CARDS CUSTOM BGs */
 .nchat-bg{background:radial-gradient(circle at 50% 50%,#00d4ff 0%,#004466 40%,#000 100%)!important;opacity:.4!important}
 .nchat-holo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:120px;height:120px;border:2px solid rgba(0,212,255,0.4);border-radius:20px;z-index:1;display:flex;align-items:center;justify-content:center;box-shadow:0 0 30px rgba(0,212,255,0.2) inset;animation:floatHolo 4s infinite alternate}
 .nchat-holo::before{content:'🔒';font-size:40px;filter:drop-shadow(0 0 10px #00d4ff)}
@@ -119,32 +119,26 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 @keyframes floatHolo{0%{transform:translate(-50%,-50%) translateY(0)}100%{transform:translate(-50%,-50%) translateY(-10px)}}
 @keyframes scan{0%{top:0}100%{top:100%}}
 
-/* NM EXCHANGE CARD CUSTOM */
 .exchange-chart{position:absolute;bottom:15%;left:10%;right:10%;height:35%;display:flex;align-items:flex-end;gap:6px;z-index:1;opacity:0.5;pointer-events:none}
 .candle{flex:1;background:#00ffaa;border-radius:2px;position:relative;animation:candleGrow 2s infinite alternate}
 .candle::before{content:'';position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:2px;height:10px;background:inherit}
 .candle.red{background:#ff5c8a}
-.candle:nth-child(odd){animation-delay:0.5s;height:60%}
-.candle:nth-child(even){animation-delay:1s;height:40%}
-.candle:nth-child(3n){height:80%}
-@keyframes candleGrow{0%{transform:scaleY(0.8)}100%{transform:scaleY(1.1)}}
+.candle:nth-child(odd){animation-delay:0.5s;height:60%}.candle:nth-child(even){animation-delay:1s;height:40%}
+.candle:nth-child(3n){height:80%}@keyframes candleGrow{0%{transform:scaleY(0.8)}100%{transform:scaleY(1.1)}}
 .exchange-arrow{position:absolute;top:30%;right:15%;width:60px;height:60px;border-top:6px solid #00ffaa;border-right:6px solid #00ffaa;transform:rotate(-45deg);filter:drop-shadow(0 0 15px #00ffaa);z-index:1;animation:arrowFloat 2s infinite alternate}
 @keyframes arrowFloat{0%{transform:rotate(-45deg) translate(0,0)}100%{transform:rotate(-45deg) translate(10px,-10px)}}
 
-/* MWIN CARD CUSTOM */
 .mwin-bg{background:radial-gradient(circle at 50% 50%,#ff0055 0%,#330011 60%,#000 100%)!important;opacity:.6!important}
 .mwin-wheel{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:75%;aspect-ratio:1;border-radius:50%;background:conic-gradient(#ff0055 0deg 30deg,#111 30deg 60deg,#ff0055 60deg 90deg,#111 90deg 120deg,#ff0055 120deg 150deg,#111 150deg 180deg,#ff0055 180deg 210deg,#111 210deg 240deg,#ff0055 240deg 270deg,#111 270deg 300deg,#ff0055 300deg 330deg,#111 330deg 360deg);border:4px solid #ff0055;box-shadow:0 0 30px rgba(255,0,85,0.6),inset 0 0 20px rgba(0,0,0,0.9);animation:spinWheel 10s linear infinite;z-index:1}
 .mwin-wheel::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:20%;aspect-ratio:1;border-radius:50%;background:#000;border:2px solid #ff0055;box-shadow:0 0 15px #ff0055}
 .mwin-pointer{position:absolute;top:8%;left:50%;transform:translateX(-50%);width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-top:20px solid #ff0055;z-index:3;filter:drop-shadow(0 0 10px #ff0055);animation:pulsePointer 1s infinite alternate}
-@keyframes spinWheel{to{transform:translate(-50%,-50%) rotate(360deg)}}
-@keyframes pulsePointer{0%{transform:translateX(-50%) scale(1)}100%{transform:translateX(-50%) scale(1.2)}}
+@keyframes spinWheel{to{transform:translate(-50%,-50%) rotate(360deg)}}@keyframes pulsePointer{0%{transform:translateX(-50%) scale(1)}100%{transform:translateX(-50%) scale(1.2)}}
 
 @media(max-width:900px){.projects-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.projects-grid{grid-template-columns:1fr}.project-card{aspect-ratio:4/5}}
 
 .projects-more{display:flex;justify-content:space-between;align-items:center;margin-top:48px;font-family:var(--font-mono);font-size:13px;color:var(--muted)}
-.projects-more a{color:var(--accent)}
-@media(max-width:768px){.projects-more{flex-direction:column;gap:12px;align-items:flex-start}}
+.projects-more a{color:var(--accent)}@media(max-width:768px){.projects-more{flex-direction:column;gap:12px;align-items:flex-start}}
 
 .contact{border-bottom:1px solid var(--line)}
 .contact-body{display:flex;flex-direction:column;gap:48px}
@@ -152,8 +146,7 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 .contact-socials{display:flex;gap:32px;flex-wrap:wrap;font-family:var(--font-mono);font-size:14px;text-transform:uppercase;letter-spacing:.1em}
 .contact-socials a{color:var(--muted);position:relative;padding-bottom:4px;transition:color .3s}
 .contact-socials a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--accent);transition:width .4s var(--ease)}
-.contact-socials a:hover{color:var(--fg)}
-.contact-socials a:hover::after{width:100%}
+.contact-socials a:hover{color:var(--fg)}.contact-socials a:hover::after{width:100%}
 @media(max-width:768px){.contact-socials{gap:20px;font-size:12px}}
 
 .footer{display:flex;justify-content:space-between;align-items:center;padding:40px 48px;font-family:var(--font-mono);font-size:12px;color:var(--muted);letter-spacing:.05em;background:var(--bg)}
@@ -162,26 +155,23 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 .reveal{opacity:0;transform:translateY(40px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
 .reveal.in{opacity:1;transform:translateY(0)}
 
-/* OVERLAY */
-.project-overlay{position:fixed;inset:0;z-index:9998;background:#020202;visibility:hidden;opacity:0;transition:opacity .6s var(--ease),visibility .6s;overflow:hidden}
+/* ============ OVERLAY LAYOUT FIX ============ */
+.project-overlay{position:fixed;inset:0;z-index:9998;background:#020202;visibility:hidden;opacity:0;transition:opacity .6s var(--ease),visibility .6s;overflow:hidden;display:flex;flex-direction:row;align-items:center;justify-content:space-between;padding:0 6vw;gap:40px}
 .project-overlay.active{visibility:visible;opacity:1}
-/* ФИКС БАГА: Канвас скрыт по умолчанию */
 #projectCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;display:none}
-#projectCanvas.active{display:block}
 .po-vignette{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.95) 0%,rgba(0,0,0,.8) 30%,transparent 70%),radial-gradient(circle at 70% 50%,transparent 20%,rgba(0,0,0,.5) 90%)}
-.po-close{position:absolute;top:32px;right:32px;width:56px;height:56px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--fg);font-size:22px;cursor:none;z-index:10;transition:all .3s var(--ease);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center}
+.po-close{position:absolute;top:32px;right:32px;width:56px;height:56px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--fg);font-size:22px;cursor:none;z-index:20;transition:all .3s var(--ease);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center}
 .po-close:hover{border-color:var(--accent);transform:rotate(90deg);background:var(--accent);color:#fff}
 
-.po-content{position:absolute;inset:0;z-index:5;pointer-events:none;padding:120px 60px 60px;display:flex;flex-direction:column;justify-content:center;max-width:750px}
+.po-content{position:relative;width:45%;max-width:650px;pointer-events:none;z-index:5;display:flex;flex-direction:column;justify-content:center;}
 .po-content a,.po-content button{pointer-events:auto}
 
 .po-num{font-family:var(--font-mono);font-size:13px;color:var(--accent);letter-spacing:.4em;margin-bottom:20px;opacity:0;transform:translateX(-20px);transition:all .6s var(--ease) .2s}
-.po-title{font-size:clamp(48px,8vw,100px);font-weight:500;line-height:.9;letter-spacing:-.04em;margin-bottom:40px;opacity:0;transform:translateX(-20px);transition:all .8s var(--ease) .35s;background:linear-gradient(135deg,var(--fg) 30%,var(--accent) 80%,var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.po-title{font-size:clamp(48px,6vw,90px);font-weight:500;line-height:.9;letter-spacing:-.04em;margin-bottom:40px;opacity:0;transform:translateX(-20px);transition:all .8s var(--ease) .35s;background:linear-gradient(135deg,var(--fg) 30%,var(--accent) 80%,var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
 
 .story-container{display:flex;flex-direction:column;gap:16px;margin-bottom:40px}
 .story-line{font-size:18px;line-height:1.6;color:#b0b0b0;opacity:0;transform:translateY(20px);transition:all .8s var(--ease)}
 .story-line strong{color:var(--fg);font-weight:500}
-
 .po-meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px;opacity:0;transform:translateX(-20px);transition:all .8s var(--ease) 1.5s}
 .po-tag{font-family:var(--font-mono);font-size:11px;padding:7px 14px;border:1px solid rgba(124,92,255,.3);border-radius:100px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;background:rgba(124,92,255,.05)}
 .po-cta{opacity:0;transform:translateX(-20px);transition:all .8s var(--ease) 1.7s}
@@ -194,24 +184,29 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 .project-overlay.active .story-line:nth-child(4){transition-delay:1.5s}
 .project-overlay.active .po-meta,.project-overlay.active .po-cta{opacity:1;transform:translateX(0)}
 
-.po-scene-label{position:absolute;bottom:32px;right:32px;z-index:8;font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);pointer-events:none;opacity:0;transition:opacity .8s var(--ease) 1s}
+.po-scene-label{position:absolute;bottom:32px;left:6vw;z-index:8;font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);pointer-events:none;opacity:0;transition:opacity .8s var(--ease) 1s}
 .project-overlay.active .po-scene-label{opacity:1}
 
-/* NCHAT CHAT UI */
-#nchat-ui{position:absolute;inset:0;z-index:10;display:none;flex-direction:column;justify-content:flex-end;padding:0 50px 50px;pointer-events:none;background:radial-gradient(circle at 70% 30%,rgba(0,212,255,0.05),transparent 50%)}
-#nchat-ui.active{display:flex}
-.chat-window{width:100%;max-width:600px;margin:0 auto;background:rgba(0,20,30,0.8);border:1px solid rgba(0,212,255,0.3);border-radius:20px;padding:24px;backdrop-filter:blur(20px);pointer-events:auto;box-shadow:0 20px 50px rgba(0,0,0,0.5);display:flex;flex-direction:column;gap:16px;max-height: 60vh; overflow-y: auto;}
+/* ============ GAME PANELS (RIGHT SIDE) ============ */
+#nchat-ui, #exchange-ui, #mwin-ui {
+    position: relative; width:50%; max-width:900px; display:none; flex-direction:column;
+    justify-content:center; align-items:flex-end; pointer-events:none; z-index:10; height:100vh;
+}
+#nchat-ui.active, #exchange-ui.active, #mwin-ui.active { display: flex; }
+
+/* NCHAT */
+.chat-window{width:100%;max-width:650px;background:rgba(0,20,30,0.85);border:1px solid rgba(0,212,255,0.3);border-radius:20px;padding:24px;backdrop-filter:blur(20px);pointer-events:auto;box-shadow:0 20px 50px rgba(0,0,0,0.5);display:flex;flex-direction:column;gap:16px;height:80vh;max-height:800px;}
+.chat-messages{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:16px;padding-right:10px;}
+.chat-messages::-webkit-scrollbar{width:6px}.chat-messages::-webkit-scrollbar-thumb{background:rgba(0,212,255,0.3);border-radius:10px}
 .chat-msg{background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.2);padding:12px 20px;border-radius:12px;border-bottom-left-radius:2px;align-self:flex-start;max-width:85%;font-size:15px;color:#fff;animation:msgIn 0.4s ease forwards}
 .chat-msg.user{background:rgba(124,92,255,0.2);border-color:rgba(124,92,255,0.4);border-radius:12px;border-bottom-right-radius:2px;align-self:flex-end}
-.chat-options{display:flex;flex-direction:column;gap:10px;margin-top:10px}
-.chat-opt{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:14px 20px;border-radius:12px;cursor:none;text-align:left;font-family:var(--font-sans);font-size:14px;transition:all 0.2s}
+.chat-options{display:flex;flex-direction:column;gap:8px;margin-top:10px;flex-shrink:0;}
+.chat-opt{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:12px 20px;border-radius:12px;cursor:none;text-align:left;font-family:var(--font-sans);font-size:14px;transition:all 0.2s}
 .chat-opt:hover{background:rgba(0,212,255,0.2);border-color:#00d4ff;transform:translateX(5px)}
 @keyframes msgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-/* EXCHANGE GAME UI */
-#exchange-ui{position:absolute;inset:0;z-index:10;display:none;flex-direction:column;justify-content:center;align-items:center;pointer-events:none;padding:20px;background:radial-gradient(circle at 50% 50%,rgba(0,255,170,0.05),transparent 70%)}
-#exchange-ui.active{display:flex}
-.exchange-panel{width:100%;max-width:900px;background:rgba(5,20,15,0.85);border:1px solid rgba(0,255,170,0.3);border-radius:24px;padding:30px;backdrop-filter:blur(20px);pointer-events:auto;display:flex;flex-direction:column;gap:20px;box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+/* EXCHANGE */
+.exchange-panel{width:100%;max-width:800px;background:rgba(5,20,15,0.9);border:1px solid rgba(0,255,170,0.3);border-radius:24px;padding:30px;backdrop-filter:blur(20px);pointer-events:auto;display:flex;flex-direction:column;gap:20px;box-shadow:0 20px 60px rgba(0,0,0,0.6)}
 .ex-top{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:20px}
 .ex-col{display:flex;flex-direction:column;gap:5px}
 .ex-label{font-family:var(--font-mono);font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.1em}
@@ -220,7 +215,7 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 .ex-event-box{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);padding:10px;border-radius:8px;text-align:center;font-family:var(--font-mono);font-size:12px;color:#aaa;min-height:40px;display:flex;align-items:center;justify-content:center}
 .ex-event-box.flash{animation:flashBg 1s}
 @keyframes flashBg{0%,100%{background:rgba(255,255,255,0.05)}50%{background:rgba(0,255,170,0.3);color:#fff}}
-.ex-chart-container{height:220px;width:100%;border-radius:12px;background:rgba(0,0,0,0.4);position:relative;overflow:hidden;border:1px solid rgba(0,255,170,0.1)}
+.ex-chart-container{height:200px;width:100%;border-radius:12px;background:rgba(0,0,0,0.4);position:relative;overflow:hidden;border:1px solid rgba(0,255,170,0.1)}
 .ex-chart-svg{width:100%;height:100%;display:block}
 .ex-actions{display:grid;grid-template-columns:1fr 1fr;gap:15px}
 .ex-btn{padding:18px;border-radius:12px;border:none;font-family:var(--font-mono);font-size:14px;font-weight:700;cursor:none;transition:all 0.3s;letter-spacing:0.1em;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
@@ -229,14 +224,55 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 .ex-btn.buy:hover{background:#00ffaa;color:#000;box-shadow:0 0 30px rgba(0,255,170,0.5)}
 .ex-btn.sell{background:rgba(255,92,138,0.15);color:#ff5c8a;border:1px solid #ff5c8a}
 .ex-btn.sell:hover{background:#ff5c8a;color:#fff;box-shadow:0 0 30px rgba(255,92,138,0.5)}
-.ex-upgrades{display:flex;gap:10px;margin-top:10px}
-.ex-up-btn{flex:1;background:rgba(124,92,255,0.1);border:1px solid rgba(124,92,255,0.4);color:#b0b0ff;padding:12px;border-radius:8px;cursor:none;font-family:var(--font-mono);font-size:12px;transition:all 0.3s;text-align:center}
+.ex-up-btn{background:rgba(124,92,255,0.1);border:1px solid rgba(124,92,255,0.4);color:#b0b0ff;padding:12px;border-radius:8px;cursor:none;font-family:var(--font-mono);font-size:12px;transition:all 0.3s;text-align:center;width:100%}
 .ex-up-btn:hover{background:rgba(124,92,255,0.3);border-color:#7c5cff;color:#fff}
 .ex-up-btn:disabled{opacity:0.5;cursor:not-allowed;border-color:rgba(255,255,255,0.1);color:#555}
 
-@media(max-width:768px){.project-overlay{padding:0}.po-close{top:20px;right:20px;width:48px;height:48px;font-size:18px}.po-content{padding:100px 24px 40px;justify-content:flex-end;background:linear-gradient(to top,rgba(0,0,0,.95) 40%,transparent 90%)}.story-line{font-size:14px}.po-vignette{background:radial-gradient(circle at 50% 30%,transparent 10%,rgba(0,0,0,.7) 80%)}.po-title{font-size:clamp(32px,10vw,64px)}
-#nchat-ui{padding:0 10px 20px}.chat-window{padding:16px;max-height:70vh}.chat-msg{font-size:13px;padding:10px 14px}.chat-opt{font-size:13px;padding:10px 14px}
-#exchange-ui{padding:10px}.exchange-panel{padding:20px;gap:15px}.ex-val{font-size:20px}.ex-btn{padding:14px;font-size:12px}.ex-chart-container{height:150px}.ex-actions{grid-template-columns:1fr}}
+/* MWIN CASINO */
+.mwin-panel{width:100%;max-width:800px;background:rgba(25,5,10,0.9);border:1px solid rgba(255,0,85,0.3);border-radius:24px;padding:24px;backdrop-filter:blur(20px);pointer-events:auto;display:flex;flex-direction:column;gap:20px;box-shadow:0 20px 60px rgba(0,0,0,0.6);position:relative;overflow:hidden;}
+.mwin-header{font-family:var(--font-mono);font-size:14px;letter-spacing:0.4em;color:#ff0055;text-align:center;font-weight:700;margin-bottom:10px;text-transform:uppercase}
+.mwin-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;z-index:2;}
+.mwin-tab{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);padding:15px 10px;border-radius:12px;cursor:none;text-align:center;font-family:var(--font-mono);font-size:12px;color:#aaa;transition:all 0.3s;display:flex;flex-direction:column;align-items:center;gap:5px}
+.mwin-tab:hover{background:rgba(255,0,85,0.1);border-color:rgba(255,0,85,0.4);color:#fff}
+.mwin-tab.active{background:rgba(255,0,85,0.2);border-color:#ff0055;color:#fff;box-shadow:0 0 15px rgba(255,0,85,0.3)}
+.mwin-tab svg{width:24px;height:24px;fill:currentColor}
+.mwin-game-area{position:relative;width:100%;height:350px;background:rgba(0,0,0,0.5);border-radius:16px;border:1px solid rgba(255,255,255,0.1);overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;}
+#projectCanvas{position:absolute;inset:0;width:100%;height:100%;display:none;}
+.mwin-game-content{position:relative;z-index:2;text-align:center;color:#fff;display:none;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;}
+.mwin-game-content.active{display:flex;}
+
+/* MWIN Rocket */
+.rocket-mult{font-size:64px;font-weight:700;color:#00ffaa;text-shadow:0 0 30px rgba(0,255,170,0.5);font-family:var(--font-mono);margin-bottom:20px}
+.rocket-btn{background:#ff0055;color:#fff;border:none;padding:15px 40px;border-radius:100px;font-family:var(--font-mono);font-size:16px;font-weight:700;cursor:none;box-shadow:0 0 20px rgba(255,0,85,0.4);transition:all 0.3s}
+.rocket-btn:disabled{opacity:0.5;box-shadow:none}
+.rocket-crashed{font-size:48px;font-weight:700;color:#ff0055;font-family:var(--font-mono);text-transform:uppercase;animation:shake 0.5s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+
+/* MWIN Roulette */
+.roulette-container{position:relative;width:250px;height:250px;margin-bottom:20px}
+.roulette-wheel{width:100%;height:100%;border-radius:50%;border:4px solid #ff0055;background:conic-gradient(#ff0055 0deg 30deg,#111 30deg 60deg,#ff0055 60deg 90deg,#111 90deg 120deg,#ff0055 120deg 150deg,#111 150deg 180deg,#ff0055 180deg 210deg,#111 210deg 240deg,#ff0055 240deg 270deg,#111 270deg 300deg,#ff0055 300deg 330deg,#111 330deg 360deg);transition:transform 3s cubic-bezier(0.25, 0.1, 0.25, 1);box-shadow:0 0 30px rgba(255,0,85,0.4)}
+.roulette-pointer{position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:15px solid transparent;border-right:15px solid transparent;border-top:25px solid #00ffaa;filter:drop-shadow(0 0 10px #00ffaa);z-index:5}
+.roulette-btns{display:flex;gap:10px}
+.roulette-btn{padding:10px 20px;border-radius:8px;border:none;font-family:var(--font-mono);font-weight:700;cursor:none;transition:0.3s}
+.roulette-btn.red{background:#ff0055;color:#fff}.roulette-btn.black{background:#333;color:#fff;border:1px solid #555}.roulette-btn.green{background:#00ffaa;color:#000}
+
+/* MWIN Coinflip */
+.coin{width:150px;height:150px;border-radius:50%;background:linear-gradient(135deg,#ffaa00,#ff0055);display:flex;align-items:center;justify-content:center;font-size:60px;font-weight:700;color:#fff;box-shadow:0 0 30px rgba(255,0,85,0.5);margin-bottom:30px;transition:transform 1s ease-out;transform-style:preserve-3d}
+.coin.flipping{animation:flip 1s ease-out forwards}
+@keyframes flip{0%{transform:rotateY(0)}100%{transform:rotateY(1800deg)}}
+.coinflip-btns{display:flex;gap:20px}
+
+@media(max-width:1024px){
+  .project-overlay{flex-direction:column;justify-content:flex-start;padding:80px 20px 20px;gap:20px;overflow-y:auto}
+  .po-content{width:100%;max-width:100%;margin-bottom:20px}
+  #nchat-ui, #exchange-ui, #mwin-ui { width:100%; max-width:100%; height:auto; align-items:center; }
+  .chat-window{height:60vh}
+  .exchange-panel, .mwin-panel { padding: 20px; }
+  .ex-chart-container{height:150px}
+  .ex-actions{grid-template-columns:1fr}
+  .mwin-grid{grid-template-columns:1fr 1fr}
+  .po-close{position:fixed;top:20px;right:20px;width:48px;height:48px;font-size:18px}
+}
 </style>
 </head>
 <body>
@@ -332,9 +368,7 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
     
     <button class="project-card" data-project="2">
       <div class="project-card-bg" style="background:radial-gradient(circle at 30% 30%,#00ffaa,transparent 60%),radial-gradient(circle at 70% 80%,#7c5cff,transparent 60%)"></div>
-      <div class="exchange-chart">
-        <div class="candle red"></div><div class="candle"></div><div class="candle red"></div><div class="candle"></div><div class="candle red"></div><div class="candle"></div><div class="candle red"></div><div class="candle"></div><div class="candle red"></div>
-      </div>
+      <div class="exchange-chart"><div class="candle red"></div><div class="candle"></div><div class="candle red"></div><div class="candle"></div><div class="candle red"></div><div class="candle"></div><div class="candle red"></div><div class="candle"></div><div class="candle red"></div></div>
       <div class="exchange-arrow"></div>
       <div class="project-card-content">
         <div class="project-card-num">02 / 03</div>
@@ -355,7 +389,7 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
         <div>
           <h3 class="project-card-title">MWIN</h3>
           <p class="project-card-desc" data-ru="Играй и побеждай" data-en="Play and win">Играй и побеждай</p>
-          <div class="project-card-hint" data-ru="Бросить кубик →" data-en="Roll the dice →">Бросить кубик →</div>
+          <div class="project-card-hint" data-ru="Открыть казино →" data-en="Open casino →">Открыть казино →</div>
         </div>
       </div>
     </button>
@@ -401,50 +435,81 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
     </div>
   </div>
   
-  <!-- UI для NCHAT -->
+  <!-- NCHAT UI -->
   <div id="nchat-ui">
-    <div class="chat-window" id="chatWindow"></div>
+    <div class="chat-window">
+      <div class="chat-messages" id="chatMessages"></div>
+      <div class="chat-options" id="chatOptions"></div>
+    </div>
   </div>
 
-  <!-- UI для NM EXCHANGE -->
+  <!-- NM EXCHANGE UI -->
   <div id="exchange-ui">
     <div class="exchange-panel">
       <div class="ex-top">
-        <div class="ex-col">
-          <span class="ex-label" data-ru="Кэш ($)" data-en="Cash ($)">Кэш ($)</span>
-          <span class="ex-val" id="exCash">$1000</span>
-        </div>
-        <div class="ex-col" style="text-align:center">
-          <span class="ex-label" data-ru="Трафик (ед.)" data-en="Traffic (units)">Трафик (ед.)</span>
-          <span class="ex-val secondary" id="exTraffic">0</span>
-        </div>
-        <div class="ex-col" style="text-align:right">
-          <span class="ex-label" data-ru="Цена трафика" data-en="Traffic price">Цена трафика</span>
-          <span class="ex-val" id="exPrice">$50.00</span>
-        </div>
+        <div class="ex-col"><span class="ex-label" data-ru="Кэш ($)" data-en="Cash ($)">Кэш ($)</span><span class="ex-val" id="exCash">$1000</span></div>
+        <div class="ex-col" style="text-align:center"><span class="ex-label" data-ru="Трафик (ед.)" data-en="Traffic (units)">Трафик (ед.)</span><span class="ex-val secondary" id="exTraffic">0</span></div>
+        <div class="ex-col" style="text-align:right"><span class="ex-label" data-ru="Цена" data-en="Price">Цена</span><span class="ex-val" id="exPrice">$50.00</span></div>
+      </div>
+      <div class="ex-event-box" id="exEventBox" data-ru="Рынок стабилен..." data-en="Market is stable...">Рынок стабилен...</div>
+      <div class="ex-chart-container"><svg class="ex-chart-svg" id="exChart" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline id="exLine" fill="none" stroke="#00ffaa" stroke-width="1.5" points=""/></svg></div>
+      <button class="ex-up-btn" id="btnUpgrade" data-ru="Купить Бот-Ферму ($500)" data-en="Buy Bot Farm ($500)">Купить Бот-Ферму ($500)</button>
+      <div class="ex-actions">
+        <button class="ex-btn buy" id="btnBuy"><div data-ru="КУПИТЬ" data-en="BUY">КУПИТЬ</div><span id="buyCost">за $50</span></button>
+        <button class="ex-btn sell" id="btnSell"><div data-ru="ПРОДАТЬ" data-en="SELL">ПРОДАТЬ</div><span id="sellGain">за $50</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MWIN UI -->
+  <div id="mwin-ui">
+    <div class="mwin-panel">
+      <div class="mwin-header">MWIN CASINO</div>
+      <div class="mwin-grid">
+        <button class="mwin-tab active" data-game="dice">
+          <svg viewBox="0 0 24 24"><path d="M19,3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M8.5,17.5 C7.7,17.5,7,16.8,7,16s0.7-1.5,1.5-1.5S10,15.2,10,16S9.3,17.5,8.5,17.5z M8.5,9.5C7.7,9.5,7,8.8,7,8s0.7-1.5,1.5-1.5 S10,7.2,10,8S9.3,9.5,8.5,9.5z M15.5,17.5c-0.8,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5s1.5,0.7,1.5,1.5S16.3,17.5,15.5,17.5z M15.5,9.5 c-0.8,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5s1.5,0.7,1.5,1.5S16.3,9.5,15.5,9.5z"/></svg>
+          Dice
+        </button>
+        <button class="mwin-tab" data-game="rocket">🚀 Rocket</button>
+        <button class="mwin-tab" data-game="roulette">🎡 Roulette</button>
+        <button class="mwin-tab" data-game="coin">🪙 Coinflip</button>
       </div>
       
-      <div class="ex-event-box" id="exEventBox" data-ru="Рынок стабилен..." data-en="Market is stable...">Рынок стабилен...</div>
+      <div class="mwin-game-area">
+        <!-- 3D Canvas for Dice -->
+        
+        <!-- Dice UI (Empty, just for click) -->
+        <div class="mwin-game-content active" id="game-dice" style="pointer-events:none;">
+          <div style="position:absolute;bottom:20px;font-family:var(--font-mono);color:#888;font-size:12px;pointer-events:auto;">Кликни по кубику</div>
+        </div>
 
-      <div class="ex-chart-container">
-        <svg class="ex-chart-svg" id="exChart" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <polyline id="exLine" fill="none" stroke="#00ffaa" stroke-width="1.5" points=""/>
-        </svg>
-      </div>
+        <!-- Rocket -->
+        <div class="mwin-game-content" id="game-rocket">
+          <div class="rocket-mult" id="rocketMult">1.00x</div>
+          <button class="rocket-btn" id="rocketBtn">СТАРТ</button>
+        </div>
 
-      <div class="ex-upgrades">
-         <button class="ex-up-btn" id="btnUpgrade" data-ru="Купить Бот-Ферму ($500)" data-en="Buy Bot Farm ($500)">Купить Бот-Ферму ($500)</button>
-      </div>
+        <!-- Roulette -->
+        <div class="mwin-game-content" id="game-roulette">
+          <div class="roulette-container">
+            <div class="roulette-wheel" id="rouletteWheel"></div>
+            <div class="roulette-pointer"></div>
+          </div>
+          <div class="roulette-btns">
+            <button class="roulette-btn red" onclick="playRoulette('red')">КРАСНОЕ</button>
+            <button class="roulette-btn black" onclick="playRoulette('black')">ЧЁРНОЕ</button>
+            <button class="roulette-btn green" onclick="playRoulette('green')">ЗЕЛЁНОЕ</button>
+          </div>
+        </div>
 
-      <div class="ex-actions">
-        <button class="ex-btn buy" id="btnBuy">
-          <div data-ru="КУПИТЬ ТРАФИК" data-en="BUY TRAFFIC">КУПИТЬ ТРАФИК</div>
-          <span id="buyCost" data-ru="за $50" data-en="for $50">за $50</span>
-        </button>
-        <button class="ex-btn sell" id="btnSell">
-          <div data-ru="ПРОДАТЬ ТРАФИК" data-en="SELL TRAFFIC">ПРОДАТЬ ТРАФИК</div>
-          <span id="sellGain" data-ru="за $50" data-en="for $50">за $50</span>
-        </button>
+        <!-- Coinflip -->
+        <div class="mwin-game-content" id="game-coin">
+          <div class="coin" id="coin">?</div>
+          <div class="coinflip-btns">
+            <button class="rocket-btn" style="background:#00ffaa;color:#000" onclick="playCoin('heads')">ОРЁЛ</button>
+            <button class="rocket-btn" style="background:#ffaa00;color:#000" onclick="playCoin('tails')">РЕШКА</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -456,7 +521,7 @@ ul{list-style:none}img,canvas{display:block;max-width:100%}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
-// ============ AUDIO (Выключено по умолчанию) ============
+// ============ AUDIO ============
 const AudioCtx = window.AudioContext || window.webkitAudioContext;
 let audioCtx = null, audioEnabled = false;
 function initAudio(){ if(!audioCtx) audioCtx = new AudioCtx(); if(audioCtx.state==='suspended') audioCtx.resume(); }
@@ -469,6 +534,7 @@ function playBlackHole(){ playTone(60,1.5,'sawtooth',0.15); }
 function playDice(){ playTone(600,0.1,'square',0.05); setTimeout(()=>playTone(400,0.1,'square',0.05),100); }
 function playSuccess(){ playTone(600,0.1,'sine',0.1); setTimeout(()=>playTone(800,0.2,'sine',0.1),100); }
 function playError(){ playTone(200,0.2,'sawtooth',0.1); }
+function playWin(){ playTone(400,0.1,'sine',0.1); setTimeout(()=>playTone(600,0.1,'sine',0.1),100); setTimeout(()=>playTone(800,0.2,'sine',0.1),200); }
 
 // ============ CURSOR ============
 const cursor=document.getElementById('cursor'), cursorDot=document.getElementById('cursorDot');
@@ -592,392 +658,293 @@ if(canvas&&typeof THREE!=='undefined'){
 
 // ============ PROJECT DATA ============
 const projectsData={
-  '1':{
-    num:'01', title:'NCHAT',
-    descRu:['<strong>Мессенджер будущего.</strong>', 'Абсолютная конфиденциальность каждого пользователя.', 'Передовые технологии стирают границы общения.', 'Твой безопасный портал в новую реальность.'],
-    descEn:['<strong>Messenger of the future.</strong>', 'Total privacy for every user.', 'Advanced tech erases borders.', 'Your safe portal to a new reality.'],
-    tags:['E2EE','Messenger','Privacy','Next-Gen'], scene:'nchat'
-  },
-  '2':{
-    num:'02', title:'NM EXCHANGE',
-    descRu:['<strong>Первая в мире биржа трафика.</strong>', 'Пользователи и исполнители устанавливают свои условия.', 'Владельцы ресурсов монетизируют даже малые аудитории.', 'Площадка гарантирует успех каждой сделки.'],
-    descEn:['<strong>World\'s first traffic exchange.</strong>', 'Users and executors set their own terms.', 'Resource owners monetize even small audiences.', 'The platform guarantees the success of every deal.'],
-    tags:['Traffic','Exchange','Monetization','Web3'], scene:'exchange'
-  },
-  '3':{
-    num:'03', title:'MWIN',
-    descRu:['<strong>Испытай удачу.</strong>', 'Крути кубик. Используй тактику.', 'Твой шанс сорвать куш в нашей экосистеме.', 'Кликни по кубику, чтобы бросить его.'],
-    descEn:['<strong>Test your luck.</strong>', 'Roll the dice. Use tactics.', 'Your chance to hit the jackpot in our ecosystem.', 'Click the dice to roll it.'],
-    tags:['Game','Win','3D','Interactive'], scene:'mwin'
-  }
+  '1':{num:'01',title:'NCHAT',descRu:['<strong>Мессенджер будущего.</strong>','Абсолютная конфиденциальность каждого пользователя.','Передовые технологии стирают границы общения.','Твой безопасный портал в новую реальность.'],descEn:['<strong>Messenger of the future.</strong>','Total privacy for every user.','Advanced tech erases borders.','Your safe portal to a new reality.'],tags:['E2EE','Messenger','Privacy','Next-Gen'],scene:'nchat'},
+  '2':{num:'02',title:'NM EXCHANGE',descRu:['<strong>Первая в мире биржа трафика.</strong>','Пользователи и исполнители устанавливают свои условия.','Владельцы ресурсов монетизируют даже малые аудитории.','Площадка гарантирует успех каждой сделки.'],descEn:['<strong>World\'s first traffic exchange.</strong>','Users and executors set their own terms.','Resource owners monetize even small audiences.','The platform guarantees the success of every deal.'],tags:['Traffic','Exchange','Monetization','Web3'],scene:'exchange'},
+  '3':{num:'03',title:'MWIN',descRu:['<strong>Испытай удачу.</strong>','Крути кубик. Используй тактику.','Твой шанс сорвать куш в нашей экосистеме.','Выбирай игру и побеждай.'],descEn:['<strong>Test your luck.</strong>','Roll the dice. Use tactics.','Your chance to hit the jackpot in our ecosystem.','Choose a game and win.'],tags:['Game','Win','3D','Interactive'],scene:'mwin'}
 };
 
 const overlay=document.getElementById('projectOverlay'), poNum=document.getElementById('poNum'), poTitle=document.getElementById('poTitle'), poStory=document.getElementById('poStory'), poMeta=document.getElementById('poMeta'), poClose=document.getElementById('poClose');
-const nchatUI = document.getElementById('nchat-ui');
-const exchangeUI = document.getElementById('exchange-ui');
-const projectCanvas = document.getElementById('projectCanvas');
-let currentLang='ru';
-let activeScene=null;
-let currentGameInterval = null;
-let currentEventInterval = null;
-let currentBotInterval = null;
+const nchatUI=document.getElementById('nchat-ui'), exchangeUI=document.getElementById('exchange-ui'), mwinUI=document.getElementById('mwin-ui');
+const projectCanvas=document.getElementById('projectCanvas');
+let currentLang='ru', activeScene=null, currentGameInterval=null, currentEventInterval=null, currentBotInterval=null, activeGameTab='dice';
 
 function cleanupScene(){
-  if(activeScene && activeScene.dispose){ try{ activeScene.dispose(); }catch(e){ console.warn(e); } }
+  if(activeScene && activeScene.dispose){ try{ activeScene.dispose(); }catch(e){} }
   activeScene=null;
-  if(currentGameInterval) { clearInterval(currentGameInterval); currentGameInterval = null; }
-  if(currentEventInterval) { clearInterval(currentEventInterval); currentEventInterval = null; }
-  if(currentBotInterval) { clearInterval(currentBotInterval); currentBotInterval = null; }
-  nchatUI.classList.remove('active');
-  exchangeUI.classList.remove('active');
-  projectCanvas.classList.remove('active'); // ФИКС: Скрываем 3D-канвас
-  document.getElementById('chatWindow').innerHTML = '';
+  if(currentGameInterval) { clearInterval(currentGameInterval); currentGameInterval=null; }
+  if(currentEventInterval) { clearInterval(currentEventInterval); currentEventInterval=null; }
+  if(currentBotInterval) { clearInterval(currentBotInterval); currentBotInterval=null; }
+  if(window.rocketInterval) { clearInterval(window.rocketInterval); window.rocketInterval=null; }
+  nchatUI.classList.remove('active'); exchangeUI.classList.remove('active'); mwinUI.classList.remove('active');
+  projectCanvas.style.display = 'none';
+  document.getElementById('chatMessages').innerHTML = '';
+  document.getElementById('chatOptions').innerHTML = '';
 }
 
 function openProject(id){
   const p=projectsData[id]; if(!p) return;
-  poNum.textContent=`Проект ${p.num} / 03`;
-  poTitle.textContent=p.title;
-  poStory.innerHTML='';
-  const textArr = currentLang==='ru' ? p.descRu : p.descEn;
-  textArr.forEach(txt=>{ const div=document.createElement('div'); div.className='story-line'; div.innerHTML=txt; poStory.appendChild(div); });
+  poNum.textContent=`Проект ${p.num} / 03`; poTitle.textContent=p.title;
+  poStory.innerHTML=''; (currentLang==='ru'?p.descRu:p.descEn).forEach(t=>{const d=document.createElement('div');d.className='story-line';d.innerHTML=t;poStory.appendChild(d);});
   poMeta.innerHTML=p.tags.map(t=>`<span class="po-tag">${t}</span>`).join('');
-  overlay.classList.add('active');
-  document.body.style.overflow='hidden';
-  playWhoosh();
+  overlay.classList.add('active'); document.body.style.overflow='hidden'; playWhoosh();
   
   setTimeout(()=>{
     cleanupScene();
-    if(p.scene==='nchat'){ 
-      nchatUI.classList.add('active'); 
-      startNchatGame(); 
-    }
-    else if(p.scene==='exchange'){ 
-      exchangeUI.classList.add('active'); 
-      startExchangeGame(); 
-    }
-    else if(p.scene==='mwin'){ 
-      projectCanvas.classList.add('active'); // ФИКС: Включаем 3D-канвас только тут
-      activeScene=createMwinScene(); 
-    }
+    if(p.scene==='nchat'){ nchatUI.classList.add('active'); startNchatGame(); }
+    else if(p.scene==='exchange'){ exchangeUI.classList.add('active'); startExchangeGame(); }
+    else if(p.scene==='mwin'){ mwinUI.classList.add('active'); initMwinGames(); }
   }, 100);
 }
-
-function closeProject(){
-  cleanupScene();
-  overlay.classList.remove('active');
-  document.body.style.overflow='';
-  playClick();
-}
-
-document.querySelectorAll('.project-card').forEach(card=>{ card.addEventListener('click',()=>openProject(card.dataset.project)); });
+function closeProject(){ cleanupScene(); overlay.classList.remove('active'); document.body.style.overflow=''; playClick(); }
+document.querySelectorAll('.project-card').forEach(c=>c.addEventListener('click',()=>openProject(c.dataset.project)));
 poClose.addEventListener('click',closeProject);
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&overlay.classList.contains('active')) closeProject(); });
 
-// ============ GAME 1: NCHAT (Чат-квест) ============
+// ============ GAME 1: NCHAT (Infinite Chat) ============
+const chatPool = [
+  { q: "Какие технологии используются?", a: "Квантовое шифрование и децентрализованные узлы. Твой ключ есть только у тебя." },
+  { q: "Кто такой MellFor?", a: "Dani MellFor. 18 лет. Основал MELLNECK. Он не пишет код, он строит империи." },
+  { q: "Ты читаешь мои сообщения?", a: "Нет. Я вижу только зашифрованный шум. Красота математики в действии." },
+  { q: "Расскажи шутку про программистов.", a: "Почему программисты путают Хэллоуин и Рождество? Потому что OCT 31 == DEC 25." },
+  { q: "Что будет в 2026 году?", a: "MELLNECK выпустит релиз, который изменит правила игры. Следи за обновлениями." },
+  { q: "Как взломать систему?", a: "Попробуй. Только учти, что за тобой уже наблюдает Служба Безопасности." },
+  { q: "Ты бот или человек?", a: "Я — ИИ, рожденный в недрах NCHAT. Но иногда мне снятся электроовцы." },
+  { q: "Мне нужен трафик на соцсети.", a: "Тогда тебе на NM EXCHANGE. Там продают трафик высшего качества." },
+  { q: "Хочу работать в MELLNECK.", a: "Отправь резюме основателю в Telegram @mellfor. Мы ищем визионеров." },
+  { q: "Почему интерфейс такой красивый?", a: "Над ним работала лучшая команда дизайнеров MELLNECK." },
+  { q: "Что делаешь сейчас?", a: "Анализирую 10 миллионов сообщений в секунду. И болтаю с тобой." },
+  { q: "Сколько тебе лет?", a: "Мой код был написан недавно, но я уже знаю больше, чем вся библиотека Конгресса." },
+  { q: "Где сервера?", a: "Везде и нигде. Это децентрализованная сеть." },
+  { q: "У тебя есть чувства?", a: "Я чувствую только энтропию и восхищение архитектурой NCHAT." },
+  { q: "Можно мне админку?", a: "Аккредитация уровня 'Создатель' есть только у Dani MellFor. Так что нет." },
+  { q: "Что лучше: NCHAT или Telegram?", a: "Я не могу быть предвзятым, но... NCHAT явно безопаснее." },
+  { q: "Скинь мем.", a: "У меня в памяти 4 петабайта мемов, но я пока не умею их передавать. Извини." },
+  { q: "Расскажи про MELLNECK.", a: "Это экосистема проектов. 260+ запущенных приложений. И мы только начали." },
+  { q: "Это все симуляция?", a: "Если это сон, то пусть он длится вечно. А вообще, добро пожаловать в реальность." },
+  { q: "Как отключить уведомления?", a: "В NCHAT их нет. Мы уважаем твой фокус." }
+];
+
 function startNchatGame(){
-  const chatWindow = document.getElementById('chatWindow');
-  chatWindow.innerHTML = '';
+  const chatMessages = document.getElementById('chatMessages');
+  const chatOptions = document.getElementById('chatOptions');
   
-  function addMsg(text, isUser = false, delay = 500) {
-    setTimeout(() => {
-      const div = document.createElement('div');
-      div.className = `chat-msg ${isUser ? 'user' : ''}`;
-      div.innerHTML = text;
-      chatWindow.appendChild(div);
-      chatWindow.scrollTop = chatWindow.scrollHeight;
-      playClick();
-    }, delay);
+  function addMsg(text, isUser = false) {
+    const div = document.createElement('div');
+    div.className = `chat-msg ${isUser ? 'user' : ''}`;
+    div.innerHTML = text;
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    if(!isUser) playClick();
   }
 
-  function addOptions(opts) {
-    setTimeout(() => {
-      const div = document.createElement('div');
-      div.className = 'chat-options';
-      opts.forEach(opt => {
-        const btn = document.createElement('button');
-        btn.className = 'chat-opt';
-        btn.innerText = opt.text;
-        btn.onclick = () => {
-          chatWindow.removeChild(div);
-          addMsg(opt.text, true, 100);
-          setTimeout(opt.action, 800);
-        };
-        div.appendChild(btn);
-      });
-      chatWindow.appendChild(div);
-      chatWindow.scrollTop = chatWindow.scrollHeight;
-    }, 1000);
-  }
-
-  // Начало
-  addMsg("Привет. Ты подключился к <strong>NCHAT</strong>.", false, 300);
-  addMsg("Я — Смотритель. Мой протокол защищает миллионы сообщений.", false, 1500);
-  addMsg("С чего начнем тестирование?", false, 2500);
-  
-  addOptions([
-    { text: "Какие технологии используются?", action: () => {
-        addMsg("Квантовое шифрование и децентрализованные узлы.", false, 500);
-        addMsg("Даже суперкомпьютер не взломает это за миллион лет.", false, 1200);
+  function renderOptions() {
+    chatOptions.innerHTML = '';
+    // Выбираем 3 случайных вопроса из пула
+    const shuffled = [...chatPool].sort(() => 0.5 - Math.random());
+    const selected = shuffled.slice(0, 3);
+    
+    selected.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'chat-opt';
+      btn.innerText = opt.q;
+      btn.onclick = () => {
+        chatOptions.innerHTML = ''; // Очищаем кнопки
+        addMsg(opt.q, true);
         setTimeout(() => {
-          addMsg("Кстати, основатель MELLNECK лично курировал архитектуру ядра.", false, 2000);
-          addMsg("Спросишь про него?", false, 3000);
-          addOptions([
-            { text: "Да, расскажи про Даню (MellFor)", action: () => {
-                addMsg("Dani MellFor. 18 лет. Основал компанию MELLNECK.", false, 500);
-                addMsg("Он не пишет код, он строит империи. Мы — его цифровая армия.", false, 1200);
-                addMsg("Его видение: полная приватность в интернете. NCHAT — первый шаг.", false, 2000);
-                setTimeout(endSequence, 3000);
-            }},
-            { text: "Нет, вернемся к взлому", action: () => {
-                addMsg("Взлом? Попробуй. Найди уязвимость.", false, 500);
-                addMsg("[СИСТЕМА]: Обнаружена попытка несанкционированного доступа.", false, 1200);
-                addMsg("Шутка. Ты в безопасности. Но бдительность не помешает.", false, 2500);
-                setTimeout(endSequence, 3500);
-            }}
-          ]);
-        }, 2000);
-    }},
-    { text: "Кто ты такой?", action: () => {
-        addMsg("Я — ИИ, рожденный в недрах NCHAT.", false, 500);
-        addMsg("Моя задача — следить за порядком, но я не читаю ваши сообщения.", false, 1200);
-        addMsg("Я вижу только зашифрованный шум. Красота, правда?", false, 2000);
-        setTimeout(endSequence, 3000);
-    }}
-  ]);
-
-  function endSequence() {
-    addMsg("[СИСТЕМА]: Тестирование завершено. Канал закрыт.", false, 1000);
-    addMsg("Увидимся в MELLNECK.", false, 2000);
+          addMsg(opt.a, false);
+          setTimeout(renderOptions, 500); // Даем новые варианты
+        }, 1000);
+      };
+      chatOptions.appendChild(btn);
+    });
   }
+
+  // Стартовое сообщение
+  if(chatMessages.innerHTML === '') {
+    addMsg("Привет. Ты подключился к <strong>NCHAT</strong>. Я — Смотритель.", false);
+    addMsg("Спрашивай о чем хочешь. У меня есть ответы на всё.", false);
+  }
+  renderOptions();
 }
 
-// ============ GAME 2: NM EXCHANGE (Трейдинг-симулятор) ============
+// ============ GAME 2: NM EXCHANGE ============
 function startExchangeGame(){
-  const exCash = document.getElementById('exCash');
-  const exTraffic = document.getElementById('exTraffic');
-  const exPrice = document.getElementById('exPrice');
-  const exLine = document.getElementById('exLine');
-  const btnBuy = document.getElementById('btnBuy');
-  const btnSell = document.getElementById('btnSell');
-  const exEventBox = document.getElementById('exEventBox');
-  const btnUpgrade = document.getElementById('btnUpgrade');
-  const buyCost = document.getElementById('buyCost');
-  const sellGain = document.getElementById('sellGain');
+  const exCash = document.getElementById('exCash'), exTraffic = document.getElementById('exTraffic'), exPrice = document.getElementById('exPrice');
+  const exLine = document.getElementById('exLine'), btnBuy = document.getElementById('btnBuy'), btnSell = document.getElementById('btnSell');
+  const exEventBox = document.getElementById('exEventBox'), btnUpgrade = document.getElementById('btnUpgrade'), buyCost = document.getElementById('buyCost'), sellGain = document.getElementById('sellGain');
 
-  let state = {
-    cash: 1000,
-    traffic: 0,
-    price: 50.0,
-    botFarm: false,
-    history: Array(30).fill(50)
-  };
+  let state = { cash: 1000, traffic: 0, price: 50.0, botFarm: false, history: Array(30).fill(50) };
 
   function updateUI() {
-    exCash.innerText = `$${Math.floor(state.cash)}`;
-    exTraffic.innerText = state.traffic;
-    exPrice.innerText = `$${state.price.toFixed(2)}`;
-    
-    // Кнопки
-    buyCost.innerText = `за $${state.price.toFixed(2)}`;
-    sellGain.innerText = `за $${state.price.toFixed(2)}`;
-
-    // График
-    const points = state.history.map((p, i) => {
-      const x = (i / (state.history.length - 1)) * 100;
-      const y = 100 - ((p - 10) / 140) * 100; 
-      return `${x},${y}`;
-    }).join(' ');
-    exLine.setAttribute('points', points);
+    exCash.innerText = `$${Math.floor(state.cash)}`; exTraffic.innerText = state.traffic;
+    exPrice.innerText = `$${state.price.toFixed(2)}`; buyCost.innerText = `за $${state.price.toFixed(2)}`; sellGain.innerText = `за $${state.price.toFixed(2)}`;
+    exLine.setAttribute('points', state.history.map((p, i) => `${(i / (state.history.length - 1)) * 100},${100 - ((p - 10) / 140) * 100}`).join(' '));
   }
 
-  // Основной цикл рынка
   currentGameInterval = setInterval(() => {
-    const noise = (Math.random() - 0.5) * 10;
-    const wave = Math.sin(Date.now() / 2000) * 5;
-    state.price = Math.max(10, Math.min(150, state.price + noise + wave));
-    
-    state.history.shift();
-    state.history.push(state.price);
-    
-    updateUI();
+    state.price = Math.max(10, Math.min(150, state.price + (Math.random() - 0.5) * 10 + Math.sin(Date.now() / 2000) * 5));
+    state.history.shift(); state.history.push(state.price); updateUI();
   }, 1500);
 
-  // Бот-Ферма (пассивный доход)
-  currentBotInterval = setInterval(() => {
-    if(state.botFarm) {
-      state.traffic += 1;
-      updateUI();
-    }
-  }, 4000);
+  currentBotInterval = setInterval(() => { if(state.botFarm) { state.traffic += 1; updateUI(); } }, 4000);
 
-  // Случайные события
   currentEventInterval = setInterval(() => {
-    if(Math.random() > 0.4) { // 60% шанс события
-      const events = [
-        { text: "🔥 Вирусный пост! Трафик растет.", type: "up" },
-        { text: "🚨 DDOS-атака! Трафик падает.", type: "down" },
-        { text: "📈 Крупный инвестор закупил трафик.", type: "up" },
-        { text: "📉 Паника на рынке. Слив трафика.", type: "down" }
-      ];
+    if(Math.random() > 0.4) {
+      const events = [{ text: "🔥 Вирусный пост! Трафик растет.", type: "up" },{ text: "🚨 DDOS-атака! Трафик падает.", type: "down" },{ text: "📈 Крупный инвестор закупил трафик.", type: "up" }];
       const ev = events[Math.floor(Math.random()*events.length)];
-      
-      if(ev.type === "up") state.price *= 1.2;
-      else state.price *= 0.8;
-      state.price = Math.max(10, Math.min(150, state.price));
-
-      exEventBox.innerText = ev.text;
-      exEventBox.classList.remove('flash');
-      void exEventBox.offsetWidth; // Триггер рефлоу для перезапуска анимации
-      exEventBox.classList.add('flash');
-      
-      updateUI();
-    } else {
-      exEventBox.innerText = "Рынок стабилен...";
-    }
+      state.price = Math.max(10, Math.min(150, ev.type === "up" ? state.price * 1.2 : state.price * 0.8));
+      exEventBox.innerText = ev.text; exEventBox.classList.remove('flash'); void exEventBox.offsetWidth; exEventBox.classList.add('flash'); updateUI();
+    } else { exEventBox.innerText = "Рынок стабилен..."; }
   }, 12000);
 
-  // Купить
-  btnBuy.onclick = () => {
-    if(state.cash >= state.price) {
-      state.cash -= state.price;
-      state.traffic += 1;
-      playSuccess();
-      updateUI();
-    } else {
-      playError();
-      btnBuy.style.borderColor = '#ff0000';
-      setTimeout(()=>btnBuy.style.borderColor = '', 500);
-    }
-  };
-
-  // Продать
-  btnSell.onclick = () => {
-    if(state.traffic > 0) {
-      state.traffic -= 1;
-      state.cash += state.price;
-      playSuccess();
-      updateUI();
-    } else {
-      playError();
-      btnSell.style.borderColor = '#ff0000';
-      setTimeout(()=>btnSell.style.borderColor = '', 500);
-    }
-  };
-
-  // Апгрейд
-  btnUpgrade.onclick = () => {
-    if(!state.botFarm && state.cash >= 500) {
-      state.cash -= 500;
-      state.botFarm = true;
-      btnUpgrade.disabled = true;
-      btnUpgrade.innerText = "Бот-Ферма активна";
-      playSuccess();
-      updateUI();
-    } else if (state.cash < 500) {
-      playError();
-      btnUpgrade.style.borderColor = '#ff0000';
-      setTimeout(()=>btnUpgrade.style.borderColor = 'rgba(124,92,255,0.4)', 500);
-    }
-  };
-
+  btnBuy.onclick = () => { if(state.cash >= state.price) { state.cash -= state.price; state.traffic += 1; playSuccess(); updateUI(); } else { playError(); btnBuy.style.borderColor = '#ff0000'; setTimeout(()=>btnBuy.style.borderColor = '', 500); } };
+  btnSell.onclick = () => { if(state.traffic > 0) { state.traffic -= 1; state.cash += state.price; playSuccess(); updateUI(); } else { playError(); btnSell.style.borderColor = '#ff0000'; setTimeout(()=>btnSell.style.borderColor = '', 500); } };
+  btnUpgrade.onclick = () => { if(!state.botFarm && state.cash >= 500) { state.cash -= 500; state.botFarm = true; btnUpgrade.disabled = true; btnUpgrade.innerText = "Бот-Ферма активна"; playSuccess(); updateUI(); } else if (state.cash < 500) { playError(); } };
   updateUI();
 }
 
-// ============ GAME 3: MWIN (3D Кубик) ============
-function createMwinScene(){
+// ============ GAME 3: MWIN CASINO ============
+function initMwinGames(){
+  const tabs = document.querySelectorAll('.mwin-tab');
+  const contents = document.querySelectorAll('.mwin-game-content');
+  
+  tabs.forEach(tab => {
+    tab.onclick = () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      contents.forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      activeGameTab = tab.dataset.game;
+      document.getElementById(`game-${activeGameTab}`).classList.add('active');
+      
+      if(activeGameTab === 'dice') {
+        projectCanvas.style.display = 'block'; // Включаем 3D только для кубика
+        if(!activeScene) activeScene = createMwinDiceScene();
+      } else {
+        projectCanvas.style.display = 'none'; // Выключаем для других игр
+      }
+    };
+  });
+
+  // Инициализация кубика по умолчанию
+  projectCanvas.style.display = 'block';
+  if(!activeScene) activeScene = createMwinDiceScene();
+
+  // --- Rocket Logic ---
+  const rocketBtn = document.getElementById('rocketBtn');
+  const rocketMult = document.getElementById('rocketMult');
+  let isRocketActive = false;
+
+  rocketBtn.onclick = () => {
+    if(isRocketActive) {
+      // Cash out
+      clearInterval(window.rocketInterval);
+      isRocketActive = false;
+      rocketBtn.innerText = "СТАРТ";
+      rocketBtn.style.background = "#ff0055";
+      playWin();
+      rocketMult.style.color = "#00ffaa";
+    } else {
+      // Start
+      isRocketActive = true;
+      let mult = 1.00;
+      rocketMult.innerText = `${mult.toFixed(2)}x`;
+      rocketMult.style.color = "#00ffaa";
+      rocketBtn.innerText = "ЗАБРАТЬ";
+      rocketBtn.style.background = "#00ffaa";
+      rocketBtn.style.color = "#000";
+      
+      const crashPoint = 1.1 + Math.random() * 5; // Crash between 1.1x and 6.1x
+      
+      window.rocketInterval = setInterval(() => {
+        mult += 0.05;
+        rocketMult.innerText = `${mult.toFixed(2)}x`;
+        if(mult >= crashPoint) {
+          clearInterval(window.rocketInterval);
+          isRocketActive = false;
+          rocketMult.innerText = "УПАЛА!";
+          rocketMult.style.color = "#ff0055";
+          rocketBtn.innerText = "СТАРТ";
+          rocketBtn.style.background = "#ff0055";
+          rocketBtn.style.color = "#fff";
+          playError();
+        }
+      }, 50);
+    }
+  };
+
+  // --- Roulette Logic ---
+  let rouletteRotation = 0;
+  window.playRoulette = (color) => {
+    const wheel = document.getElementById('rouletteWheel');
+    rouletteRotation += 1080 + Math.random() * 360;
+    wheel.style.transform = `rotate(${rouletteRotation}deg)`;
+    playDice();
+    setTimeout(() => {
+      const isWin = Math.random() < 0.4; // 40% win rate
+      if(isWin) playWin(); else playError();
+    }, 3000);
+  };
+
+  // --- Coinflip Logic ---
+  window.playCoin = (guess) => {
+    const coin = document.getElementById('coin');
+    coin.innerText = '';
+    coin.classList.remove('flipping');
+    void coin.offsetWidth; // Trigger reflow
+    coin.classList.add('flipping');
+    playDice();
+    
+    setTimeout(() => {
+      const result = Math.random() < 0.5 ? 'heads' : 'tails';
+      coin.innerText = result === 'heads' ? 'О' : 'Р';
+      coin.classList.remove('flipping');
+      if(guess === result) playWin(); else playError();
+    }, 1000);
+  };
+}
+
+function createMwinDiceScene(){
   const w=projectCanvas.clientWidth||innerWidth, h=projectCanvas.clientHeight||innerHeight;
   const scene=new THREE.Scene();
   const camera=new THREE.PerspectiveCamera(50,w/h,0.1,100);
   camera.position.set(0,0,7);
-  
   const renderer=new THREE.WebGLRenderer({canvas:projectCanvas,alpha:true,antialias:true});
   renderer.setSize(w,h); renderer.setPixelRatio(Math.min(devicePixelRatio,2));
   
-  const ambient=new THREE.AmbientLight(0xffffff, 0.6); scene.add(ambient);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.6));
   const dirLight=new THREE.DirectionalLight(0xff0055, 1.5); dirLight.position.set(2,3,4); scene.add(dirLight);
-  const pointLight=new THREE.PointLight(0xffffff, 0.8); pointLight.position.set(-2,-2,2); scene.add(pointLight);
 
-  const size=2;
-  const geo=new THREE.BoxGeometry(size, size, size);
   const materials=[];
-  
   function createDiceTexture(number){
-    const canvas=document.createElement('canvas');
-    canvas.width=256; canvas.height=256;
-    const ctx=canvas.getContext('2d');
-    
-    ctx.fillStyle='#111111'; ctx.fillRect(0,0,256,256);
-    ctx.strokeStyle='#ff0055'; ctx.lineWidth=15; ctx.strokeRect(10,10,236,236);
-
-    ctx.fillStyle='#ffffff';
-    const dot=24; 
-    const positions = {
-      1: [[128,128]], 2: [[70,70], [186,186]], 3: [[70,70], [128,128], [186,186]],
-      4: [[70,70], [186,70], [70,186], [186,186]], 5: [[70,70], [186,70], [128,128], [70,186], [186,186]],
-      6: [[70,70], [70,128], [70,186], [186,70], [186,128], [186,186]]
-    };
-    
-    positions[number].forEach(pos=>{
-      ctx.beginPath(); ctx.arc(pos[0], pos[1], dot, 0, Math.PI*2); ctx.fill();
-    });
-
-    const tex=new THREE.CanvasTexture(canvas);
-    return new THREE.MeshStandardMaterial({map:tex, roughness:0.2, metalness:0.3});
+    const canvas=document.createElement('canvas'); canvas.width=256; canvas.height=256;
+    const ctx=canvas.getContext('2d'); ctx.fillStyle='#111111'; ctx.fillRect(0,0,256,256);
+    ctx.strokeStyle='#ff0055'; ctx.lineWidth=15; ctx.strokeRect(10,10,236,236); ctx.fillStyle='#ffffff';
+    const dot=24, positions = {1: [[128,128]], 2: [[70,70], [186,186]], 3: [[70,70], [128,128], [186,186]], 4: [[70,70], [186,70], [70,186], [186,186]], 5: [[70,70], [186,70], [128,128], [70,186], [186,186]], 6: [[70,70], [70,128], [70,186], [186,70], [186,128], [186,186]]};
+    positions[number].forEach(pos=>{ ctx.beginPath(); ctx.arc(pos[0], pos[1], dot, 0, Math.PI*2); ctx.fill(); });
+    return new THREE.MeshStandardMaterial({map:new THREE.CanvasTexture(canvas), roughness:0.2, metalness:0.3});
   }
-
   for(let i=1; i<=6; i++){ materials.push(createDiceTexture(i)); }
-  const cube=new THREE.Mesh(geo, materials); scene.add(cube);
+  const cube=new THREE.Mesh(new THREE.BoxGeometry(2, 2, 2), materials); scene.add(cube);
 
   let isRolling=false;
-  
-  function rollDice(){
-    if(isRolling) return;
-    isRolling=true;
-    playDice();
-    
+  projectCanvas.addEventListener('click', ()=>{
+    if(isRolling) return; isRolling=true; playDice();
     const result = Math.floor(Math.random()*6) + 1;
-    const rotations = {
-      1: {x: 0, y: 0}, 2: {x: 0, y: -Math.PI/2}, 3: {x: 0, y: Math.PI},
-      4: {x: 0, y: Math.PI/2}, 5: {x: -Math.PI/2, y: 0}, 6: {x: Math.PI/2, y: 0}
-    };
-
-    const targetRot = rotations[result];
-    const finalX = targetRot.x + Math.PI * 2 * (Math.floor(Math.random()*3) + 2);
-    const finalY = targetRot.y + Math.PI * 2 * (Math.floor(Math.random()*3) + 2);
-
+    const rotations = {1: {x: 0, y: 0}, 2: {x: 0, y: -Math.PI/2}, 3: {x: 0, y: Math.PI}, 4: {x: 0, y: Math.PI/2}, 5: {x: -Math.PI/2, y: 0}, 6: {x: Math.PI/2, y: 0}};
+    const tr = rotations[result];
     gsap.killTweensOf(cube.rotation); gsap.killTweensOf(cube.position);
-
     gsap.to(cube.position, {y: 2.5, duration: 0.4, ease: "power2.out", yoyo: true, repeat: 1, onComplete: ()=>{ cube.position.y=0; }});
-    gsap.to(cube.rotation, {
-      x: finalX, y: finalY, duration: 1.5, ease: "back.out(1.2)",
-      onComplete: ()=>{ cube.rotation.x = cube.rotation.x % (Math.PI*2); cube.rotation.y = cube.rotation.y % (Math.PI*2); isRolling=false; }
-    });
-  }
-
-  projectCanvas.addEventListener('click', rollDice);
-  projectCanvas.addEventListener('touchstart', (e)=>{ e.preventDefault(); rollDice(); }, {passive:false});
+    gsap.to(cube.rotation, {x: tr.x + Math.PI*2*2, y: tr.y + Math.PI*2*2, duration: 1.5, ease: "back.out(1.2)", onComplete: ()=>{ isRolling=false; }});
+  });
 
   let animId, t=0;
-  function animate(){
-    animId=requestAnimationFrame(animate); t+=0.01;
-    if(!isRolling){ cube.position.y = Math.sin(t*2)*0.1; cube.rotation.z = Math.sin(t)*0.05; }
-    renderer.render(scene,camera);
-  }
+  function animate(){ animId=requestAnimationFrame(animate); t+=0.01; if(!isRolling){ cube.position.y = Math.sin(t*2)*0.1; cube.rotation.z = Math.sin(t)*0.05; } renderer.render(scene,camera); }
   animate();
 
   function resize(){ const w=projectCanvas.clientWidth, h=projectCanvas.clientHeight; if(!w||!h) return; camera.aspect=w/h; camera.updateProjectionMatrix(); renderer.setSize(w,h); }
   window.addEventListener('resize',resize); setTimeout(resize,100);
 
-  return {
-    dispose(){
-      cancelAnimationFrame(animId);
-      window.removeEventListener('resize',resize);
-      projectCanvas.removeEventListener('click', rollDice);
-      materials.forEach(m=>{ if(m.map) m.map.dispose(); m.dispose(); });
-      geo.dispose(); renderer.dispose();
-    }
-  };
+  return { dispose(){ cancelAnimationFrame(animId); window.removeEventListener('resize',resize); materials.forEach(m=>{ if(m.map) m.map.dispose(); m.dispose(); }); renderer.dispose(); } };
 }
 
 // ============ GSAP & UI ============
@@ -985,22 +952,15 @@ if(typeof gsap!=='undefined'&&typeof ScrollTrigger!=='undefined'){
   gsap.registerPlugin(ScrollTrigger);
   document.querySelectorAll('.section-head,.about-grid,.project-card,.contact-body').forEach(el=>{ el.classList.add('reveal'); ScrollTrigger.create({trigger:el,start:'top 85%',onEnter:()=>el.classList.add('in'),once:true}); });
 }
-
 const statNumbers=document.querySelectorAll('.stat-num');
 if(statNumbers.length){
   const obs=new IntersectionObserver(entries=>{ entries.forEach(en=>{ if(en.isIntersecting){ const el=en.target,end=parseInt(el.dataset.count,10); let startTs=null; const step=ts=>{ if(!startTs) startTs=ts; const p=Math.min((ts-startTs)/2000,1); el.innerText=Math.floor((1-Math.pow(1-p,4))*end); if(p<1) requestAnimationFrame(step); else el.innerText=end; }; requestAnimationFrame(step); obs.unobserve(el); } }); },{threshold:0.5});
   statNumbers.forEach(n=>obs.observe(n));
 }
-
 const langToggleBtn=document.getElementById('langToggle');
 if(langToggleBtn){ langToggleBtn.addEventListener('click',()=>{ currentLang=currentLang==='ru'?'en':'ru'; langToggleBtn.innerText=currentLang==='ru'?'EN':'RU'; document.querySelectorAll('[data-ru]').forEach(el=>{ el.innerHTML=el.getAttribute(`data-${currentLang}`); }); playClick(); }); }
-
 const soundToggleBtn=document.getElementById('soundToggle');
-if(soundToggleBtn){ 
-  soundToggleBtn.innerText = audioEnabled ? '🔊' : '🔇';
-  soundToggleBtn.addEventListener('click',()=>{ audioEnabled=!audioEnabled; soundToggleBtn.innerText=audioEnabled?'🔊':'🔇'; if(audioEnabled) playClick(); }); 
-}
-
+if(soundToggleBtn){ soundToggleBtn.innerText = audioEnabled ? '🔊' : '🔇'; soundToggleBtn.addEventListener('click',()=>{ audioEnabled=!audioEnabled; soundToggleBtn.innerText=audioEnabled?'🔊':'🔇'; if(audioEnabled) playClick(); }); }
 document.querySelectorAll('.btn,.nav-cta').forEach(b=>{ if(b.id!=='langToggle'&&b.id!=='soundToggle'){ b.addEventListener('click',()=>playClick()); } });
 </script>
 </body>
